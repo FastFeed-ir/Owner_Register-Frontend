@@ -21,111 +21,50 @@ class AccountBarState extends State<AccountBar> {
   }
 
   Widget accountBar() {
-    return Material(
-      color: Colors.white,
-      elevation: 8.0,
-      shadowColor: Colors.grey,
-      borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            InkWell(
-              onTap: () {
-                //TODO on click profile page
-              },
-              child: SizedBox(
-                height: 48,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Text(
-                      "مشاهده حساب کاربری",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(width: 8),
-                    Icon(Icons.person_outline)
-                  ],
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                //TODO on click buy subscription page
-              },
-              child: SizedBox(
-                height: 48,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Text(
-                      "خرید اشتراک",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(width: 8),
-                    Icon(Icons.shopping_cart_outlined)
-                  ],
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                //TODO on click exit
-              },
-              child: SizedBox(
-                height: 48,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Text(
-                      "خروج",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(width: 8),
-                    Icon(Icons.exit_to_app_outlined)
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget accountBarChat() {
     return PopupMenuButton(
+      icon: const Icon(Icons.person_outline),
       itemBuilder: (BuildContext context) => [
-        PopupMenuItem(
-          value: 'buy_subscription',
-          child: Row(
-            children: const [
-              Icon(Icons.payment),
-              SizedBox(width: 8),
-              Text('Buy Subscription'),
-            ],
-          ),
-        ),
         PopupMenuItem(
           value: 'view_profile',
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: const [
-              Icon(Icons.person),
+              Text('مشاهده حساب کاربری'),
               SizedBox(width: 8),
-              Text('View Profile'),
+              Icon(Icons.person_outline),
             ],
           ),
+          onTap: () {
+            //TODO on click profile page
+          },
+        ),
+        PopupMenuItem(
+          value: 'buy_subscription',
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Text('خرید اشتراک'),
+              SizedBox(width: 8),
+              Icon(Icons.shopping_cart_outlined),
+            ],
+          ),
+          onTap: () {
+            //TODO on click buy subscription page
+          },
         ),
         PopupMenuItem(
           value: 'exit',
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: const [
-              Icon(Icons.exit_to_app),
+              Text('خروج'),
               SizedBox(width: 8),
-              Text('Exit'),
+              Icon(Icons.exit_to_app_outlined),
             ],
           ),
+          onTap: () {
+            //TODO on click exit
+          },
         ),
       ],
     );
