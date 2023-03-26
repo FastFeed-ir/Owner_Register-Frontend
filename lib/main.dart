@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'view/ordering/setup_page.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -11,6 +13,9 @@ class MyApp extends StatelessWidget {
 
 
   Widget build(BuildContext context) {
-    return const MaterialApp();
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "ثبت سفارش",
+        home: const SetupPage());
   }
 }
