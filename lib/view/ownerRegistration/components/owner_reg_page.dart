@@ -11,8 +11,6 @@ class OwenerRegisterScreen extends StatefulWidget {
 }
 
 class _OwenerRegisterScreen extends State<OwenerRegisterScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -23,7 +21,7 @@ class _OwenerRegisterScreen extends State<OwenerRegisterScreen> {
               children: [
                 Header(),
                 OwnerRegister(),
-                SizedBox(height:20.r),
+                SizedBox(height: 20.r),
                 Footer(),
               ],
             ),
@@ -39,7 +37,6 @@ class OwnerRegister extends StatefulWidget {
 
   @override
   State<OwnerRegister> createState() => _OwnerRegisterState();
-
 }
 
 class _OwnerRegisterState extends State<OwnerRegister> {
@@ -72,232 +69,246 @@ class _OwnerRegisterState extends State<OwnerRegister> {
     return Container(
         child: Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(right: 150.w, top: 50.w),
-                  child: SizedBox(
-                    child: Text("ثبت‌نام فروشندگان فست ‌فید",
-                        style: TextStyle(fontSize: 70.w)),
+        Container(
+          // constraints: BoxConstraints.expand(),
+          width: 1920.w,
+          height: 1080.w,
+          decoration:  BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images/ownerBackground.png"),
+                fit: BoxFit.cover),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 150.w, top: 250.w),
+                    child: SizedBox(
+                      child: Text("ثبت‌نام فروشندگان فست ‌فید",
+                          style: TextStyle(fontSize: 70.w,color:Colors.white,)),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 150.w, top: 70.h),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width / 3,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border:
-                            Border.all(width: 10.w, color: Colors.transparent),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(8)),
-                      ),
-                      child: Form(
-                        key: _formKey,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              //dropdown for type of business
-                              DropdownButtonFormField<String>(
-                                style: TextStyle(fontSize: 20.w),
-                                decoration: InputDecoration(
-                                  labelText: 'انتخاب نوع کسب و کار',
-                                ),
-                                value: _selectedBusinessType,
-                                items: _businessTypes
-                                    .map((businessType) => DropdownMenuItem(
-                                          child: Text(businessType),
-                                          value: businessType,
-                                        ))
-                                    .toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedBusinessType = value;
-                                  });
-                                },
-                                validator: (value) {
-                                  if (value == null) {
-                                    return 'لطفا نوع کسب و کار خود را انتخاب کنید';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              SizedBox(height: 16.0.h),
-
-                              //dropdown for province
-                              DropdownButtonFormField<String>(
-                                decoration:
-                                    InputDecoration(labelText: 'انتخاب استان'),
-                                value: _selectedProvince,
-                                items: _provinces
-                                    .map((province) => DropdownMenuItem(
-                                          child: Text(province),
-                                          value: province,
-                                        ))
-                                    .toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedProvince = value;
-                                  });
-                                },
-                                validator: (value) {
-                                  if (value == null) {
-                                    return 'لطفا استان خود را انتخاب کنید';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              SizedBox(height: 16.0.h),
-
-                              //dropdown for city
-                              DropdownButtonFormField<String>(
-                                decoration:
-                                    InputDecoration(labelText: 'انتخاب شهر'),
-                                value: _selectedCity,
-                                items: _cities
-                                    .map((city) => DropdownMenuItem(
-                                          child: Text(city),
-                                          value: city,
-                                        ))
-                                    .toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedCity = value;
-                                  });
-                                },
-                                validator: (value) {
-                                  if (value == null) {
-                                    return 'لطفا شهر خود را انتخاب کنید';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              SizedBox(height: 16.0.h),
-
-                              //text input for business name
-                              TextFormField(
-                                decoration:
-                                    InputDecoration(labelText: 'نام فروشگاه'),
-                                onChanged: (value) {
-                                  _businessName = value;
-                                },
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'لطفا نام فروشگاه را وارد کنید';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              SizedBox(height: 16.0.h),
-
-                              //text input for business owner's first name
-                              TextFormField(
-                                decoration: InputDecoration(
-                                    labelText: "نام مالک فروشگاه"),
-                                onChanged: (value) {
-                                  _businessOwnerFirstName = value;
-                                },
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return "لطفا نام خود را وارد کنید";
-                                  }
-                                  return null;
-                                },
-                              ),
-                              SizedBox(height: 16.0.h),
-
-                              //text input for business owner's last name
-                              TextFormField(
-                                decoration: InputDecoration(
-                                    labelText: "نام خانوادگی مالک فروشگاه"),
-                                onChanged: (value) {
-                                  _businessOwnerLastName = value;
-                                },
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return "لطفا نام خانوادگی خود را وارد کنید";
-                                  }
-                                  return null;
-                                },
-                              ),
-                              SizedBox(height: 16.0.h),
-
-                              //number input for business owner's phone number
-                              TextFormField(
-                                decoration: InputDecoration(
-                                    labelText: "شماره تلفن همراه"),
-                                keyboardType: TextInputType.number,
-                                onChanged: (value) {
-                                  _businessOwnerPhone = int.tryParse(value);
-                                },
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return "لطفا شماره خود را وارد کنید";
-                                  }
-                                  return null;
-                                },
-                              ),
-                              SizedBox(height: 16.0.h),
-
-                              //button to submit the form
-                              SizedBox(
-                                width: double.infinity,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.yellow,
+                ],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 150.w, top: 70.h),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 3,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                              width: 10.w, color: Colors.transparent),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8)),
+                        ),
+                        child: Form(
+                          key: _formKey,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                //dropdown for type of business
+                                DropdownButtonFormField<String>(
+                                  style: TextStyle(fontSize: 20.w),
+                                  decoration: InputDecoration(
+                                    labelText: 'انتخاب نوع کسب و کار',
                                   ),
-                                  onPressed: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      //TODO: submit the form
-                                    }
+                                  value: _selectedBusinessType,
+                                  items: _businessTypes
+                                      .map((businessType) =>
+                                          DropdownMenuItem(
+                                            child: Text(businessType),
+                                            value: businessType,
+                                          ))
+                                      .toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedBusinessType = value;
+                                    });
                                   },
-                                  child: Text(
-                                    'دریافت کد تایید',
-                                    style: TextStyle(color: Colors.black),
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return 'لطفا نوع کسب و کار خود را انتخاب کنید';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(height: 16.0.h),
+
+                                //dropdown for province
+                                DropdownButtonFormField<String>(
+                                  decoration: InputDecoration(
+                                      labelText: 'انتخاب استان'),
+                                  value: _selectedProvince,
+                                  items: _provinces
+                                      .map((province) => DropdownMenuItem(
+                                            child: Text(province),
+                                            value: province,
+                                          ))
+                                      .toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedProvince = value;
+                                    });
+                                  },
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return 'لطفا استان خود را انتخاب کنید';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(height: 16.0.h),
+
+                                //dropdown for city
+                                DropdownButtonFormField<String>(
+                                  decoration: InputDecoration(
+                                      labelText: 'انتخاب شهر'),
+                                  value: _selectedCity,
+                                  items: _cities
+                                      .map((city) => DropdownMenuItem(
+                                            child: Text(city),
+                                            value: city,
+                                          ))
+                                      .toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedCity = value;
+                                    });
+                                  },
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return 'لطفا شهر خود را انتخاب کنید';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(height: 16.0.h),
+
+                                //text input for business name
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                      labelText: 'نام فروشگاه'),
+                                  onChanged: (value) {
+                                    _businessName = value;
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'لطفا نام فروشگاه را وارد کنید';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(height: 16.0.h),
+
+                                //text input for business owner's first name
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                      labelText: "نام مالک فروشگاه"),
+                                  onChanged: (value) {
+                                    _businessOwnerFirstName = value;
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "لطفا نام خود را وارد کنید";
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(height: 16.0.h),
+
+                                //text input for business owner's last name
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                      labelText:
+                                          "نام خانوادگی مالک فروشگاه"),
+                                  onChanged: (value) {
+                                    _businessOwnerLastName = value;
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "لطفا نام خانوادگی خود را وارد کنید";
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(height: 16.0.h),
+
+                                //number input for business owner's phone number
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                      labelText: "شماره تلفن همراه"),
+                                  keyboardType: TextInputType.number,
+                                  onChanged: (value) {
+                                    _businessOwnerPhone =
+                                        int.tryParse(value);
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "لطفا شماره خود را وارد کنید";
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(height: 16.0.h),
+
+                                //button to submit the form
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.yellow,
+                                    ),
+                                    onPressed: () {
+                                      if (_formKey.currentState!
+                                          .validate()) {
+                                        //TODO: submit the form
+                                      }
+                                    },
+                                    child: Text(
+                                      'دریافت کد تایید',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "کد را دریافت نکرده اید؟",
-                                      textDirection: TextDirection.ltr,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20.w,
+                                Container(
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "کد را دریافت نکرده اید؟",
+                                        textDirection: TextDirection.ltr,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20.w,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      "درخواست مجدد",
-                                      textDirection: TextDirection.ltr,
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 20.w,
+                                      Text(
+                                        "درخواست مجدد",
+                                        textDirection: TextDirection.ltr,
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 20.w,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
         SizedBox(
           height: 20.r,
@@ -305,7 +316,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
         Text("مراحل ثبت نام",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.w)),
         SizedBox(
-          height: 10.r,
+          height: 20.r,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -324,7 +335,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
             IconRow(
               title: "ثبت اطلاعات فروشگاه",
               text: 'اطلاعات تجاری، اطلاعات تماس، آدرس',
-              iconData: Icons.home_outlined,
+              iconData: Icons.store_mall_directory_outlined,
             ),
             SizedBox(
               width: 10.w,
@@ -420,31 +431,29 @@ class IconRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(right: 20.w, left: 20.w),
-      child: Container(
-        width: 150.w,
-        child: Column(
-          children: [
-            Icon(
-              iconData,
-              color: Colors.red,
-              size: 50,
-            ),
-            Text(title,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.sp,
-                ),
-                textAlign: TextAlign.center),
-            Text(text,
-                style: TextStyle(
-                  fontSize: 15.sp,
-                )),
-            SizedBox(height: 4.r),
-            // Text(text),
-          ],
-        ),
+    return Container(
+      width: 250.w,
+      child: Column(
+        children: [
+          Icon(
+            iconData,
+            color: Colors.red,
+            size: 50,
+          ),
+          Text(title,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 22.sp,
+              ),
+              textAlign: TextAlign.center),
+          Text(text,
+              style: TextStyle(
+                fontSize: 20.sp,
+              ),
+              textAlign: TextAlign.center),
+          SizedBox(height: 4.r),
+          // Text(text),
+        ],
       ),
     );
   }
