@@ -38,9 +38,6 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Register Page'),
-      ),
       body: SingleChildScrollView(
         child: Container(
           child: Column(
@@ -51,7 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(right: 150.w, top: 200.w),
+                        padding: EdgeInsets.only(right: 150.w, top: 50.w),
                         child: SizedBox(
                           child: Text("ثبت‌نام فروشندگان فست ‌فید",
                               style: TextStyle(fontSize: 70.w)),
@@ -272,31 +269,76 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 20.r,),
               Text("مراحل ثبت نام",style:TextStyle(fontWeight: FontWeight.bold,fontSize: 30.w)),
-              SizedBox(height: 10,),
+              SizedBox(height: 10.r,),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconRow(
-                    title: "ثبت اطلاعات مالک",
-                    text: 'اطلاعات هویتی، اطلاعات تماس',
-                    iconData: Icons.document_scanner_outlined,
+                  Padding(
+                    padding: EdgeInsets.only(right: 150.w),
+                    child: IconRow(
+                      title: "ثبت اطلاعات مالک",
+                      text: 'اطلاعات هویتی، اطلاعات تماس',
+                      iconData: Icons.document_scanner_outlined,
+                    ),
                   ),
+                  SizedBox(width:10.w,),
                   IconRow(
                     title: "ثبت اطلاعات فروشگاه",
                     text: 'اطلاعات تجاری، اطلاعات تماس، آدرس',
                     iconData: Icons.home_outlined,
                   ),
+                  SizedBox(width:10.w,),
                   IconRow(
                     title: "منو",
                     text: 'مدیریت دسته بندی و موارد فروش',
                     iconData: Icons.menu_book_outlined,
                   ),
+                  SizedBox(width:10.w,),
+                  Padding(
+                    padding: EdgeInsets.only(left: 150.w,),
+                    child: IconRow(
+                      title: "خرید اشتراک",
+                      text: 'به جمع فروشندگان فست فید خوش آمدید',
+                      iconData: Icons.shopping_bag_outlined,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 150.r,),
+              Text("مزایای همکاری با فست فید",style:TextStyle(fontWeight: FontWeight.bold,fontSize: 30.w)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 150.r,),
+                    child: IconRow(
+                      title: "دسترسی سریع",
+                      text: 'دسترسی سریع و راحت به منو',
+                      iconData: Icons.speed_outlined,
+                    ),
+                  ),
+                  SizedBox(width:175.w,),
                   IconRow(
-                    title: "خرید اشتراک",
-                    text: 'به جمع فروشندگان فست فید خوش آمدید',
-                    iconData: Icons.shopping_bag_outlined,
+                    title: "کاهش خطا",
+                    text: 'کم کردن خطای انسانی',
+                    iconData: Icons.error_outline,
+                  ),
+                  SizedBox(width:175.w,),
+                  IconRow(
+                    title: "صرفه‌جویی در منابع",
+                    text: 'کاهش منابع انسانی، کاهش هزینه ها',
+                    iconData: Icons.trending_down,
+                  ),
+                  SizedBox(width:175.w,),
+                  Padding(
+                    padding: EdgeInsets.only(left: 150.w,),
+                    child: IconRow(
+                      title: "پشتیبانی کامل",
+                      text: 'با پشتیبانی ویژه در خدمت شما و مشتریان هستیم',
+                      iconData: Icons.support_agent_outlined,
+                    ),
                   ),
                 ],
               ),
@@ -323,21 +365,24 @@ class IconRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 50,
-          height: 50,
-          child: Icon(
-            iconData,
-            color: Colors.red,
-          ),
+    return Padding(
+      padding: EdgeInsets.only(right: 20.w, left: 20.w),
+      child: Container(
+        width: 150.w,
+        child: Column(
+          children: [
+            Icon(
+              iconData,
+              color: Colors.red,
+              size: 50,
+            ),
+            Text(title,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp,),textAlign: TextAlign.center),
+            Text(text,style: TextStyle(fontSize: 15.sp,)),
+            SizedBox(height: 4.r),
+            // Text(text),
+          ],
         ),
-        // const SizedBox(height: 2),
-        Text(title,style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-        const SizedBox(height: 4),
-        Text(text),
-      ],
+      ),
     );
   }
 }
