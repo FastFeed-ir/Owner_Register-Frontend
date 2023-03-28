@@ -33,6 +33,7 @@ String FastfeedLogo = "assets/images/logo.png";
 String ENamad = "assets/images/enamad.png";
 String Map = "assets/images/map.png";
 String MaskGroupimg = "assets/images/maskgroup.png";
+String OwnerPageimg = "assets/images/ownerBackground.png";
 
 
 String AboutUsPhrase =
