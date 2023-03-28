@@ -25,7 +25,7 @@ class EditProfileState extends State<EditProfile> {
 
   void _showConfirmationDialog() {
     var textQuestion =
-        'آیا مطمئن هستید که می خواهید نام خود را به $_name $_lastName تغییر دهید؟';
+        'آیا مطمئن هستید که می خواهید نام خود را به ${_nameController.text} ${_lastNameController.text} تغییر دهید؟';
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -52,6 +52,8 @@ class EditProfileState extends State<EditProfile> {
                 setState(() {
                   _name = _nameController.text;
                   _lastName = _lastNameController.text;
+                  _nameController.clear();
+                  _lastNameController.clear();
                 });
                 Navigator.of(context).pop();
               },
