@@ -15,6 +15,7 @@ String RulesPage = "/rulePage";
 String AboutPage = "/aboutPage";
 String ContactUsPage = "/contactUsPage";
 String SubscriptionPage = "/subscriptionPage";
+String OwnerRegisterPage = "/ownerRegisterPage";
 
 //Strings, Names, Address
 const AppName = "فست فید";

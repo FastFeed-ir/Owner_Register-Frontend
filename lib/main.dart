@@ -6,6 +6,7 @@ import 'package:FastFeed/view/maskgroup/components/maskGroup.dart';
 import 'view/contact_about_rules/components/about.dart';
 import 'view/contact_about_rules/components/contactus.dart';
 import 'view/contact_about_rules/components/rules.dart';
+import 'view/ownerRegistration/components/owner_reg_page.dart';
 import 'view/subscription/components/subscription.dart';
 
 
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: RulesPage, page: ()=> RulesScreen()),
             GetPage(name: AboutPage, page: ()=> AboutScreen()),
             GetPage(name: ContactUsPage, page: ()=> ContactUsScreen()),
+            GetPage(name: OwnerRegisterPage, page: ()=> OwenerRegisterScreen()),
             GetPage(name: SubscriptionPage, page: ()=> SubscriptionScreen()),
           ],
           // title: 'FastFeed',
