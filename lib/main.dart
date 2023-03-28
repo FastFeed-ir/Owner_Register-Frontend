@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'utils/constants.dart';
+import 'package:FastFeed/view/maskgroup/components/maskGroup.dart';
+import 'view/contact_about_rules/components/about.dart';
+import 'view/contact_about_rules/components/contactus.dart';
+import 'view/contact_about_rules/components/rules.dart';
+import 'view/subscription/components/subscription.dart';
 
 
 void main() {
@@ -18,18 +24,17 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return GetMaterialApp(
-        /*  getPages: [
-            GetPage(name: HomePage, page: ()=> HomeScreen()),
+          getPages: [
+            GetPage(name: MaskGroupPage, page: ()=> MaskGroupScreen()),
             GetPage(name: RulesPage, page: ()=> RulesScreen()),
             GetPage(name: AboutPage, page: ()=> AboutScreen()),
             GetPage(name: ContactUsPage, page: ()=> ContactUsScreen()),
             GetPage(name: SubscriptionPage, page: ()=> SubscriptionScreen()),
           ],
-          */
           // title: 'FastFeed',
-          initialRoute: "/homePage",
+          initialRoute: MaskGroupPage,
           textDirection: TextDirection.rtl,
-          defaultTransition: Transition.fade,
+          defaultTransition: Transition.noTransition,
           debugShowCheckedModeBanner: false,
           builder: (context, child) {
             return MediaQuery(
