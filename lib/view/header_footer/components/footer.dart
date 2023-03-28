@@ -71,8 +71,7 @@ class Footer extends StatelessWidget {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      // To Do
-                      // Get.toNamed(ownerRegisterPage);
+                      Get.toNamed(OwnerRegisterPage);
                     },
                     child: FTextStyle(
                       text: 'ثبت نام فروشندگان',
