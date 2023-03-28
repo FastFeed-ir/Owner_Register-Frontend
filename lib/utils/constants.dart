@@ -32,7 +32,7 @@ String Telegram = "assets/images/telegram-app.png";
 String FastfeedLogo = "assets/images/logo.png";
 String ENamad = "assets/images/enamad.png";
 String Map = "assets/images/map.png";
-String MaskGroup = "assets/images/maskgroup.png";
+String MaskGroupimg = "assets/images/maskgroup.png";
 
 
 String AboutUsPhrase =
