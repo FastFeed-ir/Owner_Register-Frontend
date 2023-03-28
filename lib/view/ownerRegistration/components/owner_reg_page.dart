@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:FastFeed/view/header_footer/components/header.dart';
+import 'package:FastFeed/utils/constants.dart';
 
 class OwenerRegisterScreen extends StatefulWidget {
   const OwenerRegisterScreen({Key? key}) : super(key: key);
@@ -70,12 +71,11 @@ class _OwnerRegisterState extends State<OwnerRegister> {
         child: Column(
       children: [
         Container(
-          // constraints: BoxConstraints.expand(),
           width: 1920.w,
-          height: 1080.w,
+          height: 1080.h,
           decoration:  BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/images/ownerBackground.png"),
+                image: AssetImage(OwnerPageimg),
                 fit: BoxFit.cover),
           ),
           child: Row(
@@ -95,9 +95,10 @@ class _OwnerRegisterState extends State<OwnerRegister> {
               Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 150.w, top: 70.h),
+                    padding: EdgeInsets.only(left: 150.w, top: 70.r),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width / 3,
+                      // height: MediaQuery.of(context).size.width /2.6,
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -262,7 +263,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   width: double.infinity,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.yellow,
+                                      backgroundColor: YellowColor,
                                     ),
                                     onPressed: () {
                                       if (_formKey.currentState!
