@@ -10,7 +10,7 @@ const Api = "";
 const ApiKey = "";
 const Url = "";
 // Pages
-String HomePage = "/homePage";
+String MaskGroupPage = "/maskgroupPage";
 String RulesPage = "/rulePage";
 String AboutPage = "/aboutPage";
 String ContactUsPage = "/contactUsPage";
@@ -25,14 +25,14 @@ String Email = "fastfeed@gmail.com";
 String Name = "";
 String Address = "اصفهان _ میدان آزادی _ دانشگاه اصفهان";
 String PageUrl = "";
-String Linkedin = "assets/page-1/images/linkedin.png";
-String Twitter = "assets/page-1/images/twitter.png";
-String Instagram = "assets/page-1/images/instagram.png";
-String Telegram = "assets/page-1/images/telegram-app.png";
-String FastfeedLogo = "assets/page-1/images/logo.png";
-String ENamad = "assets/page-1/images/enamad.png";
-String Map = "assets/page-1/images/map.png";
-String MainPageimg = "assets/page-1/images/mainpage.png";
+String Linkedin = "assets/images/linkedin.png";
+String Twitter = "assets/images/twitter.png";
+String Instagram = "assets/images/instagram.png";
+String Telegram = "assets/images/telegram-app.png";
+String FastfeedLogo = "assets/images/logo.png";
+String ENamad = "assets/images/enamad.png";
+String Map = "assets/images/map.png";
+String MaskGroup = "assets/images/maskgroup.png";
 
 
 String AboutUsPhrase =
