@@ -1,14 +1,18 @@
+import 'package:FastFeed/model/models/product.dart';
+
 class Collection {
-  int id;
+  int? id;
   String title;
-  int store;
-  bool isFeatured;
+  int? store;
+  bool? isFeatured;
+  List<Product>? products;
 
   Collection({
-    required this.id,
+    this.id,
     required this.title,
-    required this.store,
-    required this.isFeatured,
+    this.store,
+    this.isFeatured,
+    this.products,
   });
 
   factory Collection.fromJson(Map<String, dynamic> json) {
@@ -17,6 +21,7 @@ class Collection {
       title: json['title'],
       store: json['store'],
       isFeatured: json['isFeatured'],
+      products: json['products'],
     );
   }
 
@@ -25,5 +30,6 @@ class Collection {
         'title': title,
         'store': store,
         'isFeatured': isFeatured,
+        'products': products,
       };
 }

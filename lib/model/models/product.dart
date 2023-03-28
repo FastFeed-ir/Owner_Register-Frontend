@@ -1,28 +1,28 @@
 class Product {
-  int id;
+  int? id;
   String title;
-  String image;
+  String? image;
   String description;
   double unitPrice;
-  int inventory;
-  bool isAvailable;
-  bool isFeatured;
-  double discountPercentage;
-  int store;
-  int collection;
+  int? inventory;
+  bool? isAvailable;
+  bool? isFeatured;
+  double? discountPercentage;
+  int? store;
+  int? collection;
 
   Product({
-    required this.id,
+    this.id,
     required this.title,
-    required this.image,
+    this.image,
     required this.description,
     required this.unitPrice,
-    required this.inventory,
-    required this.isAvailable,
-    required this.isFeatured,
-    required this.discountPercentage,
-    required this.store,
-    required this.collection,
+    this.inventory,
+    this.isAvailable,
+    this.isFeatured,
+    this.discountPercentage,
+    this.store,
+    this.collection,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
