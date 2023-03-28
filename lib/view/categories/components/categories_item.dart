@@ -32,7 +32,7 @@ class CategoriesItemState extends State<CategoriesItem> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: _collectionTitleController,
