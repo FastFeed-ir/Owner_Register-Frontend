@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:FastFeed/view/header_footer/components/header.dart';
 import 'package:FastFeed/utils/constants.dart';
+import 'package:FastFeed/view/verifyCode/components/verifyCode.dart';
+import 'package:get/get.dart';
 
 class OwenerRegisterScreen extends StatefulWidget {
   const OwenerRegisterScreen({Key? key}) : super(key: key);
@@ -266,10 +268,15 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       backgroundColor: YellowColor,
                                     ),
                                     onPressed: () {
-                                      if (_formKey.currentState!
-                                          .validate()) {
-                                        //TODO: submit the form
-                                      }
+                                      // if (_formKey.currentState!
+                                      //     .validate()) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return ConfirmationDialog(phoneNumber: '$_businessOwnerPhone');
+                                          },
+                                        );
+
                                     },
                                     child: Text(
                                       'دریافت کد تایید',
