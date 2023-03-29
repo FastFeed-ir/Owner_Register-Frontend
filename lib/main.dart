@@ -8,6 +8,7 @@ import 'view/contact_about_rules/components/contactus.dart';
 import 'view/contact_about_rules/components/rules.dart';
 import 'view/ownerRegistration/components/owner_reg_page.dart';
 import 'view/subscription/components/subscription.dart';
+import 'view/subscription/components/verify_subscription.dart';
 
 
 void main() {
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: ContactUsPage, page: ()=> ContactUsScreen()),
             GetPage(name: OwnerRegisterPage, page: ()=> OwenerRegisterScreen()),
             GetPage(name: SubscriptionPage, page: ()=> SubscriptionScreen()),
+            GetPage(name: VerifySubscriptonScreenPage, page: ()=> VerifySubscriptonScreen()),
           ],
           // title: 'FastFeed',
           initialRoute: MaskGroupPage,

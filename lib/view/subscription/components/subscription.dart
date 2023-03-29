@@ -4,6 +4,7 @@ import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:FastFeed/view/header_footer/components/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'Sub_style.dart';
 
 class SubscriptionScreen extends StatelessWidget {
@@ -81,8 +82,7 @@ class Subscription extends StatelessWidget {
                       ),
                       // TO DO
                       onTap: () {
-                        // SubscriptionList[index].price for price
-                        print(SubscriptionList[index].price);
+                        Get.toNamed(VerifySubscriptonScreenPage,arguments: [SubscriptionList[index].deadline,SubscriptionList[index].priceText,SubscriptionList[index].price,]);
                       },
                       shape: RoundedRectangleBorder(
                         //<-- SEE HERE
