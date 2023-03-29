@@ -11,9 +11,15 @@ class ConfirmationDialog extends StatefulWidget {
 }
 
 class _ConfirmationDialogState extends State<ConfirmationDialog> {
-  final _codeController = TextEditingController();
+  TextEditingController t0 = TextEditingController(),
+      t1 = TextEditingController(),
+      t2 = TextEditingController(),
+      t3 = TextEditingController(),
+      t4 = TextEditingController(),
+      t5 = TextEditingController();
+  // final _codeController = TextEditingController();
   Timer? _timer;
-  int _resendSeconds = 10;
+  int _resendSeconds = 100;
 
   @override
   void initState() {
@@ -41,13 +47,14 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
 
   void _resendCode() {
     // code to resend the confirmation code to the user's phone number
-    _resendSeconds = 10;
+    _resendSeconds = 100;
     _startResendTimer();
   }
 
-  void _confirmCode() {
-    String code = _codeController.text;
+  void _confirmCode(String code) {
+    // print(code);
     // code to verify the confirmation code entered by the user
+    //TODO send code for verification
     Navigator.of(context).pop();
   }
 
@@ -68,12 +75,12 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              _buildDigitInput(),
-              _buildDigitInput(),
-              _buildDigitInput(),
-              _buildDigitInput(),
-              _buildDigitInput(),
-              _buildDigitInput(),
+              _buildDigitInput(0, t5),
+              _buildDigitInput(1, t4),
+              _buildDigitInput(2, t3),
+              _buildDigitInput(3, t2),
+              _buildDigitInput(4, t1),
+              _buildDigitInput(5, t0),
             ],
           ),
           SizedBox(height: 16),
@@ -95,9 +102,9 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
               ),
             ),
           ),
-          SizedBox(
-            child: Opacity(
-              opacity: (_resendSeconds == 0) ? 1.00 : 0.00,
+          Opacity(
+            opacity: (_resendSeconds == 0) ? 1.00 : 0.00,
+            child: SizedBox(
               child: TextButton.icon(
                 // style: ButtonStyle( color: Colors.red,),
                 onPressed: (_resendSeconds == 0) ? _resendCode : null,
@@ -121,7 +128,8 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
             backgroundColor: YellowColor,
             fixedSize: Size.fromWidth(150),
           ),
-          onPressed: _confirmCode,
+          onPressed: () => _confirmCode(
+              t0.text + t1.text + t2.text + t3.text + t4.text + t5.text),
           child: Text(
             'تایید',
             style: TextStyle(
@@ -135,11 +143,11 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
     );
   }
 
-  Widget _buildDigitInput() {
+  Widget _buildDigitInput(int index, TextEditingController t) {
     return SizedBox(
-      width: 32,
+      width: 42,
       child: TextField(
-        controller: _codeController,
+        controller: t,
         maxLength: 1,
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
@@ -147,6 +155,15 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
           counter: SizedBox.shrink(),
           border: OutlineInputBorder(),
         ),
+        onChanged: (value) {
+          if (value.length == 1) {
+            if (index < 6) {
+              FocusScope.of(context).previousFocus();
+            } else {
+              FocusScope.of(context).unfocus();
+            }
+          }
+        },
       ),
     );
   }
