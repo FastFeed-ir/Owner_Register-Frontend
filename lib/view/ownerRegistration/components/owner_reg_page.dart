@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:FastFeed/view/header_footer/components/header.dart';
 import 'package:FastFeed/utils/constants.dart';
+import 'package:FastFeed/view/verifyCode/components/verifyCode.dart';
 
 class OwenerRegisterScreen extends StatefulWidget {
   const OwenerRegisterScreen({Key? key}) : super(key: key);
@@ -45,10 +46,10 @@ class _OwnerRegisterState extends State<OwnerRegister> {
   final List<String> _businessTypes = ['رستوران', 'کافه'];
   final _formKey = GlobalKey<FormState>();
 //dropdown options for province
-  final List<String> _provinces = [
-    'Province 1',
-    'Province 2',
-  ];
+//   final List<String> _provinces = [
+//     'Province 1',
+//     'Province 2',
+//   ];
 
 //dropdown options for city
   final List<String> _cities = [
@@ -95,7 +96,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
               Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 150.w, top: 70.r),
+                    padding: EdgeInsets.only(left: 150.w, top: 50.r),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width / 3,
                       // height: MediaQuery.of(context).size.width /2.6,
@@ -103,9 +104,9 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(
-                              width: 10.w, color: Colors.transparent),
+                              width: 20.w, color: Colors.white),
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(8)),
+                              const BorderRadius.all(Radius.circular(10)),
                         ),
                         child: Form(
                           key: _formKey,
@@ -146,7 +147,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   decoration: InputDecoration(
                                       labelText: 'انتخاب استان'),
                                   value: _selectedProvince,
-                                  items: _provinces
+                                  items: Proviences
                                       .map((province) => DropdownMenuItem(
                                             child: Text(province),
                                             value: province,
@@ -169,7 +170,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                 //dropdown for city
                                 DropdownButtonFormField<String>(
                                   decoration: InputDecoration(
-                                      labelText: 'انتخاب شهر'),
+                                      labelText: 'نام شهر'),
                                   value: _selectedCity,
                                   items: _cities
                                       .map((city) => DropdownMenuItem(
@@ -184,7 +185,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   },
                                   validator: (value) {
                                     if (value == null) {
-                                      return 'لطفا شهر خود را انتخاب کنید';
+                                      return 'لطفا شهر خود را وارد کنید';
                                     }
                                     return null;
                                   },
@@ -266,37 +267,21 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       backgroundColor: YellowColor,
                                     ),
                                     onPressed: () {
-                                      if (_formKey.currentState!
-                                          .validate()) {
-                                        //TODO: submit the form
-                                      }
+                                      // if (_formKey.currentState!
+                                      //     .validate()) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return ConfirmationDialog(
+                                                phoneNumber: '$_businessOwnerPhone');
+                                          },
+                                        );
+                                      // }
                                     },
                                     child: Text(
                                       'دریافت کد تایید',
                                       style: TextStyle(color: Colors.black),
                                     ),
-                                  ),
-                                ),
-                                Container(
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "کد را دریافت نکرده اید؟",
-                                        textDirection: TextDirection.ltr,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20.w,
-                                        ),
-                                      ),
-                                      Text(
-                                        "درخواست مجدد",
-                                        textDirection: TextDirection.ltr,
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 20.w,
-                                        ),
-                                      ),
-                                    ],
                                   ),
                                 ),
                               ],
