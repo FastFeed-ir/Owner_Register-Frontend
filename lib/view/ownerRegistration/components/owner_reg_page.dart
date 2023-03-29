@@ -4,7 +4,6 @@ import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:FastFeed/view/header_footer/components/header.dart';
 import 'package:FastFeed/utils/constants.dart';
 import 'package:FastFeed/view/verifyCode/components/verifyCode.dart';
-import 'package:get/get.dart';
 
 class OwenerRegisterScreen extends StatefulWidget {
   const OwenerRegisterScreen({Key? key}) : super(key: key);
@@ -47,10 +46,10 @@ class _OwnerRegisterState extends State<OwnerRegister> {
   final List<String> _businessTypes = ['رستوران', 'کافه'];
   final _formKey = GlobalKey<FormState>();
 //dropdown options for province
-  final List<String> _provinces = [
-    'Province 1',
-    'Province 2',
-  ];
+//   final List<String> _provinces = [
+//     'Province 1',
+//     'Province 2',
+//   ];
 
 //dropdown options for city
   final List<String> _cities = [
@@ -148,7 +147,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   decoration: InputDecoration(
                                       labelText: 'انتخاب استان'),
                                   value: _selectedProvince,
-                                  items: _provinces
+                                  items: Proviences
                                       .map((province) => DropdownMenuItem(
                                             child: Text(province),
                                             value: province,
@@ -171,7 +170,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                 //dropdown for city
                                 DropdownButtonFormField<String>(
                                   decoration: InputDecoration(
-                                      labelText: 'انتخاب شهر'),
+                                      labelText: 'نام شهر'),
                                   value: _selectedCity,
                                   items: _cities
                                       .map((city) => DropdownMenuItem(
@@ -186,7 +185,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   },
                                   validator: (value) {
                                     if (value == null) {
-                                      return 'لطفا شهر خود را انتخاب کنید';
+                                      return 'لطفا شهر خود را وارد کنید';
                                     }
                                     return null;
                                   },
