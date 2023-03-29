@@ -97,7 +97,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
               Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 150.w, top: 70.r),
+                    padding: EdgeInsets.only(left: 150.w, top: 50.r),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width / 3,
                       // height: MediaQuery.of(context).size.width /2.6,
@@ -105,9 +105,9 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(
-                              width: 10.w, color: Colors.transparent),
+                              width: 20.w, color: Colors.white),
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(8)),
+                              const BorderRadius.all(Radius.circular(10)),
                         ),
                         child: Form(
                           key: _formKey,
@@ -273,37 +273,16 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
-                                            return ConfirmationDialog(phoneNumber: '$_businessOwnerPhone');
+                                            return ConfirmationDialog(
+                                                phoneNumber: '$_businessOwnerPhone');
                                           },
                                         );
-
+                                      // }
                                     },
                                     child: Text(
                                       'دریافت کد تایید',
                                       style: TextStyle(color: Colors.black),
                                     ),
-                                  ),
-                                ),
-                                Container(
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "کد را دریافت نکرده اید؟",
-                                        textDirection: TextDirection.ltr,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20.w,
-                                        ),
-                                      ),
-                                      Text(
-                                        "درخواست مجدد",
-                                        textDirection: TextDirection.ltr,
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 20.w,
-                                        ),
-                                      ),
-                                    ],
                                   ),
                                 ),
                               ],

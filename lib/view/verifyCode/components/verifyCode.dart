@@ -151,6 +151,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
         maxLength: 1,
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
+        style: TextStyle(fontFamily: 'IranSansWeb',),
         decoration: InputDecoration(
           counter: SizedBox.shrink(),
           border: OutlineInputBorder(),
