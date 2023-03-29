@@ -74,7 +74,7 @@ class SubBuyTextStyle extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontSize: 36.0.sp,
+        fontSize: 32.0.sp,
         fontWeight: FontWeight.w400,
         fontFamily: 'IranSansWeb',
         color: BlackColor,
@@ -82,3 +82,20 @@ class SubBuyTextStyle extends StatelessWidget {
     );
   }
 }
+class PurchaseStyle extends StatelessWidget {
+  final String text;
+  const PurchaseStyle({super.key, required this.text});
+  @override
+  Widget build(BuildContext context) {
+    return SelectableText(
+      text,
+      style: TextStyle(
+        fontSize: 26.0.sp,
+        fontWeight: FontWeight.w400,
+        fontFamily: 'IranSansWeb',
+        color: BlackColor,
+      ),
+    );
+  }
+}
+
