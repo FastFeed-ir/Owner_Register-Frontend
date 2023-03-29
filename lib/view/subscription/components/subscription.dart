@@ -80,9 +80,9 @@ class Subscription extends StatelessWidget {
                           Icon(Icons.arrow_back_ios_new_rounded, color: BlackColor, size: 25.r,),
                         ],
                       ),
-                      // TO DO
+                      // TODO
                       onTap: () {
-                        Get.toNamed(VerifySubscriptonScreenPage,arguments: [SubscriptionList[index].deadline,SubscriptionList[index].priceText,SubscriptionList[index].price,]);
+                        Get.toNamed(VerifySubscriptonPage,arguments: [SubscriptionList[index].deadline,SubscriptionList[index].priceText,SubscriptionList[index].price,]);
                       },
                       shape: RoundedRectangleBorder(
                         //<-- SEE HERE

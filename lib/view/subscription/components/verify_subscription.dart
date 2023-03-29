@@ -154,23 +154,13 @@ class VerifySubscripton extends StatelessWidget {
                 width: 10.w,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  // ToDo Get To Bank Gateway then Get To SuccessfulPurchase or UnSuccessfulPurchasePage
+                  Get.toNamed(SuccessfulPurchasePage,arguments: [subtype, price+tax],);
+                  //Get.toNamed(UnSuccessfulPurchasePage,arguments: [subtype, price+tax],);
+                },
                 child: SubBuyTextStyle(text: "قبول قوانین و خرید اشتراک"),
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(YellowColor),
-                  elevation: MaterialStateProperty.all<double>(0.0),
-                  padding:
-                      MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
-                  fixedSize: MaterialStateProperty.all<Size>(
-                    Size(396.w, 70.h),
-                  ),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0.r),
-                    ),
-                  ),
-                ),
+                style: buttonStyle_build(396, 70, 10, YellowColor),
               ),
             ],
           ),
@@ -195,7 +185,6 @@ Widget _buildAboutDialog(BuildContext context) {
         onPressed: () {
           Navigator.of(context).pop();
         },
-        style: ElevatedButton.styleFrom(backgroundColor: YellowColor),
         child: const Text(
           'متوجه شدم',
           style: TextStyle(
@@ -203,6 +192,8 @@ Widget _buildAboutDialog(BuildContext context) {
             fontFamily: "IranSansWeb",
           ),
         ),
+        style: buttonStyle_build(190, 55, 10, YellowColor),
+
       ),
     ],
   );
