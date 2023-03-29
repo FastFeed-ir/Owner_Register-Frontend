@@ -1,5 +1,5 @@
 import 'package:FastFeed/utils/constants.dart';
-import 'package:FastFeed/view/contact_about_rules/components/rules.dart';
+import 'package:FastFeed/view/contact_about_rules/components/ACR_style.dart';
 import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +10,8 @@ import 'Sub_style.dart';
 
 class VerifySubscriptonScreen extends StatefulWidget {
   var subscription = Get.arguments;
+
+  VerifySubscriptonScreen({super.key});
 
   @override
   State<VerifySubscriptonScreen> createState() => _VerifySubScreenState();
@@ -105,7 +107,7 @@ class VerifySubscripton extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SubBuyTextStyle(text: "9درصد مالیات بر ارزش افزوده"),
+              const SubBuyTextStyle(text: "9درصد مالیات بر ارزش افزوده"),
               SubBuyTextStyle(text: "${tax} تومان"),
             ],
           ),
@@ -139,7 +141,13 @@ class VerifySubscripton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               GestureDetector(
-                onTap: () {Get.to(RulesDialog(),popGesture: isBlank, fullscreenDialog: true);},
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        _buildAboutDialog(context),
+                  );
+                },
                 child: SubTitleStyle(text: "قوانین "),
               ),
               SizedBox(
@@ -171,29 +179,31 @@ class VerifySubscripton extends StatelessWidget {
     );
   }
 }
-class RulesDialog extends StatelessWidget {
-  const RulesDialog({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(onPressed: ()=> Navigator.of(context).pop(), icon: Icon(Icons.clear),color: BlackColor),
-          ],
-          backgroundColor: WhiteColor,
-          elevation: 0,
-        ),
-        backgroundColor: WhiteColor,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Rules(),
-            ],
+Widget _buildAboutDialog(BuildContext context) {
+  return AlertDialog(
+    title: SubTitleStyle(text: "قوانین "),
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        PhraseStyle(text: RulesPhrase),
+      ],
+    ),
+    actions: <Widget>[
+      ElevatedButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        style: ElevatedButton.styleFrom(backgroundColor: YellowColor),
+        child: const Text(
+          'متوجه شدم',
+          style: TextStyle(
+            color: BlackColor,
+            fontFamily: "IranSansWeb",
           ),
         ),
       ),
-    );
-  }
+    ],
+  );
 }
