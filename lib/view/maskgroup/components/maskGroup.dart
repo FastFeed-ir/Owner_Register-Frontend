@@ -10,7 +10,7 @@ class MaskGroupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: WhiteColor,
         body: SingleChildScrollView(
           child: Column(
             children: [

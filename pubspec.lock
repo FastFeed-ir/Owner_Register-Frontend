@@ -235,6 +235,14 @@ packages:
       url: "https://mirror.flutterfarsi.ir"
     source: hosted
     version: "2.1.5"
+  persian_number_utility:
+    dependency: "direct main"
+    description:
+      name: persian_number_utility
+      sha256: b3831f32bdaba5813ee9f1d7d5d478c5795ba20b68fcf86ec527a36ef417179a
+      url: "https://mirror.flutterfarsi.ir"
+    source: hosted
+    version: "1.1.3"
   platform:
     dependency: transitive
     description:

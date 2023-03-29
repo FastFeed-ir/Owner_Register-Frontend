@@ -13,7 +13,7 @@ class SubscriptionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: WhiteColor,
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -58,7 +58,7 @@ class Subscription extends StatelessWidget {
               if(index == 0) {
                 free = YellowColor;
               } else {
-                free = Color(0xFFFFFFFF);
+                free = WhiteColor;
               }
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

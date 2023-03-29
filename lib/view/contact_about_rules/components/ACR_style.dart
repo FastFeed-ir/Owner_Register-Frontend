@@ -35,13 +35,10 @@ class TitleStyle extends StatelessWidget {
 }
 class PhraseStyle extends StatelessWidget {
   final String text;
-
   const PhraseStyle({super.key, required this.text});
-
   @override
   Widget build(BuildContext context) {
-    return SelectableText(
-      text,
+    return DefaultTextStyle(
       style: TextStyle(
         fontSize: 32.0.sp,
         fontWeight: FontWeight.w400,
@@ -49,7 +46,8 @@ class PhraseStyle extends StatelessWidget {
         color: BlackColor,
         overflow: TextOverflow.ellipsis,
       ),
-      textAlign: TextAlign.justify,
+      child: SelectableText(text, textAlign: TextAlign.justify,
+      ),
     );
   }
 }
