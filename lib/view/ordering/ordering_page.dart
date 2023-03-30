@@ -1,11 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
-import 'dart:convert';
+import 'package:socket_io_client/socket_io_client.dart';
 
 class OrderPage extends StatefulWidget {
   final String code;
+
   const OrderPage({super.key, required this.code});
 
   @override
@@ -13,35 +11,30 @@ class OrderPage extends StatefulWidget {
 }
 
 class OrderPageState extends State<OrderPage> {
-  late WebSocketChannel channel;
-  late StreamController _streamController;
-  final TextEditingController _controller = TextEditingController();
+  late Socket socket;
+  final TextEditingController _textEditingController = TextEditingController();
+  final List<String> _messages = [];
 
   @override
   void initState() {
     super.initState();
-    _streamController = StreamController();
-    connect();
+    socket = io('http://87.107.146.132:5000');
+    socket.emit('join', widget.code);
+    socket.on('message', (data) {
+      setState(() {
+        _messages.add(data['message']);
+      });
+    });
+  }
+
+  void sendMessage(String message) {
+    socket.emit('message', {'message': message, 'code': widget.code});
   }
 
   @override
   void dispose() {
-    channel.sink.close();
-    _streamController.close();
+    socket.disconnect();
     super.dispose();
-  }
-
-  void connect() {
-    String url = 'ws://localhost:3000/resturants/${widget.code}';
-    channel = WebSocketChannel.connect(Uri.parse(url));
-    channel.stream.listen((event) {
-      _streamController.add(event);
-    }, onError: (error) {}, onDone: () {});
-  }
-
-  void sendOrder(String order) {
-    channel.sink.add('{"order": "$order"}');
-    _controller.clear();
   }
 
   @override
@@ -53,41 +46,24 @@ class OrderPageState extends State<OrderPage> {
       body: Column(
         children: [
           Expanded(
-            child: StreamBuilder(
-              stream: _streamController.stream,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  final data = snapshot.data as String;
-                  final decoded = json.decode(data);
-                  return Text(
-                    (decoded['order']),
-                    style: const TextStyle(
-                        fontSize: 48,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                  );
-                } else {
-                  return Container();
-                }
-              },
+            child: SingleChildScrollView(
+              child: Column(
+                children: _messages.map((message) => Text(message)).toList(),
+              ),
             ),
           ),
-          TextField(
-            controller: _controller,
-            onSubmitted: (value) {
-              sendOrder(value);
-            },
-            decoration: InputDecoration(
-              hintText: 'Enter message',
-              suffixIcon: IconButton(
-                onPressed: () {
-                  sendOrder(_controller.text);
-                },
-                icon: const Icon(
-                  Icons.send,
-                  color: Colors.blue,
-                ),
+          Container(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              decoration: const InputDecoration(
+                hintText: 'Enter your message',
+                border: OutlineInputBorder(),
               ),
+              onSubmitted: (message) {
+                sendMessage(message);
+                _textEditingController.clear();
+              },
+              controller: _textEditingController,
             ),
           ),
         ],
