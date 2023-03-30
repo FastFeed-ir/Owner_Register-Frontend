@@ -74,10 +74,9 @@ class _OwnerRegisterState extends State<OwnerRegister> {
         Container(
           width: 1920.w,
           height: 1080.h,
-          decoration:  BoxDecoration(
+          decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(OwnerPageimg),
-                fit: BoxFit.cover),
+                image: AssetImage(OwnerPageimg), fit: BoxFit.cover),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,7 +87,10 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                     padding: EdgeInsets.only(right: 150.w, top: 250.w),
                     child: SizedBox(
                       child: Text("ثبت‌نام فروشندگان فست ‌فید",
-                          style: TextStyle(fontSize: 70.w,color:Colors.white,)),
+                          style: TextStyle(
+                            fontSize: 70.w,
+                            color: Colors.white,
+                          )),
                     ),
                   ),
                 ],
@@ -103,8 +105,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          border: Border.all(
-                              width: 20.w, color: Colors.white),
+                          border: Border.all(width: 20.w, color: Colors.white),
                           borderRadius:
                               const BorderRadius.all(Radius.circular(10)),
                         ),
@@ -122,8 +123,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   ),
                                   value: _selectedBusinessType,
                                   items: _businessTypes
-                                      .map((businessType) =>
-                                          DropdownMenuItem(
+                                      .map((businessType) => DropdownMenuItem(
                                             child: Text(businessType),
                                             value: businessType,
                                           ))
@@ -147,12 +147,11 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   decoration: InputDecoration(
                                       labelText: 'انتخاب استان'),
                                   value: _selectedProvince,
-                                  items: Proviences
-                                      .map((province) => DropdownMenuItem(
+                                  items: Proviences.map(
+                                      (province) => DropdownMenuItem(
                                             child: Text(province),
                                             value: province,
-                                          ))
-                                      .toList(),
+                                          )).toList(),
                                   onChanged: (value) {
                                     setState(() {
                                       _selectedProvince = value;
@@ -168,16 +167,12 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                 SizedBox(height: 16.0.h),
 
                                 //dropdown for city
-                                DropdownButtonFormField<String>(
+                                TextFormField(
+                                  initialValue: "اصفهان",
                                   decoration: InputDecoration(
-                                      labelText: 'نام شهر'),
-                                  value: _selectedCity,
-                                  items: _cities
-                                      .map((city) => DropdownMenuItem(
-                                            child: Text(city),
-                                            value: city,
-                                          ))
-                                      .toList(),
+                                    labelText: 'نام شهر',
+                                    border: OutlineInputBorder(),
+                                  ),
                                   onChanged: (value) {
                                     setState(() {
                                       _selectedCity = value;
@@ -190,12 +185,13 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     return null;
                                   },
                                 ),
+
                                 SizedBox(height: 16.0.h),
 
                                 //text input for business name
                                 TextFormField(
-                                  decoration: InputDecoration(
-                                      labelText: 'نام فروشگاه'),
+                                  decoration:
+                                      InputDecoration(labelText: 'نام فروشگاه'),
                                   onChanged: (value) {
                                     _businessName = value;
                                   },
@@ -227,8 +223,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                 //text input for business owner's last name
                                 TextFormField(
                                   decoration: InputDecoration(
-                                      labelText:
-                                          "نام خانوادگی مالک فروشگاه"),
+                                      labelText: "نام خانوادگی مالک فروشگاه"),
                                   onChanged: (value) {
                                     _businessOwnerLastName = value;
                                   },
@@ -247,8 +242,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       labelText: "شماره تلفن همراه"),
                                   keyboardType: TextInputType.number,
                                   onChanged: (value) {
-                                    _businessOwnerPhone =
-                                        int.tryParse(value);
+                                    _businessOwnerPhone = int.tryParse(value);
                                   },
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -269,13 +263,14 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     onPressed: () {
                                       // if (_formKey.currentState!
                                       //     .validate()) {
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return ConfirmationDialog(
-                                                phoneNumber: '$_businessOwnerPhone');
-                                          },
-                                        );
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return ConfirmationDialog(
+                                              phoneNumber:
+                                                  '$_businessOwnerPhone');
+                                        },
+                                      );
                                       // }
                                     },
                                     child: Text(
