@@ -25,7 +25,7 @@ class Footer extends StatelessWidget {
         ),
       ),
       width: 1920.w,
-      height: 335.0.r,
+      height: 335.0.h,
       child: Row(
         children: [
           Expanded(
@@ -34,11 +34,11 @@ class Footer extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: Image.asset(FastfeedLogo,height: 185.r,width: 171.w,),
+                      child: Image.asset(FastfeedLogo,height: 185.h,width: 171.w,),
                     ),
                     SizedBox(width: 30.w,),
                     Expanded(
-                      child: Image.asset(ENamad, height: 220.r,width: 150.w,),
+                      child: Image.asset(ENamad, height: 220.h,width: 150.w,),
                     ),
                   ],
                 ),
@@ -71,8 +71,7 @@ class Footer extends StatelessWidget {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      // To Do
-                      // Get.toNamed(ownerRegisterPage);
+                      Get.toNamed(OwnerRegisterPage);
                     },
                     child: FTextStyle(
                       text: 'ثبت نام فروشندگان',
@@ -103,7 +102,7 @@ class Footer extends StatelessWidget {
                             // To DO
                             //go to Instagram
                           },
-                          child: Image.asset(Instagram,height: 40.r, width: 40.r,),
+                          child: Image.asset(Instagram,height: 40.h, width: 40.w,),
                         ),
                       ),
                       Expanded(
@@ -112,7 +111,7 @@ class Footer extends StatelessWidget {
                             // To DO
                             //go to Twitter
                           },
-                          child: Image.asset(Twitter,height: 40.r, width: 40.r,),
+                          child: Image.asset(Twitter,height: 40.h, width: 40.w,),
                         ),
                       ),
                       Expanded(
@@ -121,7 +120,7 @@ class Footer extends StatelessWidget {
                             // To DO
                             //go to Telegram
                           },
-                          child: Image.asset(Telegram,height: 40.r, width: 40.r,),
+                          child: Image.asset(Telegram,height: 40.h, width: 40.w,),
                         ),
                       ),
                       Expanded(
@@ -130,7 +129,7 @@ class Footer extends StatelessWidget {
                             // To DO
                             //go to Linkedin
                           },
-                          child: Image.asset(Linkedin,height: 40.r, width: 40.r,),
+                          child: Image.asset(Linkedin,height: 40.h, width: 40.w,),
                         ),
                       ),
                     ],
