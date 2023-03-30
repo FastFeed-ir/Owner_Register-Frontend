@@ -73,7 +73,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
       children: [
         Container(
           width: 1920.w,
-          height: 1080.h,
+          height: 1180.h,
           decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(OwnerPageimg), fit: BoxFit.cover),
@@ -119,7 +119,10 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                 DropdownButtonFormField<String>(
                                   style: TextStyle(fontSize: 20.w),
                                   decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    suffixIcon: Icon(Icons.store_mall_directory_outlined),
                                     labelText: 'انتخاب نوع کسب و کار',
+                                    errorStyle: TextStyle(fontSize:10)
                                   ),
                                   value: _selectedBusinessType,
                                   items: _businessTypes
@@ -140,12 +143,15 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     return null;
                                   },
                                 ),
-                                SizedBox(height: 16.0.h),
+                                SizedBox(height: 13.0.h),
 
                                 //dropdown for province
                                 DropdownButtonFormField<String>(
                                   decoration: InputDecoration(
-                                      labelText: 'انتخاب استان'),
+                                      labelText: 'انتخاب استان',
+                                    suffixIcon: Icon(Icons.location_city_outlined),
+                                    border: OutlineInputBorder(),
+                                  ),
                                   value: _selectedProvince,
                                   items: Proviences.map(
                                       (province) => DropdownMenuItem(
@@ -164,12 +170,12 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     return null;
                                   },
                                 ),
-                                SizedBox(height: 16.0.h),
+                                SizedBox(height: 13.0.h),
 
                                 //dropdown for city
                                 TextFormField(
-                                  initialValue: "اصفهان",
                                   decoration: InputDecoration(
+                                    suffixIcon: Icon(Icons.home_outlined),
                                     labelText: 'نام شهر',
                                     border: OutlineInputBorder(),
                                   ),
@@ -179,19 +185,22 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     });
                                   },
                                   validator: (value) {
-                                    if (value == null) {
-                                      return 'لطفا شهر خود را وارد کنید';
+                                    if (value == null|| value.isEmpty) {
+                                      return 'لطفا نام شهر را وارد کنید';
                                     }
                                     return null;
                                   },
                                 ),
 
-                                SizedBox(height: 16.0.h),
+                                SizedBox(height: 13.0.h),
 
                                 //text input for business name
                                 TextFormField(
-                                  decoration:
-                                      InputDecoration(labelText: 'نام فروشگاه'),
+                                  decoration: InputDecoration(
+                                    suffixIcon: Icon(Icons.local_mall_outlined),
+                                    labelText: 'نام فروشگاه',
+                                    border: OutlineInputBorder(),
+                                  ),
                                   onChanged: (value) {
                                     _businessName = value;
                                   },
@@ -202,12 +211,15 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     return null;
                                   },
                                 ),
-                                SizedBox(height: 16.0.h),
+                                SizedBox(height: 13.0.h),
 
                                 //text input for business owner's first name
                                 TextFormField(
                                   decoration: InputDecoration(
-                                      labelText: "نام مالک فروشگاه"),
+                                    suffixIcon: Icon(Icons.person),
+                                    labelText: "نام مالک فروشگاه",
+                                    border: OutlineInputBorder(),
+                                  ),
                                   onChanged: (value) {
                                     _businessOwnerFirstName = value;
                                   },
@@ -218,12 +230,15 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     return null;
                                   },
                                 ),
-                                SizedBox(height: 16.0.h),
+                                SizedBox(height: 13.0.h),
 
                                 //text input for business owner's last name
                                 TextFormField(
                                   decoration: InputDecoration(
-                                      labelText: "نام خانوادگی مالک فروشگاه"),
+                                    suffixIcon: Icon(Icons.person),
+                                    labelText: "نام خانوادگی مالک فروشگاه",
+                                    border: OutlineInputBorder(),
+                                  ),
                                   onChanged: (value) {
                                     _businessOwnerLastName = value;
                                   },
@@ -234,12 +249,15 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     return null;
                                   },
                                 ),
-                                SizedBox(height: 16.0.h),
+                                SizedBox(height: 13.0.h),
 
                                 //number input for business owner's phone number
                                 TextFormField(
                                   decoration: InputDecoration(
-                                      labelText: "شماره تلفن همراه"),
+                                    suffixIcon: Icon(Icons.phone),
+                                    labelText: "شماره تلفن همراه",
+                                    border: OutlineInputBorder(),
+                                  ),
                                   keyboardType: TextInputType.number,
                                   onChanged: (value) {
                                     _businessOwnerPhone = int.tryParse(value);
@@ -251,27 +269,27 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     return null;
                                   },
                                 ),
-                                SizedBox(height: 16.0.h),
+                                SizedBox(height: 13.0.h),
 
                                 //button to submit the form
                                 SizedBox(
                                   width: double.infinity,
+                                  height: 50.h,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: YellowColor,
                                     ),
                                     onPressed: () {
-                                      // if (_formKey.currentState!
-                                      //     .validate()) {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return ConfirmationDialog(
-                                              phoneNumber:
-                                                  '$_businessOwnerPhone');
-                                        },
-                                      );
-                                      // }
+                                      if (_formKey.currentState!.validate()) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return ConfirmationDialog(
+                                                phoneNumber:
+                                                    '$_businessOwnerPhone');
+                                          },
+                                        );
+                                      }
                                     },
                                     child: Text(
                                       'دریافت کد تایید',
