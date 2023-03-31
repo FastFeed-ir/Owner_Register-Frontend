@@ -1,7 +1,7 @@
-import 'package:FastFeed/util/constants.dart';
 import 'package:dio/dio.dart';
 
 import '../entity/collection.dart';
+import '../util/constants.dart';
 import 'collection_repository.dart';
 
 class CollectionRepositoryImpl extends CollectionRepository {
