@@ -1,7 +1,8 @@
+import 'package:FastFeed/view_model/collection_viewmodel.dart';
 import 'package:flutter/material.dart';
 
-import '../../../model/models/collection.dart';
-import '../../../model/models/product.dart';
+import '../../model/entity/collection.dart';
+import '../../model/entity/product.dart';
 
 class CategoriesItem extends StatefulWidget {
   const CategoriesItem({super.key});
@@ -18,7 +19,25 @@ class CategoriesItemState extends State<CategoriesItem> {
       TextEditingController();
   final TextEditingController _productUnitPriceController =
       TextEditingController();
+
   final List<Collection> _collections = [];
+
+  final _viewModel = CollectionViewModel();
+
+  @override
+  void initState() {
+    super.initState();
+    getCollections();
+  }
+
+  Future<void> getCollections() async {
+    _viewModel.getCollections();
+    _viewModel.collections.stream.listen((list) {
+      setState(() {
+        _collections.addAll(list);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

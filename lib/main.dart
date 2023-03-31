@@ -1,4 +1,4 @@
-import 'package:FastFeed/view/categories/components/categories_item.dart';
+import 'package:FastFeed/view/categories/categories_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
