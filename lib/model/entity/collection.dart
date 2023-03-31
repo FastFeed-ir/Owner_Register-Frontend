@@ -1,4 +1,4 @@
-import 'package:FastFeed/model/models/product.dart';
+import 'package:FastFeed/model/entity/product.dart';
 
 class Collection {
   int? id;
