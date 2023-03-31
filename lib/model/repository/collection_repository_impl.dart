@@ -1,3 +1,4 @@
+import 'package:FastFeed/model/entity/product.dart';
 import 'package:dio/dio.dart';
 
 import '../entity/collection.dart';
@@ -6,18 +7,6 @@ import 'collection_repository.dart';
 
 class CollectionRepositoryImpl extends CollectionRepository {
   var dio = Dio(options);
-
-  @override
-  Future<void> addCollection(Collection collection) async {
-    var response = await dio.post(
-      'collections',
-      queryParameters: {
-        'title': collection.title,
-        'store': collection.store,
-        'is_featured': collection.isFeatured
-      },
-    );
-  }
 
   @override
   Future<List<Collection>> getCollections() async {
@@ -34,5 +23,65 @@ class CollectionRepositoryImpl extends CollectionRepository {
     } else {
       throw Exception('Invalid response');
     }
+  }
+
+  @override
+  Future<List<Product>> getProducts() async {
+    var response = await dio.get('products');
+    if (response.data is List) {
+      List<dynamic> dataList = response.data;
+      List<Product> products = [];
+      for (var data in dataList) {
+        if (data is Map<String, dynamic>) {
+          products.add(Product.fromJson(data));
+        }
+      }
+      return products;
+    } else {
+      throw Exception('Invalid response');
+    }
+  }
+
+  @override
+  Future<void> addCollection(Collection collection) async {
+    // TODO: implement addCollection
+    var response = await dio.post(
+      'collections',
+      queryParameters: {
+        'title': collection.title,
+        'store': collection.store,
+        'is_featured': collection.isFeatured
+      },
+    );
+  }
+
+  @override
+  Future<void> addProduct(Product product) async {
+    // TODO: implement addProduct
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> editCollection(Collection collection) async {
+    // TODO: implement editCollection
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> editProduct(Product product) async {
+    // TODO: implement editProduct
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteCollection(Collection collection) async {
+    // TODO: implement deleteCollection
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteProduct(Product product) async {
+    // TODO: implement deleteProduct
+    throw UnimplementedError();
   }
 }
