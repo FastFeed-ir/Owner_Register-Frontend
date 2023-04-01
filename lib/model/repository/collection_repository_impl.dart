@@ -63,8 +63,8 @@ class CollectionRepositoryImpl extends CollectionRepository {
   @override
   Future<void> editCollection(Collection collection) async {
     // TODO: implement editCollection
-    var response = await dio.put(
-      'collections/',
+    var response = await dio.patch(
+      'collections/${collection.id}/',
       data: collection,
     );
     print('response: ${response.statusMessage}');
@@ -73,8 +73,8 @@ class CollectionRepositoryImpl extends CollectionRepository {
   @override
   Future<void> editProduct(Product product) async {
     // TODO: implement editProduct
-    var response = await dio.put(
-      'products/',
+    var response = await dio.patch(
+      'products/${product.id}/',
       data: product,
     );
     print('response: ${response.statusMessage}');
@@ -82,20 +82,16 @@ class CollectionRepositoryImpl extends CollectionRepository {
 
   @override
   Future<void> deleteCollection(Collection collection) async {
-    // TODO: implement deleteCollection
     var response = await dio.delete(
-      'collections/',
-      data: collection.id,
+      'collections/${collection.id}/',
     );
     print('response: ${response.statusMessage}');
   }
 
   @override
   Future<void> deleteProduct(Product product) async {
-    // TODO: implement deleteProduct
     var response = await dio.delete(
-      'products/',
-      data: product.id,
+      'products/${product.id}/',
     );
     print('response: ${response.statusMessage}');
   }
