@@ -101,7 +101,7 @@ class CategoriesItemState extends State<CategoriesItem> {
                               ),
                               subtitle: Container(
                                   alignment: Alignment.center,
-                                  child: Text(product.description)),
+                                  child: Text(product.unitPrice.toString())),
                               trailing: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -143,7 +143,8 @@ class CategoriesItemState extends State<CategoriesItem> {
     String title = _collectionTitleController.text.trim();
     if (title.isNotEmpty) {
       setState(() {
-        _collections.add(Collection(title: title));
+        //TODO set store id
+        _collections.add(Collection(title: title, storeId: 1));
         _collectionTitleController.clear();
       });
     }
@@ -250,6 +251,7 @@ class CategoriesItemState extends State<CategoriesItem> {
             TextButton(
               child: const Text('تایید'),
               onPressed: () {
+                //TODO set new product
                 String title = _productTitleController.text.trim();
                 String description = _productDescriptionController.text.trim();
                 double? unitPrice =
@@ -258,9 +260,12 @@ class CategoriesItemState extends State<CategoriesItem> {
                   setState(() {
                     collection.products ??= [];
                     collection.products!.add(Product(
-                      title: title,
-                      description: description,
-                      unitPrice: unitPrice,
+                      title: '',
+                      description: '',
+                      unitPrice: 0.0,
+                      isAvailable: true,
+                      discountPercentage: 0.0,
+                      collectionId: 1,
                     ));
                     _productDescriptionController.clear();
                     _productTitleController.clear();
@@ -278,7 +283,7 @@ class CategoriesItemState extends State<CategoriesItem> {
 
   void _editProduct(Collection collection, Product product) {
     _productTitleController.text = product.title;
-    _productDescriptionController.text = product.description;
+    _productDescriptionController.text = product.description ?? '';
     _productUnitPriceController.text = product.unitPrice.toString();
     showDialog(
       context: context,

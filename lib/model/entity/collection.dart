@@ -3,14 +3,14 @@ import 'package:FastFeed/model/entity/product.dart';
 class Collection {
   int? id;
   String title;
-  int? store;
+  int storeId;
   bool? isFeatured;
   List<Product>? products;
 
   Collection({
     this.id,
     required this.title,
-    this.store,
+    required this.storeId,
     this.isFeatured,
     this.products,
   });
@@ -19,17 +19,15 @@ class Collection {
     return Collection(
       id: json['id'],
       title: json['title'],
-      store: json['store'],
+      storeId: json['store'],
       isFeatured: json['isFeatured'],
-      products: json['products'],
     );
   }
 
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
-        'store': store,
+        'store': storeId,
         'isFeatured': isFeatured,
-        'products': products,
       };
 }

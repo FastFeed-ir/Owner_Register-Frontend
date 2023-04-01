@@ -49,7 +49,7 @@ class CollectionRepositoryImpl extends CollectionRepository {
       'collections',
       queryParameters: {
         'title': collection.title,
-        'store': collection.store,
+        'store': collection.storeId,
         'is_featured': collection.isFeatured
       },
     );

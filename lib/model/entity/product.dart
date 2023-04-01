@@ -2,14 +2,13 @@ class Product {
   int? id;
   String title;
   String? image;
-  String description;
+  String? description;
   double unitPrice;
   int? inventory;
-  bool? isAvailable;
+  bool isAvailable;
   bool? isFeatured;
-  double? discountPercentage;
-  int? store;
-  int? collection;
+  double discountPercentage;
+  int collectionId;
 
   Product({
     this.id,
@@ -18,11 +17,10 @@ class Product {
     required this.description,
     required this.unitPrice,
     this.inventory,
-    this.isAvailable,
+    required this.isAvailable,
     this.isFeatured,
-    this.discountPercentage,
-    this.store,
-    this.collection,
+    required this.discountPercentage,
+    required this.collectionId,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -36,8 +34,7 @@ class Product {
       isAvailable: json['is_available'],
       isFeatured: json['is_featured'],
       discountPercentage: json['discount_percentage'],
-      store: json['store'],
-      collection: json['collection'],
+      collectionId: json['collection'],
     );
   }
 
@@ -51,7 +48,6 @@ class Product {
         'is_available': isAvailable,
         'is_featured': isFeatured,
         'discount_percentage': discountPercentage,
-        'store': store,
-        'collection': collection,
+        'collection': collectionId,
       };
 }
