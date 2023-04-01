@@ -5,12 +5,14 @@ import '../entity/collection.dart';
 import '../util/constants.dart';
 import 'collection_repository.dart';
 
+// ignore_for_file: avoid_print
 class CollectionRepositoryImpl extends CollectionRepository {
   var dio = Dio(options);
 
   @override
   Future<List<Collection>> getCollections() async {
     var response = await dio.get('collections/');
+    print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
       List<Collection> collections = [];
@@ -28,6 +30,7 @@ class CollectionRepositoryImpl extends CollectionRepository {
   @override
   Future<List<Product>> getProducts() async {
     var response = await dio.get('products/');
+    print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
       List<Product> products = [];
@@ -62,7 +65,6 @@ class CollectionRepositoryImpl extends CollectionRepository {
 
   @override
   Future<void> editCollection(Collection collection) async {
-    // TODO: implement editCollection
     var response = await dio.patch(
       'collections/${collection.id}/',
       data: collection,
@@ -72,7 +74,6 @@ class CollectionRepositoryImpl extends CollectionRepository {
 
   @override
   Future<void> editProduct(Product product) async {
-    // TODO: implement editProduct
     var response = await dio.patch(
       'products/${product.id}/',
       data: product,
