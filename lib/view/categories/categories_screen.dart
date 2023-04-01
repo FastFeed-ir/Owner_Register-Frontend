@@ -37,31 +37,6 @@ class CategoriesItemState extends State<CategoriesItem> {
     getProducts();
   }
 
-  void getCollections() {
-    _viewModel.getCollections();
-    _viewModel.collections.stream.listen((list) {
-      setState(() {
-        _collections.addAll(list);
-      });
-    });
-  }
-
-  void getProducts() {
-    _viewModel.getProducts();
-    _viewModel.products.stream.listen((list) {
-      setState(() {
-        for (var collection in _collections) {
-          for (var product in list) {
-            if (product.collectionId == collection.id) {
-              collection.products = [];
-              collection.products!.add(product);
-            }
-          }
-        }
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -162,6 +137,31 @@ class CategoriesItemState extends State<CategoriesItem> {
     );
   }
 
+  void getCollections() {
+    _viewModel.getCollections();
+    _viewModel.collections.stream.listen((list) {
+      setState(() {
+        _collections.addAll(list);
+      });
+    });
+  }
+
+  void getProducts() {
+    _viewModel.getProducts();
+    _viewModel.products.stream.listen((list) {
+      setState(() {
+        for (var collection in _collections) {
+          for (var product in list) {
+            if (product.collectionId == collection.id) {
+              collection.products = [];
+              collection.products!.add(product);
+            }
+          }
+        }
+      });
+    });
+  }
+
   void _addCollection() {
     String title = _collectionTitleController.text.trim();
     int storeId = widget.storeId;
@@ -169,7 +169,7 @@ class CategoriesItemState extends State<CategoriesItem> {
       var collection = Collection(title: title, storeId: storeId);
       _viewModel.addCollection(collection);
       setState(() {
-        _collections.add(Collection(title: title, storeId: storeId));
+        _collections.add(collection);
         _collectionTitleController.clear();
       });
     }
