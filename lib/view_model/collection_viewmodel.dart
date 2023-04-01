@@ -19,7 +19,6 @@ class CollectionViewModel extends ChangeNotifier {
   }
 
   void getProducts() async {
-    //TODO getProducts
     products.add(await repository.getProducts());
     notifyListeners();
   }

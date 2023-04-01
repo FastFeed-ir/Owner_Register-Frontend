@@ -29,11 +29,11 @@ class Product {
       title: json['title'],
       image: json['image'],
       description: json['description'],
-      unitPrice: json['unit_price'],
+      unitPrice: double.parse(json['unit_price']),
       inventory: json['inventory'],
       isAvailable: json['is_available'],
       isFeatured: json['is_featured'],
-      discountPercentage: json['discount_percentage'],
+      discountPercentage: double.parse(json['discount_percentage']),
       collectionId: json['collection'],
     );
   }

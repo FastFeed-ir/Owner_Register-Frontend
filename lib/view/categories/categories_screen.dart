@@ -28,6 +28,7 @@ class CategoriesItemState extends State<CategoriesItem> {
   void initState() {
     super.initState();
     getCollections();
+    getProducts();
   }
 
   Future<void> getCollections() async {
@@ -35,6 +36,22 @@ class CategoriesItemState extends State<CategoriesItem> {
     _viewModel.collections.stream.listen((list) {
       setState(() {
         _collections.addAll(list);
+      });
+    });
+  }
+
+  Future<void> getProducts() async {
+    _viewModel.getProducts();
+    _viewModel.products.stream.listen((list) {
+      setState(() {
+        for (var collection in _collections) {
+          for (var product in list) {
+            if (product.collectionId == collection.id) {
+              collection.products = [];
+              collection.products!.add(product);
+            }
+          }
+        }
       });
     });
   }
