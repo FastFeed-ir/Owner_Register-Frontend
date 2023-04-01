@@ -80,7 +80,8 @@ class CategoriesItemState extends State<CategoriesItem> {
                         children: [
                           IconButton(
                             icon: const Icon(Icons.edit),
-                            onPressed: () => _editCollection(index, collection),
+                            onPressed: () =>
+                                _showEditCollectionDialog(index, collection),
                           ),
                           IconButton(
                             icon: const Icon(Icons.delete),
@@ -312,7 +313,18 @@ class CategoriesItemState extends State<CategoriesItem> {
     );
   }
 
-  void _editCollection(int index, Collection collection) {
+  void _editCollection(Collection collection) {
+    String title = _collectionTitleController.text.trim();
+    if (title.isNotEmpty) {
+      setState(() {
+        collection.title = title;
+        _collectionTitleController.clear();
+      });
+      Navigator.pop(context);
+    }
+  }
+
+  void _showEditCollectionDialog(int index, Collection collection) {
     showDialog(
       context: context,
       builder: (context) {
@@ -341,14 +353,7 @@ class CategoriesItemState extends State<CategoriesItem> {
             TextButton(
               child: const Text('تایید'),
               onPressed: () {
-                String title = _collectionTitleController.text.trim();
-                if (title.isNotEmpty) {
-                  setState(() {
-                    collection.title = title;
-                    _collectionTitleController.clear();
-                  });
-                  Navigator.pop(context);
-                }
+                _editCollection(collection);
               },
             ),
           ],
