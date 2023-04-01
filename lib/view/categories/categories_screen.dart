@@ -437,11 +437,9 @@ class CategoriesItemState extends State<CategoriesItem> {
   }
 
   void _deleteProduct(Collection collection, Product product) {
+    _viewModel.deleteProduct(product);
     setState(() {
       collection.products!.remove(product);
-      if (collection.products!.isEmpty) {
-        collection.products = null;
-      }
     });
   }
 }
