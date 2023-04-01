@@ -46,12 +46,8 @@ class CollectionRepositoryImpl extends CollectionRepository {
   Future<void> addCollection(Collection collection) async {
     // TODO: implement addCollection
     var response = await dio.post(
-      'collections',
-      queryParameters: {
-        'title': collection.title,
-        'store': collection.storeId,
-        'is_featured': collection.isFeatured
-      },
+      'collections/',
+      queryParameters: collection.toJson(),
     );
   }
 
@@ -59,18 +55,8 @@ class CollectionRepositoryImpl extends CollectionRepository {
   Future<void> addProduct(Product product) async {
     // TODO: implement addProduct
     var response = await dio.post(
-      'products',
-      queryParameters: {
-        'title': product.title,
-        'image': product.image,
-        'description': product.description,
-        'unit_price': product.unitPrice,
-        'inventory': product.inventory,
-        'is_available': product.isAvailable,
-        'is_featured': product.isFeatured,
-        'discount_percentage': product.discountPercentage,
-        'collection': product.collectionId
-      },
+      'products/',
+      queryParameters: product.toJson(),
     );
   }
 
@@ -78,13 +64,8 @@ class CollectionRepositoryImpl extends CollectionRepository {
   Future<void> editCollection(Collection collection) async {
     // TODO: implement editCollection
     var response = await dio.put(
-      'collections',
-      queryParameters: {
-        'id': collection.id,
-        'title': collection.title,
-        'store': collection.storeId,
-        'is_featured': collection.isFeatured
-      },
+      'collections/',
+      queryParameters: collection.toJson(),
     );
   }
 
@@ -92,26 +73,16 @@ class CollectionRepositoryImpl extends CollectionRepository {
   Future<void> editProduct(Product product) async {
     // TODO: implement editProduct
     var response = await dio.put(
-      'products',
-      queryParameters: {
-        'id': product.id,
-        'title': product.title,
-        'image': product.image,
-        'description': product.description,
-        'unit_price': product.unitPrice,
-        'inventory': product.inventory,
-        'is_available': product.isAvailable,
-        'is_featured': product.isFeatured,
-        'discount_percentage': product.discountPercentage,
-        'collection': product.collectionId
-      },
+      'products/',
+      queryParameters: product.toJson(),
     );
   }
 
   @override
   Future<void> deleteCollection(Collection collection) async {
+    // TODO: implement deleteCollection
     var response = await dio.delete(
-      'collections',
+      'collections/',
       queryParameters: {
         'id': collection.id,
       },
@@ -120,8 +91,9 @@ class CollectionRepositoryImpl extends CollectionRepository {
 
   @override
   Future<void> deleteProduct(Product product) async {
+    // TODO: implement deleteProduct
     var response = await dio.delete(
-      'products',
+      'products/',
       queryParameters: {
         'id': product.id,
       },

@@ -5,7 +5,9 @@ import '../../model/entity/collection.dart';
 import '../../model/entity/product.dart';
 
 class CategoriesItem extends StatefulWidget {
-  const CategoriesItem({super.key});
+  const CategoriesItem({super.key, required this.storeId});
+
+  final int storeId;
 
   @override
   CategoriesItemState createState() => CategoriesItemState();
@@ -19,9 +21,13 @@ class CategoriesItemState extends State<CategoriesItem> {
       TextEditingController();
   final TextEditingController _productUnitPriceController =
       TextEditingController();
+  final TextEditingController _productDiscountPercentageController =
+      TextEditingController();
+  final TextEditingController _productInventoryController =
+      TextEditingController();
 
+  var _checkBoxValue = false;
   final List<Collection> _collections = [];
-
   final _viewModel = CollectionViewModel();
 
   @override
@@ -158,36 +164,58 @@ class CategoriesItemState extends State<CategoriesItem> {
 
   void _addCollection() {
     String title = _collectionTitleController.text.trim();
+    int storeId = widget.storeId;
     if (title.isNotEmpty) {
+      var collection = Collection(title: title, storeId: storeId);
+      _viewModel.addCollection(collection);
       setState(() {
-        //TODO set store id
-        _collections.add(Collection(title: title, storeId: 1));
+        _collections.add(Collection(title: title, storeId: storeId));
         _collectionTitleController.clear();
       });
     }
   }
 
   void _addProduct(Collection collection) {
-    setState(() {
-      collection.products ??= [];
-      collection.products!.add(Product(
-        title: '',
-        description: '',
-        unitPrice: 0.0,
-        isAvailable: true,
-        discountPercentage: 0.0,
-        collectionId: 1,
-      ));
-      _productDescriptionController.clear();
-      _productTitleController.clear();
-      _productUnitPriceController.clear();
-    });
+    var title = _productTitleController.text.trim();
+    var description = _productDescriptionController.text.trim();
+    var unitPrice = _productUnitPriceController.text.trim();
+    var discountPercentage = _productDiscountPercentageController.text.trim();
+    var inventory = _productInventoryController.text.trim();
+    if (title.isNotEmpty &&
+        description.isNotEmpty &&
+        unitPrice.isNotEmpty &&
+        discountPercentage.isNotEmpty &&
+        inventory.isNotEmpty) {
+      Product product = Product(
+        title: title,
+        description: description,
+        unitPrice: double.parse(unitPrice),
+        isAvailable: _checkBoxValue,
+        discountPercentage: double.parse(discountPercentage),
+        collectionId: collection.id ?? 0,
+      );
+      _viewModel.addProduct(product);
+      setState(() {
+        collection.products ??= [];
+        collection.products!.add(product);
+        _productTitleController.clear();
+        _productDescriptionController.clear();
+        _productUnitPriceController.clear();
+        _productDiscountPercentageController.clear();
+        _productInventoryController.clear();
+        _checkBoxValue = false;
+      });
+      Navigator.pop(context);
+    }
   }
 
   void _showAddProductDialog(Collection collection) {
-    _productUnitPriceController.clear();
     _productTitleController.clear();
     _productDescriptionController.clear();
+    _productUnitPriceController.clear();
+    _productDiscountPercentageController.clear();
+    _productInventoryController.clear();
+    _checkBoxValue = false;
     showDialog(
       context: context,
       builder: (context) {
@@ -196,35 +224,76 @@ class CategoriesItemState extends State<CategoriesItem> {
             alignment: Alignment.centerRight,
             child: const Text('افزودن محصول'),
           ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _productTitleController,
-                decoration: const InputDecoration(
-                  hintText: 'عنوان',
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: _productTitleController,
+                  decoration: const InputDecoration(
+                    hintText: 'عنوان',
+                  ),
+                  textAlign: TextAlign.right,
                 ),
-                textAlign: TextAlign.right,
-              ),
-              const SizedBox(height: 8.0),
-              TextField(
-                controller: _productDescriptionController,
-                decoration: const InputDecoration(
-                  hintText: 'توضیحات',
+                const SizedBox(height: 8.0),
+                TextField(
+                  controller: _productDescriptionController,
+                  decoration: const InputDecoration(
+                    hintText: 'توضیحات',
+                  ),
+                  textAlign: TextAlign.right,
                 ),
-                textAlign: TextAlign.right,
-              ),
-              const SizedBox(height: 8.0),
-              TextField(
-                controller: _productUnitPriceController,
-                decoration: const InputDecoration(
-                  hintText: 'قیمت',
+                const SizedBox(height: 8.0),
+                TextField(
+                  controller: _productUnitPriceController,
+                  decoration: const InputDecoration(
+                    hintText: 'قیمت',
+                  ),
+                  textAlign: TextAlign.right,
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
                 ),
-                textAlign: TextAlign.right,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-              ),
-            ],
+                const SizedBox(height: 8.0),
+                TextField(
+                  controller: _productDiscountPercentageController,
+                  decoration: const InputDecoration(
+                    hintText: 'درصد تخفیف',
+                  ),
+                  textAlign: TextAlign.right,
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                ),
+                const SizedBox(height: 8.0),
+                TextField(
+                  controller: _productInventoryController,
+                  decoration: const InputDecoration(
+                    hintText: 'تعداد',
+                  ),
+                  textAlign: TextAlign.right,
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                ),
+                const SizedBox(height: 8.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    StatefulBuilder(
+                      builder: (BuildContext context, StateSetter setState) {
+                        return Checkbox(
+                          value: _checkBoxValue,
+                          onChanged: (newValue) {
+                            setState(() {
+                              _checkBoxValue = newValue!;
+                            });
+                          },
+                        );
+                      },
+                    ),
+                    const Text('موجود بودن')
+                  ],
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(
@@ -234,15 +303,7 @@ class CategoriesItemState extends State<CategoriesItem> {
             TextButton(
               child: const Text('تایید'),
               onPressed: () {
-                //TODO set new product
-                String title = _productTitleController.text.trim();
-                String description = _productDescriptionController.text.trim();
-                double? unitPrice =
-                    double.tryParse(_productUnitPriceController.text.trim());
-                if (title.isNotEmpty && unitPrice != null) {
-                  _addProduct(collection);
-                  Navigator.pop(context);
-                }
+                _addProduct(collection);
               },
             ),
           ],

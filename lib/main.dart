@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: SafeArea(child: CategoriesItem()),
+      home: SafeArea(child: CategoriesItem(storeId: 1)), //TODO test storeId
     );
   }
 }

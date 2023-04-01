@@ -20,14 +20,13 @@ class Collection {
       id: json['id'],
       title: json['title'],
       storeId: json['store'],
-      isFeatured: json['isFeatured'],
+      isFeatured: json['is_featured'],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
         'title': title,
+        'is_featured': isFeatured,
         'store': storeId,
-        'isFeatured': isFeatured,
       };
 }
