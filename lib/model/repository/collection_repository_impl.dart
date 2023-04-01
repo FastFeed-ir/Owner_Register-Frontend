@@ -58,30 +58,73 @@ class CollectionRepositoryImpl extends CollectionRepository {
   @override
   Future<void> addProduct(Product product) async {
     // TODO: implement addProduct
-    throw UnimplementedError();
+    var response = await dio.post(
+      'products',
+      queryParameters: {
+        'title': product.title,
+        'image': product.image,
+        'description': product.description,
+        'unit_price': product.unitPrice,
+        'inventory': product.inventory,
+        'is_available': product.isAvailable,
+        'is_featured': product.isFeatured,
+        'discount_percentage': product.discountPercentage,
+        'collection': product.collectionId
+      },
+    );
   }
 
   @override
   Future<void> editCollection(Collection collection) async {
     // TODO: implement editCollection
-    throw UnimplementedError();
+    var response = await dio.put(
+      'collections',
+      queryParameters: {
+        'id': collection.id,
+        'title': collection.title,
+        'store': collection.storeId,
+        'is_featured': collection.isFeatured
+      },
+    );
   }
 
   @override
   Future<void> editProduct(Product product) async {
     // TODO: implement editProduct
-    throw UnimplementedError();
+    var response = await dio.put(
+      'products',
+      queryParameters: {
+        'id': product.id,
+        'title': product.title,
+        'image': product.image,
+        'description': product.description,
+        'unit_price': product.unitPrice,
+        'inventory': product.inventory,
+        'is_available': product.isAvailable,
+        'is_featured': product.isFeatured,
+        'discount_percentage': product.discountPercentage,
+        'collection': product.collectionId
+      },
+    );
   }
 
   @override
   Future<void> deleteCollection(Collection collection) async {
-    // TODO: implement deleteCollection
-    throw UnimplementedError();
+    var response = await dio.delete(
+      'collections',
+      queryParameters: {
+        'id': collection.id,
+      },
+    );
   }
 
   @override
   Future<void> deleteProduct(Product product) async {
-    // TODO: implement deleteProduct
-    throw UnimplementedError();
+    var response = await dio.delete(
+      'products',
+      queryParameters: {
+        'id': product.id,
+      },
+    );
   }
 }

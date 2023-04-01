@@ -31,7 +31,7 @@ class CategoriesItemState extends State<CategoriesItem> {
     getProducts();
   }
 
-  Future<void> getCollections() async {
+  void getCollections() {
     _viewModel.getCollections();
     _viewModel.collections.stream.listen((list) {
       setState(() {
@@ -40,7 +40,7 @@ class CategoriesItemState extends State<CategoriesItem> {
     });
   }
 
-  Future<void> getProducts() async {
+  void getProducts() {
     _viewModel.getProducts();
     _viewModel.products.stream.listen((list) {
       setState(() {
@@ -167,55 +167,21 @@ class CategoriesItemState extends State<CategoriesItem> {
     }
   }
 
-  void _deleteCollection(Collection collection) {
+  void _addProduct(Collection collection) {
     setState(() {
-      _collections.remove(collection);
+      collection.products ??= [];
+      collection.products!.add(Product(
+        title: '',
+        description: '',
+        unitPrice: 0.0,
+        isAvailable: true,
+        discountPercentage: 0.0,
+        collectionId: 1,
+      ));
+      _productDescriptionController.clear();
+      _productTitleController.clear();
+      _productUnitPriceController.clear();
     });
-  }
-
-  void _editCollection(int index, Collection collection) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Container(
-            alignment: Alignment.centerRight,
-            child: const Text('ویرایش دسته بندی'),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _collectionTitleController,
-                decoration: const InputDecoration(
-                  hintText: 'عنوان',
-                ),
-                textAlign: TextAlign.right,
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              child: const Text('لغو'),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: const Text('تایید'),
-              onPressed: () {
-                String title = _collectionTitleController.text.trim();
-                if (title.isNotEmpty) {
-                  setState(() {
-                    collection.title = title;
-                    _collectionTitleController.clear();
-                  });
-                  Navigator.pop(context);
-                }
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 
   void _showAddProductDialog(Collection collection) {
@@ -274,19 +240,51 @@ class CategoriesItemState extends State<CategoriesItem> {
                 double? unitPrice =
                     double.tryParse(_productUnitPriceController.text.trim());
                 if (title.isNotEmpty && unitPrice != null) {
+                  _addProduct(collection);
+                  Navigator.pop(context);
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _editCollection(int index, Collection collection) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Container(
+            alignment: Alignment.centerRight,
+            child: const Text('ویرایش دسته بندی'),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: _collectionTitleController,
+                decoration: const InputDecoration(
+                  hintText: 'عنوان',
+                ),
+                textAlign: TextAlign.right,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              child: const Text('لغو'),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: const Text('تایید'),
+              onPressed: () {
+                String title = _collectionTitleController.text.trim();
+                if (title.isNotEmpty) {
                   setState(() {
-                    collection.products ??= [];
-                    collection.products!.add(Product(
-                      title: '',
-                      description: '',
-                      unitPrice: 0.0,
-                      isAvailable: true,
-                      discountPercentage: 0.0,
-                      collectionId: 1,
-                    ));
-                    _productDescriptionController.clear();
-                    _productTitleController.clear();
-                    _productUnitPriceController.clear();
+                    collection.title = title;
+                    _collectionTitleController.clear();
                   });
                   Navigator.pop(context);
                 }
@@ -363,6 +361,13 @@ class CategoriesItemState extends State<CategoriesItem> {
         );
       },
     );
+  }
+
+  void _deleteCollection(Collection collection) {
+    _viewModel.deleteCollection(collection);
+    setState(() {
+      _collections.remove(collection);
+    });
   }
 
   void _deleteProduct(Collection collection, Product product) {
