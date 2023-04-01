@@ -316,6 +316,8 @@ class CategoriesItemState extends State<CategoriesItem> {
   void _editCollection(Collection collection) {
     String title = _collectionTitleController.text.trim();
     if (title.isNotEmpty) {
+      collection.title = title;
+      _viewModel.editCollection(collection);
       setState(() {
         collection.title = title;
         _collectionTitleController.clear();
@@ -363,6 +365,7 @@ class CategoriesItemState extends State<CategoriesItem> {
   }
 
   void _editProduct(Collection collection, Product product) {
+    //TODO fix
     _productTitleController.text = product.title;
     _productDescriptionController.text = product.description ?? '';
     _productUnitPriceController.text = product.unitPrice.toString();

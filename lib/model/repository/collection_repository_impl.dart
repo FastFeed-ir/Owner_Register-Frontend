@@ -10,7 +10,7 @@ class CollectionRepositoryImpl extends CollectionRepository {
 
   @override
   Future<List<Collection>> getCollections() async {
-    var response = await dio.get('collections');
+    var response = await dio.get('collections/');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
       List<Collection> collections = [];
@@ -27,7 +27,7 @@ class CollectionRepositoryImpl extends CollectionRepository {
 
   @override
   Future<List<Product>> getProducts() async {
-    var response = await dio.get('products');
+    var response = await dio.get('products/');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
       List<Product> products = [];
@@ -44,20 +44,20 @@ class CollectionRepositoryImpl extends CollectionRepository {
 
   @override
   Future<void> addCollection(Collection collection) async {
-    // TODO: implement addCollection
     var response = await dio.post(
       'collections/',
-      queryParameters: collection.toJson(),
+      data: collection,
     );
+    print('response: ${response.statusMessage}');
   }
 
   @override
   Future<void> addProduct(Product product) async {
-    // TODO: implement addProduct
     var response = await dio.post(
       'products/',
-      queryParameters: product.toJson(),
+      data: product,
     );
+    print('response: ${response.statusMessage}');
   }
 
   @override
@@ -65,8 +65,9 @@ class CollectionRepositoryImpl extends CollectionRepository {
     // TODO: implement editCollection
     var response = await dio.put(
       'collections/',
-      queryParameters: collection.toJson(),
+      data: collection,
     );
+    print('response: ${response.statusMessage}');
   }
 
   @override
@@ -74,8 +75,9 @@ class CollectionRepositoryImpl extends CollectionRepository {
     // TODO: implement editProduct
     var response = await dio.put(
       'products/',
-      queryParameters: product.toJson(),
+      data: product,
     );
+    print('response: ${response.statusMessage}');
   }
 
   @override
@@ -83,10 +85,9 @@ class CollectionRepositoryImpl extends CollectionRepository {
     // TODO: implement deleteCollection
     var response = await dio.delete(
       'collections/',
-      queryParameters: {
-        'id': collection.id,
-      },
+      data: collection.id,
     );
+    print('response: ${response.statusMessage}');
   }
 
   @override
@@ -94,9 +95,8 @@ class CollectionRepositoryImpl extends CollectionRepository {
     // TODO: implement deleteProduct
     var response = await dio.delete(
       'products/',
-      queryParameters: {
-        'id': product.id,
-      },
+      data: product.id,
     );
+    print('response: ${response.statusMessage}');
   }
 }
