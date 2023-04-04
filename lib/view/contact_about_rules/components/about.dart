@@ -35,13 +35,13 @@ class About extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(
-        150.0.r,
-        57.0.r,
-        150.0.r,
-        81.0.r,
+        150.0.w,
+        57.0.h,
+        150.0.w,
+        81.0.h,
       ),
       width: 1920.w,
-      //height: 1080.0.r,
+      height: 600.0.h,
       child: Column(
         children: [
           Row(
@@ -49,7 +49,7 @@ class About extends StatelessWidget {
               TitleStyle(text:"درباره "),
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(height: 10.h,),
           Row(
             children: [
               PhraseStyle(text:AboutUsPhrase),

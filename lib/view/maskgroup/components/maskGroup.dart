@@ -32,17 +32,18 @@ class MaskGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-        left: 150.0.r,
-        top: 57.0.r,
-        right: 150.0.r,
-        bottom: 81.0.r,
+        left: 150.0.w,
+        top: 57.0.h,
+        right: 150.0.w,
+        bottom: 81.0.h,
       ),
       width: 1920.w,
-      height: 1080.r,
+      height: 1080.h,
       decoration: BoxDecoration(
         image:  DecorationImage(
           image: AssetImage(MaskGroupimg),
           fit: BoxFit.fill,
+
         ),
       ),
     );

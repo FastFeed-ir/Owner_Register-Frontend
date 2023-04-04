@@ -12,9 +12,9 @@ class Footer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-        left: 150.0.r,
-        top: 30.0.r,
-        right: 143.0.r,
+        left: 150.0.w,
+        top: 30.0.h,
+        right: 143.0.w,
         //12.0.r,
       ),
       decoration: const BoxDecoration(

@@ -36,12 +36,12 @@ class Subscription extends StatelessWidget {
     // TODO: implement build
     return Container(
       padding: EdgeInsets.only(
-        left: 150.0.r,
-        top: 51.0.r,
-        right: 150.0.r,
+        left: 150.0.w,
+        top: 51.0.h,
+        right: 150.0.w,
       ),
       width: 1920.w,
-      //height: 1080.0.r,
+      height: 720.0.h,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -49,12 +49,12 @@ class Subscription extends StatelessWidget {
             child: TitleStyle(text: "خرید اشتراک "),
           ),
           SizedBox(
-            height: 20.r,
+            height: 20.h,
           ),
           ListView.builder(
             itemCount: SubscriptionList.length,
             shrinkWrap: true,
-            padding: EdgeInsets.only(left: 700.r,),
+            padding: EdgeInsets.only(left: 700.w,),
             itemBuilder: (BuildContext context, int index) {
               if(index == 0) {
                 free = YellowColor;
@@ -67,7 +67,7 @@ class Subscription extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: 800.w,
-                    height: 110.r,
+                    height: 110.h,
                     child: ListTile(
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -96,7 +96,7 @@ class Subscription extends StatelessWidget {
                       tileColor: free,
                     ),
                   ),
-                  SizedBox(height: 20.r,),
+                  SizedBox(height: 20.h,),
                 ],
               );
             },

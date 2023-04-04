@@ -30,9 +30,8 @@ class LogoTextStyle extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontFamily: 'Fugaz One',
+        fontFamily: 'FugazOne',
         fontSize: 56.0.sp,
-        fontStyle: FontStyle.italic,
         fontWeight: FontWeight.bold,
         color: RedColor,
       ),
