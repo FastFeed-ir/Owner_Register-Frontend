@@ -14,7 +14,7 @@ class HTextStyle extends StatelessWidget {
       style: TextStyle(
         fontSize: 28.0.sp,
         fontWeight: FontWeight.w400,
-        fontFamily: 'IranSansWeb',
+        fontFamily: IranSansWeb,
         color: BlackColor,
       ),
     );
@@ -30,7 +30,7 @@ class LogoTextStyle extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontFamily: 'FugazOne',
+        fontFamily: FugazOne,
         fontSize: 56.0.sp,
         fontWeight: FontWeight.bold,
         color: RedColor,
@@ -52,7 +52,7 @@ class FTextStyle extends StatelessWidget {
       style: TextStyle(
         fontSize: 24.0.sp,
         fontWeight: FontWeight.w400,
-        fontFamily: 'IranSansWeb',
+        fontFamily: IranSansWeb,
         color: BlackColor,
       ),
     );

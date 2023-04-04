@@ -15,7 +15,7 @@ class TitleStyle extends StatelessWidget {
         style: TextStyle(
           fontSize: 48.0.sp,
           fontWeight: FontWeight.w400,
-          fontFamily: 'IranSansWeb',
+          fontFamily: IranSansWeb,
           color: BlackColor,
         ),
         children: [
@@ -24,7 +24,7 @@ class TitleStyle extends StatelessWidget {
             style: TextStyle(
               fontSize: 48.0.sp,
               fontWeight: FontWeight.w400,
-              fontFamily: 'IranSansWeb',
+              fontFamily: IranSansWeb,
               color: RedColor,
             ),
           ),
@@ -42,7 +42,7 @@ class PhraseStyle extends StatelessWidget {
       style: TextStyle(
         fontSize: 32.0.sp,
         fontWeight: FontWeight.w400,
-        fontFamily: 'IranSansWeb',
+        fontFamily: IranSansWeb,
         color: BlackColor,
         overflow: TextOverflow.ellipsis,
       ),
@@ -71,7 +71,7 @@ class ContactusStyle extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 32.0.sp,
                   fontWeight: FontWeight.w400,
-                  fontFamily: 'IranSansWeb',
+                  fontFamily: IranSansWeb,
                   color: BlackColor,
                 ),
               ),
@@ -85,7 +85,7 @@ class ContactusStyle extends StatelessWidget {
           style: TextStyle(
             fontSize: 32.0.sp,
             fontWeight: FontWeight.w400,
-            fontFamily: 'IranSansWeb',
+            fontFamily: IranSansWeb,
             color: BlackColor,
           ),
         ),

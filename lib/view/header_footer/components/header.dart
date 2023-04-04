@@ -50,7 +50,7 @@ class Header extends StatelessWidget {
                   height: 72.0.h,
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.toNamed(SubscriptionPage);
+                      Get.toNamed(HomePage);
                     },
                     style: buttonStyle_build(257, 72, 10, YellowColor),
                     child: HTextStyle(text: 'ورود / عضویت',),

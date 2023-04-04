@@ -14,7 +14,7 @@ class SubTypeTextStyle extends StatelessWidget {
       style: TextStyle(
         fontSize: 36.0.sp,
         fontWeight: FontWeight.w400,
-        fontFamily: 'IranSansWeb',
+        fontFamily: IranSansWeb,
         color: RedColor,
       ),
     );
@@ -46,7 +46,7 @@ class SubTitleStyle extends StatelessWidget {
         style: TextStyle(
           fontSize: 36.0.sp,
           fontWeight: FontWeight.w400,
-          fontFamily: 'IranSansWeb',
+          fontFamily: IranSansWeb,
           color: BlackColor,
         ),
         children: [
@@ -55,7 +55,7 @@ class SubTitleStyle extends StatelessWidget {
             style: TextStyle(
               fontSize: 36.0.sp,
               fontWeight: FontWeight.w400,
-              fontFamily: 'IranSansWeb',
+              fontFamily: IranSansWeb,
               color: RedColor,
             ),
           ),
@@ -76,7 +76,7 @@ class SubBuyTextStyle extends StatelessWidget {
       style: TextStyle(
         fontSize: 32.0.sp,
         fontWeight: FontWeight.w400,
-        fontFamily: 'IranSansWeb',
+        fontFamily: IranSansWeb,
         color: BlackColor,
       ),
     );
@@ -92,7 +92,7 @@ class PurchaseStyle extends StatelessWidget {
       style: TextStyle(
         fontSize: 26.0.sp,
         fontWeight: FontWeight.w400,
-        fontFamily: 'IranSansWeb',
+        fontFamily: IranSansWeb,
         color: BlackColor,
       ),
     );

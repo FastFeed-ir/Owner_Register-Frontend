@@ -18,10 +18,12 @@ String RulesPage = "/rulePage";
 String AboutPage = "/aboutPage";
 String ContactUsPage = "/contactUsPage";
 String SubscriptionPage = "/subscriptionPage";
+String HomePage = "/homePage";
 String OwnerRegisterPage = "/ownerRegisterPage";
 String VerifySubscriptonPage = "/verifySubscriptonPage";
 String SuccessfulPurchasePage = "/successfulPurchasePage";
 String UnSuccessfulPurchasePage = "/unSuccessfulPurchasePage";
+
 
 //Strings, Names, Address
 const AppName = "فست فید";
@@ -44,6 +46,10 @@ String OwnerPageimg = "assets/images/ownerBackground.png";
 String Qrsample = "assets/images/Qrsample.png";
 String Tick = "assets/images/Tick.png";
 String Zabdar = "assets/images/zabdar.png";
+
+// Fonts
+String IranSansWeb = "IranSansWeb";
+String FugazOne = "FugazOne";
 
 String AboutUsPhrase =
     "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه \nروزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود\n ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را\n می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی \nایجاد کرد."
