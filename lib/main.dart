@@ -1,4 +1,3 @@
-import 'package:FastFeed/view/categories/categories_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -7,6 +6,7 @@ import 'package:FastFeed/view/maskgroup/components/maskGroup.dart';
 import 'view/contact_about_rules/components/about.dart';
 import 'view/contact_about_rules/components/contactus.dart';
 import 'view/contact_about_rules/components/rules.dart';
+import 'view/home/components/homePage.dart';
 import 'view/ownerRegistration/components/owner_reg_page.dart';
 import 'view/subscription/components/subscription.dart';
 import 'view/subscription/components/successful_purchase.dart';
@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: RulesPage, page: ()=> RulesScreen()),
             GetPage(name: AboutPage, page: ()=> AboutScreen()),
             GetPage(name: ContactUsPage, page: ()=> ContactUsScreen()),
+            GetPage(name: HomePage, page: ()=> HomeScreen()),
             GetPage(name: OwnerRegisterPage, page: ()=> OwenerRegisterScreen()),
             GetPage(name: SubscriptionPage, page: ()=> SubscriptionScreen()),
             GetPage(name: VerifySubscriptonPage, page: ()=> VerifySubscriptonScreen()),
