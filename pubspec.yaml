@@ -80,6 +80,8 @@ flutter:
     - assets/images/Qrsample.png
     - assets/images/Tick.png
     - assets/images/zabdar.png
+    - assets/images/restarauntLogo.png
+    - assets/images/sadface.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
