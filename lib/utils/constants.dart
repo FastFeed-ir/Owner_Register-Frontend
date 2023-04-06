@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../view/contact_about_rules/components/ACR_style.dart';
+import '../view/subscription/components/Sub_style.dart';
 // Colors
 const Color WhiteColor = Color(0xFFFFFFFF);
 const Color BaseColor = Color(0xfff5f5f5);
@@ -23,7 +25,7 @@ String OwnerRegisterPage = "/ownerRegisterPage";
 String VerifySubscriptonPage = "/verifySubscriptonPage";
 String SuccessfulPurchasePage = "/successfulPurchasePage";
 String UnSuccessfulPurchasePage = "/unSuccessfulPurchasePage";
-
+String RestaurantListPage = "/restaurantListPage";
 
 //Strings, Names, Address
 const AppName = "فست فید";
@@ -34,6 +36,7 @@ String Email = "fastfeed@gmail.com";
 String Name = "";
 String Address = "اصفهان _ میدان آزادی _ دانشگاه اصفهان";
 String PageUrl = "";
+// Images
 String Linkedin = "assets/images/linkedin.png";
 String Twitter = "assets/images/twitter.png";
 String Instagram = "assets/images/instagram.png";
@@ -46,7 +49,8 @@ String OwnerPageimg = "assets/images/ownerBackground.png";
 String Qrsample = "assets/images/Qrsample.png";
 String Tick = "assets/images/Tick.png";
 String Zabdar = "assets/images/zabdar.png";
-
+String RestaurantLogoDef = "assets/images/restarauntLogo.png";
+String SadFace = "assets/images/sadface.png";
 // Fonts
 String IranSansWeb = "IranSansWeb";
 String FugazOne = "FugazOne";
@@ -73,5 +77,32 @@ ButtonStyle buttonStyle_build(int width, int height, int radius,Color color){
         borderRadius: BorderRadius.circular(radius.r),
       ),
     ),
+  );
+}
+Widget buildInfoDialog(BuildContext context, String? text, String? Phrase) {
+  return AlertDialog(
+    title: SubTitleStyle(text: text!),
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        PhraseStyle(text: Phrase!),
+      ],
+    ),
+    actions: <Widget>[
+      ElevatedButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: const Text(
+          'متوجه شدم',
+          style: TextStyle(
+            color: BlackColor,
+            fontFamily: "IranSansWeb",
+          ),
+        ),
+        style: buttonStyle_build(190, 55, 10, YellowColor),
+      ),
+    ],
   );
 }

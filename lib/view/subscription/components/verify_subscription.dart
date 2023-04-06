@@ -1,5 +1,4 @@
 import 'package:FastFeed/utils/constants.dart';
-import 'package:FastFeed/view/contact_about_rules/components/ACR_style.dart';
 import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -144,8 +143,7 @@ class VerifySubscripton extends StatelessWidget {
                 onTap: () {
                   showDialog(
                     context: context,
-                    builder: (BuildContext context) =>
-                        _buildAboutDialog(context),
+                    builder: (BuildContext context) => buildInfoDialog(context, "قوانین ", RulesPhrase),
                   );
                 },
                 child: SubTitleStyle(text: "قوانین "),
@@ -168,33 +166,4 @@ class VerifySubscripton extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget _buildAboutDialog(BuildContext context) {
-  return AlertDialog(
-    title: SubTitleStyle(text: "قوانین "),
-    content: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        PhraseStyle(text: RulesPhrase),
-      ],
-    ),
-    actions: <Widget>[
-      ElevatedButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        child: const Text(
-          'متوجه شدم',
-          style: TextStyle(
-            color: BlackColor,
-            fontFamily: "IranSansWeb",
-          ),
-        ),
-        style: buttonStyle_build(190, 55, 10, YellowColor),
-
-      ),
-    ],
-  );
 }

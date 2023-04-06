@@ -1,8 +1,6 @@
 import 'package:FastFeed/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-
 import 'HF_style.dart';
 
 class Footer extends StatelessWidget {
@@ -34,11 +32,21 @@ class Footer extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: Image.asset(FastfeedLogo,height: 185.h,width: 171.w,),
+                      child: Image.asset(
+                        FastfeedLogo,
+                        height: 185.h,
+                        width: 171.w,
+                      ),
                     ),
-                    SizedBox(width: 30.w,),
+                    SizedBox(
+                      width: 30.w,
+                    ),
                     Expanded(
-                      child: Image.asset(ENamad, height: 220.h,width: 150.w,),
+                      child: Image.asset(
+                        ENamad,
+                        height: 220.h,
+                        width: 150.w,
+                      ),
                     ),
                   ],
                 ),
@@ -51,7 +59,11 @@ class Footer extends StatelessWidget {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      Get.toNamed(AboutPage);
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            buildInfoDialog(context, "درباره ", AboutUsPhrase),
+                      );
                     },
                     child: FTextStyle(
                       text: 'درباره فست فید',
@@ -61,20 +73,14 @@ class Footer extends StatelessWidget {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      Get.toNamed(RulesPage);
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            buildInfoDialog(context, "قوانین ", RulesPhrase),
+                      );
                     },
                     child: FTextStyle(
                       text: 'قوانین سایت',
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      Get.toNamed(OwnerRegisterPage);
-                    },
-                    child: FTextStyle(
-                      text: 'ثبت نام فروشندگان',
                     ),
                   ),
                 ),
@@ -102,34 +108,47 @@ class Footer extends StatelessWidget {
                             // To DO
                             //go to Instagram
                           },
-                          child: Image.asset(Instagram,height: 40.h, width: 40.w,),
+                          child: Image.asset(
+                            Instagram,
+                            height: 40.h,
+                            width: 40.w,
+                          ),
                         ),
                       ),
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            // To DO
-                            //go to Twitter
+                            // ToDO go to Twitter
                           },
-                          child: Image.asset(Twitter,height: 40.h, width: 40.w,),
+                          child: Image.asset(
+                            Twitter,
+                            height: 40.h,
+                            width: 40.w,
+                          ),
                         ),
                       ),
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            // To DO
-                            //go to Telegram
+                            // ToDO go to Telegram
                           },
-                          child: Image.asset(Telegram,height: 40.h, width: 40.w,),
+                          child: Image.asset(
+                            Telegram,
+                            height: 40.h,
+                            width: 40.w,
+                          ),
                         ),
                       ),
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            // To DO
-                            //go to Linkedin
+                            // ToDO go to Linkedin
                           },
-                          child: Image.asset(Linkedin,height: 40.h, width: 40.w,),
+                          child: Image.asset(
+                            Linkedin,
+                            height: 40.h,
+                            width: 40.w,
+                          ),
                         ),
                       ),
                     ],
