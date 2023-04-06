@@ -1,4 +1,4 @@
-import 'package:FastFeed/view/profile/components/edit_profile.dart';
+import 'package:FastFeed/view/profile/edit_profile.dart';
 import 'package:flutter/material.dart';
 
 void main() {
