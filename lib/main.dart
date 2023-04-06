@@ -7,6 +7,7 @@ import 'view/contact_about_rules/components/about.dart';
 import 'view/contact_about_rules/components/contactus.dart';
 import 'view/contact_about_rules/components/rules.dart';
 import 'view/home/components/homePage.dart';
+import 'view/home/components/restaurant_list.dart';
 import 'view/ownerRegistration/components/owner_reg_page.dart';
 import 'view/subscription/components/subscription.dart';
 import 'view/subscription/components/successful_purchase.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: VerifySubscriptonPage, page: ()=> VerifySubscriptonScreen()),
             GetPage(name: SuccessfulPurchasePage, page: ()=> SuccessfulPurchaseScreen()),
             GetPage(name: UnSuccessfulPurchasePage, page: ()=> UnSuccessfulPurchaseScreen()),
+            GetPage(name: RestaurantListPage, page: ()=> RestaurantListScreen()),
           ],
           // title: 'FastFeed',
           initialRoute: MaskGroupPage,

@@ -30,33 +30,37 @@ class HeaderPanel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           SizedBox(
-            width: 266.0.w,
+            width: 300.0.w,
             height: 84.0.h,
-            child: Center(child: LogoTextStyle(text:'FastFeed',)),
+            child: Center(
+              child: LogoTextStyle(
+                text: 'FastFeed',
+              ),
+            ),
           ),
           SizedBox(
-            width: 684.0.w,
+            width: 550.0.w,
             height: 72.0.h,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                //GestureDetector(onTap: (){Get.toNamed(MaskGroupPage);}, child: HTextStyle(text: 'خانه',),),
-                GestureDetector(onTap: (){Get.toNamed(RulesPage);}, child: HTextStyle(text: 'قوانین',),),
-                GestureDetector(onTap: (){Get.toNamed(AboutPage);}, child: HTextStyle(text: 'درباره ما',),),
-                GestureDetector(onTap: (){Get.toNamed(ContactUsPage);}, child: HTextStyle(text: 'ارتباط با ما',),),
-                profileMenu(),
-                SizedBox(
-                  width: 200.0.w,
-                  height: 72.0.h,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Get.toNamed(SubscriptionPage);
-                    },
-                    style: buttonStyle_build(200, 72, 10, YellowColor),
-                    child: HTextStyle(text: 'اشتراک',),
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(HomePage);
+                  },
+                  child: HTextStyle(
+                    text: 'خانه',
                   ),
                 ),
+                SizedBox(
+                  width: 40.w,
+                ),
+                profileMenu(),
+                SizedBox(
+                  width: 40.w,
+                ),
+                subsMenu("تمدید اشتراک"),
               ],
             ),
           ),
@@ -67,50 +71,87 @@ class HeaderPanel extends StatelessWidget {
 }
 Widget profileMenu() {
   return PopupMenuButton(
-    icon: const Icon(Icons.person_outline),
+    icon: Icon(
+      Icons.person_outline,
+      size: 35.r,
+    ),
+    onSelected: (String choice) async {
+      if (choice == 'view_profile') {
+        // TODO Get.toNamed(ProfilePage);
+      } else if (choice == 'buy_subscription') {
+        Get.toNamed(OwnerRegisterPage);
+      } else if (choice == 'exit') {
+        //SharedPreferences prefs = await SharedPreferences.getInstance();
+        //await prefs.remove('user.api_token');
+      }
+    },
     itemBuilder: (BuildContext context) => [
       PopupMenuItem(
         value: 'view_profile',
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: const [
+          children: [
             Text('مشاهده حساب کاربری'),
-            SizedBox(width: 8),
+            SizedBox(width: 8.w),
             Icon(Icons.person_outline),
           ],
         ),
-        onTap: () {
-          //TODO on click profile page
-        },
       ),
       PopupMenuItem(
         value: 'buy_subscription',
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: const [
+          children: [
             Text('خرید اشتراک'),
-            SizedBox(width: 8),
+            SizedBox(width: 8.w),
             Icon(Icons.shopping_cart_outlined),
           ],
         ),
-        onTap: () {
-          //TODO on click buy subscription page
-        },
       ),
       PopupMenuItem(
         value: 'exit',
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: const [
+          children: [
             Text('خروج'),
-            SizedBox(width: 8),
+            SizedBox(width: 8.w),
             Icon(Icons.exit_to_app_outlined),
           ],
         ),
-        onTap: () {
-          //TODO on click exit
-        },
       ),
     ],
+  );
+}
+
+Widget subsMenu(String? text) {
+  return TextButton(
+    onPressed: () => Get.toNamed(RestaurantListPage),
+    style: TextButton.styleFrom(
+      backgroundColor: WhiteColor,
+    ),
+    child: Wrap(
+      alignment: WrapAlignment.spaceAround,
+      children: [
+        RichText(
+          text: TextSpan(
+            children: [
+              WidgetSpan(
+                child: Icon(Icons.assignment_outlined,
+                    color: BlackColor, size: 30.r),
+              ),
+              TextSpan(
+                text: text,
+                style: TextStyle(
+                  fontSize: 28.0.sp,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: IranSansWeb,
+                  color: BlackColor,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
   );
 }
