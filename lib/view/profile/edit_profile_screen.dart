@@ -2,14 +2,14 @@ import 'package:FastFeed/view/profile/components/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
-class EditProfile extends StatefulWidget {
-  const EditProfile({super.key});
+class EditProfileScreen extends StatefulWidget {
+  const EditProfileScreen({super.key});
 
   @override
-  EditProfileState createState() => EditProfileState();
+  EditProfileScreenState createState() => EditProfileScreenState();
 }
 
-class EditProfileState extends State<EditProfile> {
+class EditProfileScreenState extends State<EditProfileScreen> {
   //TODO fix attributes
   String _name = 'دانیال';
   String _lastName = 'توکلی';

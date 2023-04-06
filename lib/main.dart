@@ -1,4 +1,4 @@
-import 'package:FastFeed/view/profile/edit_profile.dart';
+import 'package:FastFeed/view/profile/edit_profile_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: SafeArea(child: EditProfile()),
+      home: SafeArea(child: EditProfileScreen()),
     );
   }
 }
