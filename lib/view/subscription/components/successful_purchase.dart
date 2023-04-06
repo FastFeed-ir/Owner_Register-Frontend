@@ -93,8 +93,8 @@ class SuccessfulPurchase extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 PurchaseStyle(text:"نام فروشگاه :"),
-                // ToDO Set Restaraunt Name
-                PurchaseStyle(text: "Restaraunt Name"),
+                // ToDO Set Restaurant Name
+                PurchaseStyle(text: "Restaurant Name"),
               ],
             ),
             SizedBox(

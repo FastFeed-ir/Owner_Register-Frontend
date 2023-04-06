@@ -97,7 +97,7 @@ class UnSuccessfulPurchase extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 PurchaseStyle(text:"نام فروشگاه :"),
-                PurchaseStyle(text: "Restaraunt Name"),
+                PurchaseStyle(text: "Restaurant Name"),
               ],
             ),
             SizedBox(
