@@ -1,5 +1,6 @@
 import 'package:FastFeed/view/categories/components/text_form_field.dart';
-import 'package:FastFeed/view_model/collection_viewmodel.dart';
+import 'package:FastFeed/view/categories/components/text_form_field_number.dart';
+import 'package:FastFeed/view_model/collection_view_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/entity/collection.dart';
@@ -53,13 +54,6 @@ class CategoriesScreenState extends State<CategoriesScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             textFormField(_collectionTitleController, 'عنوان دسته بندی'),
-            TextField(
-              controller: _collectionTitleController,
-              decoration: const InputDecoration(
-                hintText: 'عنوان دسته بندی',
-              ),
-              textAlign: TextAlign.right,
-            ),
             const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: _addCollection,
@@ -147,18 +141,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         alignment: Alignment.centerRight,
         child: const Text('ویرایش دسته بندی'),
       ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextField(
-            controller: _collectionTitleController,
-            decoration: const InputDecoration(
-              hintText: 'عنوان',
-            ),
-            textAlign: TextAlign.right,
-          ),
-        ],
-      ),
+      content: textFormField(_collectionTitleController, 'عنوان'),
       actions: [
         TextButton(
           child: const Text('لغو'),
@@ -190,51 +173,16 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(
-              controller: _productTitleController,
-              decoration: const InputDecoration(
-                hintText: 'عنوان',
-              ),
-              textAlign: TextAlign.right,
-            ),
+            textFormField(_productTitleController, 'عنوان'),
             const SizedBox(height: 8.0),
-            TextField(
-              controller: _productDescriptionController,
-              decoration: const InputDecoration(
-                hintText: 'توضیحات',
-              ),
-              textAlign: TextAlign.right,
-            ),
+            textFormField(_productDescriptionController, 'توضیحات'),
             const SizedBox(height: 8.0),
-            TextField(
-              controller: _productUnitPriceController,
-              decoration: const InputDecoration(
-                hintText: 'قیمت',
-              ),
-              textAlign: TextAlign.right,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
+            textFormFieldNumber(_productUnitPriceController, 'قیمت'),
             const SizedBox(height: 8.0),
-            TextField(
-              controller: _productDiscountPercentageController,
-              decoration: const InputDecoration(
-                hintText: 'درصد تخفیف',
-              ),
-              textAlign: TextAlign.right,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
+            textFormFieldNumber(
+                _productDiscountPercentageController, 'درصد تخفیف'),
             const SizedBox(height: 8.0),
-            TextField(
-              controller: _productInventoryController,
-              decoration: const InputDecoration(
-                hintText: 'تعداد',
-              ),
-              textAlign: TextAlign.right,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
+            textFormFieldNumber(_productInventoryController, 'تعداد'),
             const SizedBox(height: 8.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
