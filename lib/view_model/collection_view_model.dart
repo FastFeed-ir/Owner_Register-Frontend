@@ -29,9 +29,10 @@ class CollectionViewModel extends ChangeNotifier {
     return newCollection.id ?? 0;
   }
 
-  void addProduct(Product product) async {
-    await repository.addProduct(product);
+  Future<int> addProduct(Product product) async {
+    var newProduct = await repository.addProduct(product);
     notifyListeners();
+    return newProduct.id ?? 0;
   }
 
   void editCollection(Collection collection) async {

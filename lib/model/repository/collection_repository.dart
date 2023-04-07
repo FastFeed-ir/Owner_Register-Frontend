@@ -9,7 +9,7 @@ abstract class CollectionRepository {
 
   Future<Collection> addCollection(Collection collection);
 
-  Future<void> addProduct(Product product);
+  Future<Product> addProduct(Product product);
 
   Future<void> editCollection(Collection collection);
 

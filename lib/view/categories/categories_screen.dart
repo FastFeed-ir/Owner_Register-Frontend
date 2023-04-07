@@ -61,6 +61,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  const SizedBox(height: 16.0),
                   textFormField(_collectionTitleController, 'عنوان دسته بندی'),
                   const SizedBox(height: 16.0),
                   ElevatedButton(
@@ -293,18 +294,20 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         discountPercentage: double.parse(discountPercentage),
         collectionId: collection.id ?? 0,
       );
-      _viewModel.addProduct(product);
-      setState(() {
-        collection.products ??= [];
-        collection.products!.add(product);
-        _productTitleController.clear();
-        _productDescriptionController.clear();
-        _productUnitPriceController.clear();
-        _productDiscountPercentageController.clear();
-        _productInventoryController.clear();
-        _checkBoxValue = false;
+      _viewModel.addProduct(product).asStream().listen((productId) {
+        product.id = productId;
+        setState(() {
+          collection.products ??= [];
+          collection.products!.add(product);
+          _productTitleController.clear();
+          _productDescriptionController.clear();
+          _productUnitPriceController.clear();
+          _productDiscountPercentageController.clear();
+          _productInventoryController.clear();
+          _checkBoxValue = false;
+        });
+        Navigator.pop(context);
       });
-      Navigator.pop(context);
     }
   }
 
