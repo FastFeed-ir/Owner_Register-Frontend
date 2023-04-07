@@ -1,5 +1,4 @@
 import 'package:FastFeed/model/entity/product.dart';
-import 'package:dio/dio.dart';
 
 import '../entity/collection.dart';
 import '../util/constants.dart';
@@ -7,8 +6,6 @@ import 'collection_repository.dart';
 
 // ignore_for_file: avoid_print
 class CollectionRepositoryImpl extends CollectionRepository {
-  var dio = Dio(options);
-
   @override
   Future<List<Collection>> getCollections() async {
     var response = await dio.get('collections/');

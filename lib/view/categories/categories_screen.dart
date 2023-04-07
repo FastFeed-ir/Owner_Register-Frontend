@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import '../../model/entity/collection.dart';
 import '../../model/entity/product.dart';
 
-class CategoriesItem extends StatefulWidget {
-  const CategoriesItem({super.key, required this.storeId});
+class CategoriesScreen extends StatefulWidget {
+  const CategoriesScreen({super.key, required this.storeId});
 
   final int storeId;
 
   @override
-  CategoriesItemState createState() => CategoriesItemState();
+  CategoriesScreenState createState() => CategoriesScreenState();
 }
 
-class CategoriesItemState extends State<CategoriesItem> {
+class CategoriesScreenState extends State<CategoriesScreen> {
   final TextEditingController _collectionTitleController =
       TextEditingController();
   final TextEditingController _productTitleController = TextEditingController();
