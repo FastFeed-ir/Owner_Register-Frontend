@@ -1,3 +1,4 @@
+import 'package:FastFeed/view/categories/components/text_form_field.dart';
 import 'package:FastFeed/view_model/collection_viewmodel.dart';
 import 'package:flutter/material.dart';
 
@@ -51,12 +52,12 @@ class CategoriesItemState extends State<CategoriesItem> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            textFormField(_collectionTitleController, 'عنوان دسته بندی'),
             TextField(
               controller: _collectionTitleController,
               decoration: const InputDecoration(
                 hintText: 'عنوان دسته بندی',
               ),
-              onSubmitted: (_) => _addCollection(),
               textAlign: TextAlign.right,
             ),
             const SizedBox(height: 16.0),
@@ -64,6 +65,7 @@ class CategoriesItemState extends State<CategoriesItem> {
               onPressed: _addCollection,
               child: const Text('افزودن دسته بندی'),
             ),
+            const SizedBox(height: 16.0),
             Expanded(
               child: ListView.builder(
                 itemCount: _collections.length,

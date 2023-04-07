@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget textFormField(
-    TextEditingController controller, String label, String content) {
+Widget textFormField(TextEditingController controller, String label) {
   return Directionality(
     textDirection: TextDirection.rtl,
     child: TextFormField(
@@ -9,7 +8,6 @@ Widget textFormField(
       textAlign: TextAlign.right,
       decoration: InputDecoration(
         labelText: label,
-        hintText: content,
         alignLabelWithHint: true,
         filled: true,
         border: const OutlineInputBorder(),
