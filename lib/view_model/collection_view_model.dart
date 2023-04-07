@@ -23,33 +23,34 @@ class CollectionViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addCollection(Collection collection) async {
-    repository.addCollection(collection);
+  Future<int> addCollection(Collection collection) async {
+    var newCollection = await repository.addCollection(collection);
     notifyListeners();
+    return newCollection.id ?? 0;
   }
 
   void addProduct(Product product) async {
-    repository.addProduct(product);
+    await repository.addProduct(product);
     notifyListeners();
   }
 
   void editCollection(Collection collection) async {
-    repository.editCollection(collection);
+    await repository.editCollection(collection);
     notifyListeners();
   }
 
   void editProduct(Product product) async {
-    repository.editProduct(product);
+    await repository.editProduct(product);
     notifyListeners();
   }
 
   void deleteCollection(Collection collection) async {
-    repository.deleteCollection(collection);
+    await repository.deleteCollection(collection);
     notifyListeners();
   }
 
   void deleteProduct(Product product) async {
-    repository.deleteProduct(product);
+    await repository.deleteProduct(product);
     notifyListeners();
   }
 }

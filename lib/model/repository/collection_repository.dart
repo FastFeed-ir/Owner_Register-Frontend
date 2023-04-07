@@ -7,7 +7,7 @@ abstract class CollectionRepository {
 
   Future<List<Product>> getProducts();
 
-  Future<void> addCollection(Collection collection);
+  Future<Collection> addCollection(Collection collection);
 
   Future<void> addProduct(Product product);
 

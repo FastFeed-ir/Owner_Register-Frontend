@@ -43,12 +43,14 @@ class CollectionRepositoryImpl extends CollectionRepository {
   }
 
   @override
-  Future<void> addCollection(Collection collection) async {
+  Future<Collection> addCollection(Collection collection) async {
     var response = await dio.post(
       'collections/',
       data: collection,
     );
     print('response: ${response.statusMessage}');
+    final newCollection = Collection.fromJson(response.data);
+    return newCollection;
   }
 
   @override
