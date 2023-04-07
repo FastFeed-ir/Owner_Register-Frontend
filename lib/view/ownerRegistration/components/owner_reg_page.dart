@@ -1,5 +1,8 @@
+import 'dart:async';
+import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:FastFeed/view/header_footer/components/header.dart';
@@ -46,6 +49,65 @@ class _OwnerRegisterState extends State<OwnerRegister> {
   //dropdown options for type of business
   final List<String> _businessTypes = ['رستوران', 'کافه'];
   final _formKey = GlobalKey<FormState>();
+  XFile? image;
+
+  final ImagePicker picker = ImagePicker();
+
+  //we can upload image from camera or from gallery based on parameter
+  Future getImage(ImageSource media) async {
+    var img = await picker.pickImage(source: media);
+
+    setState(() {
+      image = img;
+    });
+  }
+
+  //show popup dialog
+  void myAlert() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            title: Text('Please choose media to select'),
+            content: Container(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    //if user click this button, user can upload image from gallery
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getImage(ImageSource.gallery);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.image),
+                        Text('From Gallery'),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height:20),
+                  ElevatedButton(
+                    //if user click this button. user can upload image from camera
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getImage(ImageSource.camera);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.camera),
+                        Text('From Camera'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
 
 //form field variables
   String? _selectedBusinessType;
@@ -94,11 +156,13 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                             children: [
                               Text(
                                 "ثبت‌نام فروشندگان فست ‌فید",
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.w,color:Colors.white,),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30.w,
+                                  color: Colors.white,
+                                ),
                               ),
-                              SizedBox(
-                                height: 25.h,
-                              ),
+                              SizedBox(height: 25.h),
                               // Row 1
                               Row(
                                 mainAxisAlignment:
@@ -127,12 +191,18 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         labelText: 'انتخاب نوع کسب و کار',
                                         hoverColor: Colors.white,
                                         helperText: "",
-                                        helperStyle: TextStyle(color: Colors.white),
+                                        helperStyle:
+                                            TextStyle(color: Colors.white),
                                       ),
+                                      dropdownColor: YellowColor,
                                       value: _selectedBusinessType,
                                       items: _businessTypes.map((businessType) {
                                         return DropdownMenuItem(
-                                          child: Text(businessType,style:TextStyle(color: Colors.white),),
+                                          child: Text(
+                                            businessType,
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
                                           value: businessType,
                                         );
                                       }).toList(),
@@ -152,6 +222,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   SizedBox(width: 13.0.w),
                                   Expanded(
                                     child: DropdownButtonFormField<String>(
+                                      menuMaxHeight: 200,
                                       decoration: InputDecoration(
                                         labelText: 'انتخاب استان',
                                         helperText: "",
@@ -173,10 +244,15 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                               BorderSide(color: YellowColor),
                                         ),
                                       ),
+                                      dropdownColor: YellowColor,
                                       value: _selectedProvince,
                                       items: Proviences.map((province) {
                                         return DropdownMenuItem(
-                                          child: Text(province,style:TextStyle(color: Colors.white),),
+                                          child: Text(
+                                            province,
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
                                           value: province,
                                         );
                                       }).toList(),
@@ -205,42 +281,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     child: TextFormField(
                                       decoration: InputDecoration(
                                         suffixIcon: Icon(
-                                          Icons.home_outlined,
-                                          color: Colors.white,
-                                        ),
-                                        border: OutlineInputBorder(),
-                                        labelStyle: TextStyle(color: Colors.white),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(color: Colors.white),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(color: YellowColor),
-                                        ),
-                                        labelText: 'نام شهر',
-                                        helperText: "",
-                                        helperStyle: TextStyle(color: Colors.white),
-
-                                      ),
-                                      style: TextStyle(color: Colors.white),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _selectedCity = value;
-                                        });
-                                      },
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'لطفا نام شهر خود را وارد کنید';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(width: 13.0.w),
-                                  Expanded(
-                                    child: TextFormField(
-                                      decoration: InputDecoration(
-                                        suffixIcon: Icon(
-                                          Icons.local_mall_outlined,
+                                          Icons.apartment_outlined,
                                           color: Colors.white,
                                         ),
                                         border: OutlineInputBorder(),
@@ -254,7 +295,39 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           borderSide:
                                               BorderSide(color: YellowColor),
                                         ),
-                                        labelText: 'نام فروشگاه',
+                                        labelText: 'نام شهر',
+                                        helperText: "",
+                                        helperStyle:
+                                            TextStyle(color: Colors.white),
+                                      ),
+                                      style: TextStyle(color: Colors.white),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedCity = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(width: 13.0.w),
+                                  Expanded(
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                        suffixIcon: Icon(
+                                          Icons.home_outlined,
+                                          color: Colors.white,
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        labelStyle:
+                                            TextStyle(color: Colors.white),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: YellowColor),
+                                        ),
+                                        labelText: 'آدرس',
                                         helperText: "",
                                         helperStyle:
                                             TextStyle(color: Colors.white),
@@ -262,12 +335,6 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       style: TextStyle(color: Colors.white),
                                       onChanged: (value) {
                                         _businessName = value;
-                                      },
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'لطفا نام فروشگاه خود را وارد کنید';
-                                        }
-                                        return null;
                                       },
                                     ),
                                   ),
@@ -284,7 +351,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       child: TextFormField(
                                         decoration: InputDecoration(
                                           suffixIcon: Icon(
-                                            Icons.person,
+                                            Icons.local_mall_outlined,
                                             color: Colors.white,
                                           ),
                                           border: OutlineInputBorder(),
@@ -298,7 +365,43 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                             borderSide:
                                                 BorderSide(color: YellowColor),
                                           ),
-                                          labelText: "نام",
+                                          labelText: 'نام فروشگاه',
+                                          helperText: "",
+                                          helperStyle:
+                                              TextStyle(color: Colors.white),
+                                        ),
+                                        style: TextStyle(color: Colors.white),
+                                        onChanged: (value) {
+                                          _businessName = value;
+                                        },
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'لطفا نام فروشگاه خود را وارد کنید';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                    SizedBox(width: 13.0.w),
+                                    Expanded(
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                          suffixIcon: Icon(
+                                            Icons.table_bar_outlined,
+                                            color: Colors.white,
+                                          ),
+                                          border: OutlineInputBorder(),
+                                          labelStyle:
+                                              TextStyle(color: Colors.white),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: YellowColor),
+                                          ),
+                                          labelText: "تعداد میز",
                                           helperText: "",
                                           helperStyle:
                                               TextStyle(color: Colors.white),
@@ -309,44 +412,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         },
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
-                                            return "لطفا نام خود را وارد کنید";
-                                          }
-                                          return null;
-                                        },
-                                      ),
-                                    ),
-                                    SizedBox(width: 13.0.w),
-                                    Expanded(
-                                      //text input for business owner's last name
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
-                                          suffixIcon: Icon(
-                                            Icons.person,
-                                            color: Colors.white,
-                                          ),
-                                          border: OutlineInputBorder(),
-                                          labelStyle:
-                                              TextStyle(color: Colors.white),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.white),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: YellowColor),
-                                          ),
-                                          labelText: "نام خانوادگی",
-                                          helperText: "",
-                                          helperStyle:
-                                              TextStyle(color: Colors.white),
-                                        ),
-                                        style: TextStyle(color: Colors.white),
-                                        onChanged: (value) {
-                                          _businessOwnerLastName = value;
-                                        },
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return "لطفا نام خانوادگی خود را وارد کنید";
+                                            return "لطفا تعداد میز را وارد کنید";
                                           }
                                           return null;
                                         },
@@ -368,18 +434,22 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         color: Colors.white,
                                       ),
                                       border: OutlineInputBorder(),
-                                      labelStyle: TextStyle(color: Colors.white),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.white),
+                                        borderSide:
+                                            BorderSide(color: Colors.white),
                                       ),
                                       focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: YellowColor),
+                                        borderSide:
+                                            BorderSide(color: YellowColor),
                                       ),
                                       labelText: "شماره تلفن همراه",
                                       helperText: "",
-                                      helperStyle: TextStyle(color: Colors.white),
+                                      helperStyle:
+                                          TextStyle(color: Colors.white),
                                     ),
-                                        style: TextStyle(color: Colors.white),
+                                    style: TextStyle(color: Colors.white),
                                     keyboardType: TextInputType.number,
                                     onChanged: (value) {
                                       _businessOwnerPhone = int.tryParse(value);
@@ -396,7 +466,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     child: TextFormField(
                                       decoration: InputDecoration(
                                         suffixIcon: Icon(
-                                          Icons.phone,
+                                          Icons.phone_android_outlined,
                                           color: Colors.white,
                                         ),
                                         border: OutlineInputBorder(),
@@ -410,29 +480,81 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           borderSide:
                                               BorderSide(color: YellowColor),
                                         ),
-                                        labelText: "شماره تلفن همراه",
+                                        labelText: 'آدرس صفحه اینستاگرام',
                                         helperText: "",
                                         helperStyle:
                                             TextStyle(color: Colors.white),
                                       ),
                                       style: TextStyle(color: Colors.white),
-                                      keyboardType: TextInputType.number,
                                       onChanged: (value) {
-                                        _businessOwnerPhone =
-                                            int.tryParse(value);
-                                      },
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return "لطفا شماره خود را وارد کنید";
-                                        }
-                                        return null;
+                                        _businessName = value;
                                       },
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 25.0.h),
 
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                        // width: 50,
+                                        height: 50,
+                                        child: Column(
+                                          children: [
+                                            ElevatedButton(
+                                                style: ButtonStyle(
+                                                    backgroundColor:
+                                                        MaterialStateProperty.all<Color>(
+                                                            Colors.transparent),
+                                                    shape: MaterialStateProperty.all<
+                                                            RoundedRectangleBorder>(
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                    5),
+                                                            side: BorderSide(
+                                                                color: Colors
+                                                                    .white)))),
+                                                onPressed: () {
+                                                  myAlert();
+                                                },
+                                                child: Text('افزودن لوگو')),
+                                            SizedBox(
+                                              height: 8.h,
+                                            ),
+                                            //if image not null show the image
+                                            //if image null show text
+                                            image != null
+                                                ? Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 20),
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      child: Image.file(
+                                                        //to show image, you type like this.
+                                                        File(image!.path),
+                                                        fit: BoxFit.cover,
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        height: 300,
+                                                      ),
+                                                    ),
+                                                  )
+                                                : Text(
+                                                    "No Image",
+                                                    style:
+                                                        TextStyle(fontSize: 10),
+                                                  ),
+                                          ],
+                                        ))
+                                  ]),
+                              SizedBox(height: 25.0.h),
                               //button to submit the form
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 4,
@@ -457,7 +579,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     }
                                   },
                                   child: Text(
-                                    'دریافت کد تایید',
+                                    'ثبت اطلاعات',
                                     style: TextStyle(color: Colors.black),
                                   ),
                                 ),
