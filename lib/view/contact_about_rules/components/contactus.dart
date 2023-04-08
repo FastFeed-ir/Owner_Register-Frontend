@@ -13,7 +13,7 @@ class ContactUsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: WhiteColor,
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -35,13 +35,13 @@ class ContactUs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-        left: 150.0.r,
-        top: 50.0.r,
-        right: 150.0.r,
-        bottom: 81.0.r,
+        left: 150.0.w,
+        top: 50.0.h,
+        right: 150.0.w,
+        bottom: 81.0.h,
       ),
       width: 1920.w,
-      //height: 1080.0.r,
+      height: 600.0.h,
       child: Row(
         children: [
           Column(
@@ -51,7 +51,7 @@ class ContactUs extends StatelessWidget {
                 child: TitleStyle(text: "ارتباط با "),
               ),
               SizedBox(
-                height: 20.r,
+                height: 20.h,
               ),
               ContactusStyle(
                 master: "  تلفن :",
@@ -59,7 +59,7 @@ class ContactUs extends StatelessWidget {
                 icon: Icons.call,
               ),
               SizedBox(
-                height: 10,
+                height: 10.h,
               ),
               ContactusStyle(
                 master: "  ایمیل :",
@@ -67,7 +67,7 @@ class ContactUs extends StatelessWidget {
                 icon: Icons.mail,
               ),
               SizedBox(
-                height: 10,
+                height: 10.h,
               ),
               ContactusStyle(
                 master: "  آدرس :",
@@ -75,7 +75,7 @@ class ContactUs extends StatelessWidget {
                 icon: Icons.location_on,
               ),
               SizedBox(
-                height: 10,
+                height: 10.h,
               ),
               Row(
                 //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -98,8 +98,8 @@ class ContactUs extends StatelessWidget {
                         },
                         child: Image.asset(
                           Instagram,
-                          height: 68.r,
-                          width: 68.r,
+                          height: 68.h,
+                          width: 68.w,
                         ),
                       ),
                       GestureDetector(
@@ -109,8 +109,8 @@ class ContactUs extends StatelessWidget {
                         },
                         child: Image.asset(
                           Twitter,
-                          height: 68.r,
-                          width: 68.r,
+                          height: 68.h,
+                          width: 68.w,
                         ),
                       ),
                       GestureDetector(
@@ -120,8 +120,8 @@ class ContactUs extends StatelessWidget {
                         },
                         child: Image.asset(
                           Telegram,
-                          height: 68.r,
-                          width: 68.r,
+                          height: 68.h,
+                          width: 68.w,
                         ),
                       ),
                       GestureDetector(
@@ -131,8 +131,8 @@ class ContactUs extends StatelessWidget {
                         },
                         child: Image.asset(
                           Linkedin,
-                          height: 68.r,
-                          width: 68.r,
+                          height: 68.h,
+                          width: 68.w,
                         ),
                       ),
                     ],
@@ -144,10 +144,10 @@ class ContactUs extends StatelessWidget {
           SizedBox(width: 230.w,),
           Column(
             children: [
-              SizedBox(height: 30.r,),
+              SizedBox(height: 30.h,),
               GestureDetector(
                 onTap: () {},
-                child: Image.asset(Map,height: 450.r, width: 400.r,),
+                child: Image.asset(Map,height: 400.r, width: 400.r,),
               ),
             ],
           ),

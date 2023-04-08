@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:FastFeed/view/header_footer/components/footer.dart';
-import 'package:FastFeed/view/header_footer/components/header.dart';
 import 'package:FastFeed/utils/constants.dart';
 import 'package:FastFeed/view/verifyCode/components/verifyCode.dart';
+import '../../home/components/header_panel.dart';
 
 class OwenerRegisterScreen extends StatefulWidget {
   const OwenerRegisterScreen({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class _OwenerRegisterScreen extends State<OwenerRegisterScreen> {
           child: Container(
             child: Column(
               children: [
-                Header(),
+                HeaderPanel(),
                 OwnerRegister(),
                 SizedBox(height: 20.r),
                 Footer(),

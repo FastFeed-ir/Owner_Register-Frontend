@@ -1,0 +1,52 @@
+class Product {
+  int? id;
+  String title;
+  String? image;
+  String? description;
+  double unitPrice;
+  int? inventory;
+  bool isAvailable;
+  bool? isFeatured;
+  double discountPercentage;
+  int collectionId;
+
+  Product({
+    this.id,
+    required this.title,
+    this.image,
+    required this.description,
+    required this.unitPrice,
+    this.inventory,
+    required this.isAvailable,
+    this.isFeatured,
+    required this.discountPercentage,
+    required this.collectionId,
+  });
+
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      id: json['id'],
+      title: json['title'],
+      image: json['image'],
+      description: json['description'],
+      unitPrice: double.parse(json['unit_price']),
+      inventory: json['inventory'],
+      isAvailable: json['is_available'],
+      isFeatured: json['is_featured'],
+      discountPercentage: double.parse(json['discount_percentage']),
+      collectionId: json['collection'],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'image': image,
+        'description': description,
+        'unit_price': unitPrice,
+        'inventory': inventory,
+        'is_available': isAvailable,
+        'is_featured': isFeatured,
+        'discount_percentage': discountPercentage,
+        'collection': collectionId,
+      };
+}

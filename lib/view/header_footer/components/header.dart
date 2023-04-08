@@ -11,10 +11,10 @@ class Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(
-        150.0.r,
-        12.0.r,
-        143.0.r,
-        12.0.r,
+        150.0.w,
+        12.0.h,
+        143.0.w,
+        12.0.h,
       ),
       decoration: const BoxDecoration(
         border: Border(
@@ -24,19 +24,19 @@ class Header extends StatelessWidget {
         ),
       ),
       width: 1920.w,
-      height: 101.0.r,
+      height: 101.0.h,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           SizedBox(
-            width: 266.0.r,
-            height: 84.0.r,
-            child: LogoTextStyle(text:'FastFeed',),
+            width: 266.0.w,
+            height: 84.0.h,
+            child: Center(child: LogoTextStyle(text:'FastFeed',)),
           ),
           SizedBox(
             width: 684.0.w,
-            height: 72.0.r,
+            height: 72.0.h,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,31 +46,14 @@ class Header extends StatelessWidget {
                 GestureDetector(onTap: (){Get.toNamed(AboutPage);}, child: HTextStyle(text: 'درباره ما',),),
                 GestureDetector(onTap: (){Get.toNamed(ContactUsPage);}, child: HTextStyle(text: 'ارتباط با ما',),),
                 SizedBox(
-                  width: 257.0.r,
-                  height: 72.0.r,
+                  width: 257.0.w,
+                  height: 72.0.h,
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.toNamed(SubscriptionPage);
+                      Get.toNamed(HomePage);
                     },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xFFF5C13F),
-                      ),
-                      elevation: MaterialStateProperty.all<double>(0.0),
-                      padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
-                      fixedSize: MaterialStateProperty.all<Size>(
-                        Size(
-                          257.0.r,
-                          72.0.r,
-                        ),
-                      ),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0.r),
-                        ),
-                      ),
-                    ),
-                    child: HTextStyle(text: 'اشتراک',),
+                    style: buttonStyle_build(257, 72, 10, YellowColor),
+                    child: HTextStyle(text: 'ورود / عضویت',),
                   ),
                 ),
               ],
