@@ -1,13 +1,26 @@
+import 'package:FastFeed/model/entity/subscription_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../utils/constants.dart';
+import '../../../view_model/subscription_viewmodel.dart';
 import '../../header_footer/components/footer.dart';
 import 'Home_style.dart';
 import 'header_panel.dart';
 
-class RestaurantListScreen extends StatelessWidget {
-  const RestaurantListScreen({Key? key}) : super(key: key);
+class RestaurantListScreen extends StatefulWidget {
+  const RestaurantListScreen({Key? key,}) : super(key: key);
+
+  @override
+  State<RestaurantListScreen> createState() => _RestaurantListScreenState();
+}
+
+class _RestaurantListScreenState extends State<RestaurantListScreen> {
+  final List<SubscriptionModel> _restaurants = [];
+  final _viewModel = SubscriptionViewModel();
+  @override
+  initState() {
+    getSubscripton();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -17,7 +30,7 @@ class RestaurantListScreen extends StatelessWidget {
           child: Column(
             children: [
               HeaderPanel(),
-              RestaurantList(),
+              restaurantList(),
               Footer(),
             ],
           ),
@@ -25,18 +38,8 @@ class RestaurantListScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-class RestaurantList extends StatefulWidget {
-  const RestaurantList({Key? key}) : super(key: key);
-
   @override
-  State<RestaurantList> createState() => _RestaurantListState();
-}
-
-class _RestaurantListState extends State<RestaurantList> {
-  @override
-  Widget build(BuildContext context) {
+  Widget restaurantList() {
     // TODO: implement build
     if(Restaurants.isEmpty){
       return Container(
@@ -76,7 +79,7 @@ class _RestaurantListState extends State<RestaurantList> {
             shrinkWrap: true,
             padding: EdgeInsets.only(left: 700.w,),
             itemBuilder: (BuildContext context, int index) {
-             // TODO loaing
+              // TODO loaing
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -111,5 +114,13 @@ class _RestaurantListState extends State<RestaurantList> {
         ],
       ),
     );
+  }
+  void getSubscripton() {
+    _viewModel.getSubscriptions();
+    _viewModel.subscriptions.stream.listen((list) {
+      setState(() {
+        _restaurants.addAll(list);
+      });
+    });
   }
 }
