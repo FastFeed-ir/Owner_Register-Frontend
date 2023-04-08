@@ -24,7 +24,7 @@ class StoreRepositoryImpl extends StoreRepository {
     }
   }
   @override
-  Future<void> addStores(Store store) async {
+  Future<void> addStore(Store store) async {
     var response = await dio.post(
       'collections/',
       data: store,
@@ -46,5 +46,4 @@ class StoreRepositoryImpl extends StoreRepository {
     );
     print('response: ${response.statusMessage}');
   }
-
 }
