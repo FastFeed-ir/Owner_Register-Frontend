@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -121,7 +119,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
   String? _city;
   String? _address;
   late int _telephone_number;
-  late int _tables_count ;
+  late int _tables_count;
   String? _instagram_page_link;
 
   @override
@@ -200,15 +198,15 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                             TextStyle(color: Colors.white),
                                       ),
                                       dropdownColor: YellowColor,
-                                      value: _businessTypes[0],
-                                      items: _businessTypes.map((business_type) {
+                                      value: _business_type,
+                                      items: _businessTypes.map((businessType) {
                                         return DropdownMenuItem(
                                           child: Text(
-                                            business_type,
+                                            businessType,
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
-                                          value: business_type,
+                                          value: businessType,
                                         );
                                       }).toList(),
                                       onChanged: (value) {
@@ -229,7 +227,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     child: DropdownButtonFormField<String>(
                                       menuMaxHeight: 200,
                                       style: TextStyle(fontSize: 15.w),
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         labelText: 'انتخاب استان',
                                         helperText: "",
                                         helperStyle:
@@ -239,16 +237,19 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           color: Colors.white,
                                         ),
                                         border: OutlineInputBorder(),
-                                        labelStyle: TextStyle(color: Colors.white),
+                                        labelStyle:
+                                            TextStyle(color: Colors.white),
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(color: Colors.white),
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(color: YellowColor),
+                                          borderSide:
+                                              BorderSide(color: YellowColor),
                                         ),
                                       ),
                                       dropdownColor: YellowColor,
-                                      value: Proviences[0],
+                                      value: _state,
                                       items: Proviences.map((province) {
                                         return DropdownMenuItem(
                                           child: Text(
@@ -314,7 +315,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   SizedBox(width: 16.0.w),
                                   Expanded(
                                     child: TextFormField(
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         suffixIcon: Icon(
                                           Icons.home_outlined,
                                           color: Colors.white,
@@ -352,7 +353,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   children: [
                                     Expanded(
                                       child: TextFormField(
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           suffixIcon: Icon(
                                             Icons.local_mall_outlined,
                                             color: Colors.white,
@@ -388,30 +389,31 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     SizedBox(width: 16.0.w),
                                     Expanded(
                                       child: TextFormField(
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           suffixIcon: Icon(
                                             Icons.table_bar_outlined,
                                             color: Colors.white,
                                           ),
                                           border: OutlineInputBorder(),
-                                          labelStyle: TextStyle(color: Colors.white),
+                                          labelStyle:
+                                              TextStyle(color: Colors.white),
                                           enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(color: Colors.white),
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(color: YellowColor),
+                                            borderSide:
+                                                BorderSide(color: YellowColor),
                                           ),
                                           labelText: "تعداد میز",
                                           helperText: "",
-                                          helperStyle: TextStyle(color: Colors.white),
+                                          helperStyle:
+                                              TextStyle(color: Colors.white),
                                         ),
                                         keyboardType: TextInputType.number,
-                                        inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly
-                                        ],
                                         style: TextStyle(color: Colors.white),
                                         onChanged: (value) {
-                                          _tables_count = int.parse(value);
+                                          _tables_count = value as int;
                                         },
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
@@ -431,7 +433,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                 children: [
                                   Expanded(
                                       child: TextFormField(
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       suffixIcon: Icon(
                                         Icons.phone,
                                         color: Colors.white,
@@ -454,11 +456,8 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     ),
                                     style: TextStyle(color: Colors.white),
                                     keyboardType: TextInputType.number,
-                                        inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly
-                                        ],
                                     onChanged: (value) {
-                                      _telephone_number = int.parse(value);
+                                      _telephone_number = int.tryParse(value)!;
                                     },
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -470,7 +469,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   SizedBox(width: 16.0.w),
                                   Expanded(
                                     child: TextFormField(
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         suffixIcon: Icon(
                                           Icons.phone_android_outlined,
                                           color: Colors.white,
@@ -585,16 +584,14 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         tables_count: _tables_count,
                                         instagram_page_link: _instagram_page_link
                                       );
-
-                                      Get.toNamed(SubscriptionPage,arguments:[1,store]);
-
-                                      // showDialog(
-                                      //   context: context,
-                                      //   builder: (BuildContext context) {
-                                      //     return ConfirmationDialog(
-                                      //         phoneNumber: '$_telephone_number');
-                                      //   },
-                                      // );
+                                      // Get.toNamed()
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return ConfirmationDialog(
+                                              phoneNumber: '$_telephone_number');
+                                        },
+                                      );
                                     }
                                   },
                                   child: Text(
