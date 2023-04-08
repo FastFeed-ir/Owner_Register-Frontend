@@ -8,6 +8,8 @@ import '../../../model/entity/subscription_model.dart';
 import '../../../view_model/subscription_viewmodel.dart';
 import '../../header_footer/components/header.dart';
 import 'Sub_style.dart';
+import 'package:FastFeed/view_model/store_viewmodel.dart';
+import 'package:FastFeed/model/entity/store.dart';
 
 class VerifySubscriptonScreen extends StatefulWidget {
   var subscription = Get.arguments;
@@ -28,6 +30,7 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
   late double totalCost;
   late List<dynamic> pageType;
   final _viewModel = SubscriptionViewModel();
+  final _storeViewModel = StoreViewModel();
 
   @override
   void initState() {
@@ -148,6 +151,7 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
                     _addSubscripton();
                     // Store store = pageType[1];
                     // store.title
+                    _storeViewModel.addStore(store);
                     // TODO send Store Api with add function
                     Get.toNamed(SuccessfulPurchasePage,arguments: [period, totalCost, /*store.title*/],);
                   }else{ // revival
