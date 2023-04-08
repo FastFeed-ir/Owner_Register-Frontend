@@ -26,7 +26,7 @@ class StoreRepositoryImpl extends StoreRepository {
   @override
   Future<void> addStore(Store store) async {
     var response = await dio.post(
-      'collections/',
+      'stores/',
       data: store,
     );
     print('response: ${response.statusMessage}');
@@ -34,7 +34,7 @@ class StoreRepositoryImpl extends StoreRepository {
   @override
   Future<void> editStore(Store store) async {
     var response = await dio.patch(
-      'collections/${store.id}/',
+      'stores/${store.id}/',
       data: store,
     );
     print('response: ${response.statusMessage}');
@@ -42,7 +42,7 @@ class StoreRepositoryImpl extends StoreRepository {
   @override
   Future<void> deleteStore(Store store) async {
     var response = await dio.delete(
-      'collections/${store.id}/',
+      'stores/${store.id}/',
     );
     print('response: ${response.statusMessage}');
   }
