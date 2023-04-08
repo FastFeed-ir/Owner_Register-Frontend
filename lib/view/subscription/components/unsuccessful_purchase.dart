@@ -15,12 +15,15 @@ class UnSuccessfulPurchaseScreen extends StatefulWidget {
 }
 
 class _UnSuccessfulPurchaseState extends State<UnSuccessfulPurchaseScreen> {
-  late String subtype = "";
+  late String period = "";
   late int price = 0;
+  late String storeName="";
+
   @override
   void initState() {
-    subtype = widget.subscription[0];
+    period = widget.subscription[0];
     price = widget.subscription[1];
+    storeName = widget.subscription[2];
   }
 
   @override
@@ -32,25 +35,14 @@ class _UnSuccessfulPurchaseState extends State<UnSuccessfulPurchaseScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              //Header(),
-              UnSuccessfulPurchase(
-                subtype: subtype,
-                price: price,
-              ),
-              //Footer(),
+              unSuccessfulPurchase(),
             ],
           ),
         ),
       ),
     );
   }
-}
-class UnSuccessfulPurchase extends StatelessWidget {
-  late String subtype;
-  late int price;
-  UnSuccessfulPurchase({required this.subtype, required this.price});
-  @override
-  Widget build(BuildContext context) {
+  Widget unSuccessfulPurchase(){
     return Container(
       padding: EdgeInsets.fromLTRB(
         640.0.w,
@@ -60,8 +52,8 @@ class UnSuccessfulPurchase extends StatelessWidget {
       ),
       decoration:  BoxDecoration(
         image: DecorationImage(
-            image: AssetImage(OwnerPageimg),
-            fit: BoxFit.fill,
+          image: AssetImage(OwnerPageimg),
+          fit: BoxFit.fill,
         ),
       ),
       width: 1920.w,
@@ -97,7 +89,7 @@ class UnSuccessfulPurchase extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 PurchaseStyle(text:"نام فروشگاه :"),
-                PurchaseStyle(text: "Restaurant Name"),
+                PurchaseStyle(text: storeName),
               ],
             ),
             SizedBox(
@@ -146,7 +138,7 @@ class UnSuccessfulPurchase extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 PurchaseStyle(text: "مدت اشتراک :"),
-                PurchaseStyle(text: subtype),
+                PurchaseStyle(text: period),
               ],
             ),
             SizedBox(
@@ -177,3 +169,4 @@ class UnSuccessfulPurchase extends StatelessWidget {
     );
   }
 }
+
