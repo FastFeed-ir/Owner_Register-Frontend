@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import '../../../model/entity/subscription_model.dart';
+import '../../../view_model/subscription_viewmodel.dart';
 import '../../header_footer/components/header.dart';
 import 'Sub_style.dart';
 
@@ -17,17 +19,26 @@ class VerifySubscriptonScreen extends StatefulWidget {
 }
 
 class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
-  late String subtype = "";
+  late int storeName;
+  late bool isEdit;
+  late String period = "";
   late String priceText = "";
-  late int price = 0;
-  late int tax = 364000;
+  late double price = 0;
+  late double tax = 364000;
+  late double totalCost;
+  late List<dynamic> pageType;
+  final _viewModel = SubscriptionViewModel();
 
   @override
   void initState() {
-    subtype = widget.subscription[0];
-    priceText = widget.subscription[1];
-    price = widget.subscription[2];
+    // TODO isEdit, storeId
+    priceText = widget.subscription[0];
+    period = widget.subscription[1];
+    priceText = widget.subscription[2];
+    price = widget.subscription[3];
     if (price == 0) tax = 0;
+    totalCost = price + tax;
+    pageType = widget.subscription[4];
   }
 
   @override
@@ -40,12 +51,7 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Header(),
-              VerifySubscripton(
-                subtype: subtype,
-                priceText: priceText,
-                price: price,
-                tax: tax,
-              ),
+              verifySubscripton(),
               Footer(),
             ],
           ),
@@ -53,23 +59,7 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
       ),
     );
   }
-}
-
-class VerifySubscripton extends StatelessWidget {
-  late String subtype;
-  late String priceText;
-  late int price;
-  late int tax;
-
-  VerifySubscripton({
-    required this.subtype,
-    required this.priceText,
-    required this.price,
-    required this.tax,
-  });
-
-  @override
-  Widget build(BuildContext context) {
+  Widget verifySubscripton(){
     return Container(
       padding: EdgeInsets.fromLTRB(
         286.0.w,
@@ -95,7 +85,7 @@ class VerifySubscripton extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SubBuyTextStyle(text: subtype),
+              SubBuyTextStyle(text: period),
               SubBuyTextStyle(text: priceText),
             ],
           ),
@@ -120,7 +110,7 @@ class VerifySubscripton extends StatelessWidget {
               SubBuyTextStyle(text: "مبلغ قابل پرداخت"),
               Row(
                 children: [
-                  SubBuyTextStyle(text: "${price + tax}".seRagham()),
+                  SubBuyTextStyle(text: "${totalCost}".seRagham()),
                   SubBuyTextStyle(text: " تومان"),
                 ],
               ),
@@ -154,8 +144,17 @@ class VerifySubscripton extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   // ToDo Get To Bank Gateway then Get To SuccessfulPurchase or UnSuccessfulPurchasePage
-                  Get.toNamed(SuccessfulPurchasePage,arguments: [subtype, price+tax],);
-                  //Get.toNamed(UnSuccessfulPurchasePage,arguments: [subtype, price+tax],);
+                  if(pageType[0] == 1){ // Store
+                    _addSubscripton();
+                    // Store store = pageType[1];
+                    // store.title
+                    // TODO send Store Api with add function
+                    Get.toNamed(SuccessfulPurchasePage,arguments: [period, totalCost, /*store.title*/],);
+                  }else{ // revival
+                    _editSubscripton();
+                    Get.toNamed(HomePage);
+                  }
+                  //Get.toNamed(UnSuccessfulPurchasePage,arguments: [period, price+tax],);
                 },
                 child: SubBuyTextStyle(text: "قبول قوانین و خرید اشتراک"),
                 style: buttonStyle_build(396, 70, 10, YellowColor),
@@ -165,5 +164,29 @@ class VerifySubscripton extends StatelessWidget {
         ],
       ),
     );
+  }
+  void _addSubscripton() {
+  var period = this.period;
+  var price = this.price;
+    if (period.isNotEmpty && price >= 0) {
+      SubscriptionModel subscription = SubscriptionModel(
+        period: period,
+        price: totalCost,
+      );
+      _viewModel.addSubscriptions(subscription);
+      Navigator.pop(context);
+    }
+  }
+  void _editSubscripton() {
+    var period = this.period;
+    var price = this.price;
+    if (period.isNotEmpty && price >= 0) {
+      SubscriptionModel subscription = SubscriptionModel(
+        period: period,
+        price: totalCost,
+      );
+      _viewModel.editSubscriptions(subscription);
+      Navigator.pop(context);
+    }
   }
 }
