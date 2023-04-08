@@ -7,8 +7,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'Sub_style.dart';
 
-class SubscriptionScreen extends StatelessWidget {
-  const SubscriptionScreen({Key? key}) : super(key: key);
+class SubscriptionScreen extends StatefulWidget {
+  var pageType = Get.arguments;
+
+  @override
+  State<SubscriptionScreen> createState() => _SubscriptionScreenState();
+}
+
+class _SubscriptionScreenState extends State<SubscriptionScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,7 @@ class SubscriptionScreen extends StatelessWidget {
           child: Column(
             children: [
               Header(),
-              Subscription(),
+              subscription(),
               Footer(),
             ],
           ),
@@ -27,13 +33,9 @@ class SubscriptionScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-class Subscription extends StatelessWidget {
-  late Color free = Color(0xFFFFFFFF);
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
+  Widget subscription(){
+    late Color free = Color(0xFFFFFFFF);
     return Container(
       padding: EdgeInsets.only(
         left: 150.0.w,
@@ -82,7 +84,7 @@ class Subscription extends StatelessWidget {
                       ),
                       // TODO
                       onTap: () {
-                        Get.toNamed(VerifySubscriptonPage,arguments: [SubscriptionList[index].deadline,SubscriptionList[index].priceText,SubscriptionList[index].price,]);
+                        Get.toNamed(VerifySubscriptonPage,arguments: [SubscriptionList[index].periodText, SubscriptionList[index].period,SubscriptionList[index].priceText,SubscriptionList[index].price,widget.pageType]);
                       },
                       shape: RoundedRectangleBorder(
                         //<-- SEE HERE
@@ -90,7 +92,7 @@ class Subscription extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20.r),
                       ),
                       leading:Text(
-                        SubscriptionList[index].deadline,
+                        SubscriptionList[index].periodText,
                         style: TextStyle(color: BlackColor, fontSize: 28.sp,fontFamily: "IranSansWeb"),
                       ),
                       tileColor: free,
