@@ -21,17 +21,18 @@ class SubTypeTextStyle extends StatelessWidget {
   }
 }
 class SubscriptionItem{
-  late String deadline;
+  late String periodText;
+  late int period;
   late String priceText;
   late int price;
-  SubscriptionItem(this.deadline, this.priceText, this.price,);
+  SubscriptionItem(this.periodText, this.period,this.priceText, this.price,);
 
 }
 List<SubscriptionItem> SubscriptionList =[
-  SubscriptionItem("اشتراک 1 ماهه\t (ویژه کاربران جدید)" , "0 (رایگان)" , 0,),
-  SubscriptionItem("اشتراک 3 ماهه" , "3 میلیون تومان" , 3000000,),
-  SubscriptionItem("اشتراک 6 ماهه" , "6 میلیون تومان" , 6000000,),
-  SubscriptionItem("اشتراک 1 ساله" , "10 میلیون تومان" , 10000000,),
+  SubscriptionItem("اشتراک 1 ماهه\t (ویژه کاربران جدید)" , 30, "0 (رایگان)" , 0,),
+  SubscriptionItem("اشتراک 3 ماهه", 90, "3 میلیون تومان" , 3000000,),
+  SubscriptionItem("اشتراک 6 ماهه", 180, "6 میلیون تومان" , 6000000,),
+  SubscriptionItem("اشتراک 1 ساله", 365, "10 میلیون تومان" , 10000000,),
 ];
 class SubTitleStyle extends StatelessWidget {
   final String text;
