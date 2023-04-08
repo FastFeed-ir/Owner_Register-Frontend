@@ -31,4 +31,20 @@ class StoreRepositoryImpl extends StoreRepository {
     );
     print('response: ${response.statusMessage}');
   }
+  @override
+  Future<void> editStore(Store store) async {
+    var response = await dio.patch(
+      'collections/${store.id}/',
+      data: store,
+    );
+    print('response: ${response.statusMessage}');
+  }
+  @override
+  Future<void> deleteStore(Store store) async {
+    var response = await dio.delete(
+      'collections/${store.id}/',
+    );
+    print('response: ${response.statusMessage}');
+  }
+
 }
