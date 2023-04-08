@@ -15,12 +15,15 @@ class SuccessfulPurchaseScreen extends StatefulWidget {
 }
 
 class _SuccessfulPurchaseState extends State<SuccessfulPurchaseScreen> {
-  late String subtype = "";
+  late String period = "";
   late int price = 0;
+  late String storeName;
+
   @override
   void initState() {
-    subtype = widget.subscription[0];
+    period = widget.subscription[0];
     price = widget.subscription[1];
+    storeName = widget.subscription[2];
   }
 
   @override
@@ -31,23 +34,15 @@ class _SuccessfulPurchaseState extends State<SuccessfulPurchaseScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SuccessfulPurchase(
-                subtype: subtype,
-                price: price,
-              ),
+              successfulPurchase(),
             ],
           ),
         ),
       ),
     );
   }
-}
-class SuccessfulPurchase extends StatelessWidget {
-  late String subtype;
-  late int price;
-  SuccessfulPurchase({required this.subtype, required this.price});
-  @override
-  Widget build(BuildContext context) {
+
+  Widget successfulPurchase() {
     return Container(
       padding: EdgeInsets.fromLTRB(
         640.0.w,
@@ -55,16 +50,15 @@ class SuccessfulPurchase extends StatelessWidget {
         640.0.w,
         70.0.h,
       ),
-      decoration:  BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage(OwnerPageimg),
-            fit: BoxFit.cover),
+      decoration: BoxDecoration(
+        image:
+            DecorationImage(image: AssetImage(OwnerPageimg), fit: BoxFit.cover),
       ),
       width: 1920.w,
       height: 1080.0.h,
       child: Container(
         color: Color(0xffD2E1D0),
-        padding: EdgeInsets.only(left: 80.w,right: 80.w),
+        padding: EdgeInsets.only(left: 80.w, right: 80.w),
         child: Column(
           children: [
             SizedBox(
@@ -72,7 +66,11 @@ class SuccessfulPurchase extends StatelessWidget {
             ),
             CircleAvatar(
               backgroundColor: GreenColor,
-              child: Image.asset(Tick,height: 97.h, width: 97.w,),
+              child: Image.asset(
+                Tick,
+                height: 97.h,
+                width: 97.w,
+              ),
               radius: 60.r,
             ),
             SizedBox(
@@ -92,9 +90,9 @@ class SuccessfulPurchase extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                PurchaseStyle(text:"نام فروشگاه :"),
+                PurchaseStyle(text: "نام فروشگاه :"),
                 // ToDO Set Restaurant Name
-                PurchaseStyle(text: "Restaurant Name"),
+                PurchaseStyle(text: storeName,),
               ],
             ),
             SizedBox(
@@ -143,7 +141,7 @@ class SuccessfulPurchase extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 PurchaseStyle(text: "مدت اشتراک :"),
-                PurchaseStyle(text: subtype),
+                PurchaseStyle(text: period),
               ],
             ),
             SizedBox(
@@ -154,7 +152,11 @@ class SuccessfulPurchase extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Image
-                Image.asset(Qrsample,height: 200.h, width: 200.w,),
+                Image.asset(
+                  Qrsample,
+                  height: 200.h,
+                  width: 200.w,
+                ),
                 SizedBox(
                   height: 30.h,
                 ),
