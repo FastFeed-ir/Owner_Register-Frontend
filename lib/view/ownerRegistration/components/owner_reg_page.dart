@@ -2,12 +2,14 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:FastFeed/utils/constants.dart';
 import 'package:FastFeed/view/verifyCode/components/verifyCode.dart';
 import '../../home/components/header_panel.dart';
+import '../../../model/entity/store.dart';
 
 class OwenerRegisterScreen extends StatefulWidget {
   const OwenerRegisterScreen({Key? key}) : super(key: key);
@@ -173,7 +175,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   Expanded(
                                     child: DropdownButtonFormField<String>(
                                       style: TextStyle(fontSize: 20.w),
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         suffixIcon: Icon(
                                           Icons.store_mall_directory_outlined,
                                           color: Colors.white,
@@ -225,7 +227,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     child: DropdownButtonFormField<String>(
                                       menuMaxHeight: 200,
                                       style: TextStyle(fontSize: 15.w),
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         labelText: 'انتخاب استان',
                                         helperText: "",
                                         helperStyle:
@@ -281,7 +283,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                 children: [
                                   Expanded(
                                     child: TextFormField(
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         suffixIcon: Icon(
                                           Icons.apartment_outlined,
                                           color: Colors.white,
@@ -313,7 +315,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   SizedBox(width: 16.0.w),
                                   Expanded(
                                     child: TextFormField(
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         suffixIcon: Icon(
                                           Icons.home_outlined,
                                           color: Colors.white,
@@ -351,7 +353,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   children: [
                                     Expanded(
                                       child: TextFormField(
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           suffixIcon: Icon(
                                             Icons.local_mall_outlined,
                                             color: Colors.white,
@@ -387,7 +389,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     SizedBox(width: 16.0.w),
                                     Expanded(
                                       child: TextFormField(
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           suffixIcon: Icon(
                                             Icons.table_bar_outlined,
                                             color: Colors.white,
@@ -431,7 +433,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                 children: [
                                   Expanded(
                                       child: TextFormField(
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       suffixIcon: Icon(
                                         Icons.phone,
                                         color: Colors.white,
@@ -467,7 +469,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   SizedBox(width: 16.0.w),
                                   Expanded(
                                     child: TextFormField(
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         suffixIcon: Icon(
                                           Icons.phone_android_outlined,
                                           color: Colors.white,
@@ -571,12 +573,23 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   ),
                                   onPressed: () {
                                     if (_formKey.currentState!.validate()) {
+                                      Store store = Store(
+                                        title: _title,
+                                        logo: _logo,
+                                        business_type: _business_type,
+                                        state: _state,
+                                        city: _city,
+                                        address: _address,
+                                        telephone_number: _telephone_number,
+                                        tables_count: _tables_count,
+                                        instagram_page_link: _instagram_page_link
+                                      );
+                                      // Get.toNamed()
                                       showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
                                           return ConfirmationDialog(
-                                              phoneNumber:
-                                                  '$_telephone_number');
+                                              phoneNumber: '$_telephone_number');
                                         },
                                       );
                                     }
