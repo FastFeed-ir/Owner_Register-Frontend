@@ -1,5 +1,6 @@
 
 class Store{
+  int? id;
   String title;
   String? logo;
   String business_type;
@@ -11,6 +12,7 @@ class Store{
   String? instagram_page_link;
 
   Store({
+    this.id,
     required this.title,
     this.logo,
     required this.business_type,
