@@ -1,7 +1,12 @@
+import 'dart:async';
+import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:FastFeed/utils/constants.dart';
+import 'package:FastFeed/view/verifyCode/components/verifyCode.dart';
 import '../../home/components/header_panel.dart';
 
 class OwenerRegisterScreen extends StatefulWidget {
@@ -44,17 +49,65 @@ class _OwnerRegisterState extends State<OwnerRegister> {
   //dropdown options for type of business
   final List<String> _businessTypes = ['رستوران', 'کافه'];
   final _formKey = GlobalKey<FormState>();
-//dropdown options for province
-  final List<String> _provinces = [
-    'Province 1',
-    'Province 2',
-  ];
+  XFile? image;
 
-//dropdown options for city
-  final List<String> _cities = [
-    'Kathmandu',
-    'Pokhara',
-  ];
+  final ImagePicker picker = ImagePicker();
+
+  //we can upload image from camera or from gallery based on parameter
+  Future getImage(ImageSource media) async {
+    var img = await picker.pickImage(source: media);
+
+    setState(() {
+      image = img;
+    });
+  }
+
+  //show popup dialog
+  void myAlert() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            title: Text('Please choose media to select'),
+            content: Container(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    //if user click this button, user can upload image from gallery
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getImage(ImageSource.gallery);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.image),
+                        Text('From Gallery'),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height:20),
+                  ElevatedButton(
+                    //if user click this button. user can upload image from camera
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getImage(ImageSource.camera);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.camera),
+                        Text('From Camera'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
 
 //form field variables
   String? _selectedBusinessType;
@@ -72,235 +125,466 @@ class _OwnerRegisterState extends State<OwnerRegister> {
       children: [
         Container(
           width: 1920.w,
-          height: 1080.h,
-          decoration:  BoxDecoration(
+          height: 1180.h,
+          decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage(OwnerPageimg),
-                fit: BoxFit.cover),
+              image: AssetImage(OwnerPageimg),
+              fit: BoxFit.cover,
+            ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
+          child: ClipRRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+              child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(right: 150.w, top: 250.w),
+                    padding:
+                        EdgeInsets.only(left: 150.w, top: 45.r, right: 150),
                     child: SizedBox(
-                      child: Text("ثبت‌نام فروشندگان فست ‌فید",
-                          style: TextStyle(fontSize: 70.w,color:Colors.white,)),
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 150.w, top: 70.r),
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width / 3,
-                      // height: MediaQuery.of(context).size.width /2.6,
+                      width: MediaQuery.of(context).size.width / 2,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Colors.white24,
                           border: Border.all(
-                              width: 10.w, color: Colors.transparent),
+                              width: 20.w, color: Colors.transparent),
                           borderRadius:
-                              const BorderRadius.all(Radius.circular(8)),
+                              const BorderRadius.all(Radius.circular(10)),
                         ),
                         child: Form(
                           key: _formKey,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                //dropdown for type of business
-                                DropdownButtonFormField<String>(
-                                  style: TextStyle(fontSize: 20.w),
-                                  decoration: InputDecoration(
-                                    labelText: 'انتخاب نوع کسب و کار',
-                                  ),
-                                  value: _selectedBusinessType,
-                                  items: _businessTypes
-                                      .map((businessType) =>
-                                          DropdownMenuItem(
-                                            child: Text(businessType),
-                                            value: businessType,
-                                          ))
-                                      .toList(),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedBusinessType = value;
-                                    });
-                                  },
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return 'لطفا نوع کسب و کار خود را انتخاب کنید';
-                                    }
-                                    return null;
-                                  },
+                          child: Column(
+                            children: [
+                              Text(
+                                "ثبت‌نام فروشندگان فست ‌فید",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30.w,
+                                  color: Colors.white,
                                 ),
-                                SizedBox(height: 16.0.h),
-
-                                //dropdown for province
-                                DropdownButtonFormField<String>(
-                                  decoration: InputDecoration(
-                                      labelText: 'انتخاب استان'),
-                                  value: _selectedProvince,
-                                  items: _provinces
-                                      .map((province) => DropdownMenuItem(
-                                            child: Text(province),
-                                            value: province,
-                                          ))
-                                      .toList(),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedProvince = value;
-                                    });
-                                  },
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return 'لطفا استان خود را انتخاب کنید';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                SizedBox(height: 16.0.h),
-
-                                //dropdown for city
-                                DropdownButtonFormField<String>(
-                                  decoration: InputDecoration(
-                                      labelText: 'انتخاب شهر'),
-                                  value: _selectedCity,
-                                  items: _cities
-                                      .map((city) => DropdownMenuItem(
-                                            child: Text(city),
-                                            value: city,
-                                          ))
-                                      .toList(),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedCity = value;
-                                    });
-                                  },
-                                  validator: (value) {
-                                    if (value == null) {
-                                      return 'لطفا شهر خود را انتخاب کنید';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                SizedBox(height: 16.0.h),
-
-                                //text input for business name
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                      labelText: 'نام فروشگاه'),
-                                  onChanged: (value) {
-                                    _businessName = value;
-                                  },
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'لطفا نام فروشگاه را وارد کنید';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                SizedBox(height: 16.0.h),
-
-                                //text input for business owner's first name
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                      labelText: "نام مالک فروشگاه"),
-                                  onChanged: (value) {
-                                    _businessOwnerFirstName = value;
-                                  },
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return "لطفا نام خود را وارد کنید";
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                SizedBox(height: 16.0.h),
-
-                                //text input for business owner's last name
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                      labelText:
-                                          "نام خانوادگی مالک فروشگاه"),
-                                  onChanged: (value) {
-                                    _businessOwnerLastName = value;
-                                  },
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return "لطفا نام خانوادگی خود را وارد کنید";
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                SizedBox(height: 16.0.h),
-
-                                //number input for business owner's phone number
-                                TextFormField(
-                                  decoration: InputDecoration(
-                                      labelText: "شماره تلفن همراه"),
-                                  keyboardType: TextInputType.number,
-                                  onChanged: (value) {
-                                    _businessOwnerPhone =
-                                        int.tryParse(value);
-                                  },
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return "لطفا شماره خود را وارد کنید";
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                SizedBox(height: 16.0.h),
-
-                                //button to submit the form
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: YellowColor,
+                              ),
+                              SizedBox(height: 25.h),
+                              // Row 1
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: DropdownButtonFormField<String>(
+                                      style: TextStyle(fontSize: 20.w),
+                                      decoration: InputDecoration(
+                                        suffixIcon: Icon(
+                                          Icons.store_mall_directory_outlined,
+                                          color: Colors.white,
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        errorStyle: TextStyle(fontSize: 10),
+                                        labelStyle:
+                                            TextStyle(color: Colors.white),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: YellowColor),
+                                        ),
+                                        labelText: 'انتخاب نوع کسب و کار',
+                                        hoverColor: Colors.white,
+                                        helperText: "",
+                                        helperStyle:
+                                            TextStyle(color: Colors.white),
+                                      ),
+                                      dropdownColor: YellowColor,
+                                      value: _selectedBusinessType,
+                                      items: _businessTypes.map((businessType) {
+                                        return DropdownMenuItem(
+                                          child: Text(
+                                            businessType,
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          value: businessType,
+                                        );
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedBusinessType = value;
+                                        });
+                                      },
+                                      validator: (value) {
+                                        if (value == null) {
+                                          return 'لطفا نوع کسب و کار خود را انتخاب کنید';
+                                        }
+                                        return null;
+                                      },
                                     ),
-                                    onPressed: () {
-                                      if (_formKey.currentState!
-                                          .validate()) {
-                                        //TODO: submit the form
-                                      }
+                                  ),
+                                  SizedBox(width: 13.0.w),
+                                  Expanded(
+                                    child: DropdownButtonFormField<String>(
+                                      menuMaxHeight: 200,
+                                      decoration: InputDecoration(
+                                        labelText: 'انتخاب استان',
+                                        helperText: "",
+                                        helperStyle:
+                                            TextStyle(color: Colors.white),
+                                        suffixIcon: Icon(
+                                          Icons.location_city_outlined,
+                                          color: Colors.white,
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        labelStyle:
+                                            TextStyle(color: Colors.white),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: YellowColor),
+                                        ),
+                                      ),
+                                      dropdownColor: YellowColor,
+                                      value: _selectedProvince,
+                                      items: Proviences.map((province) {
+                                        return DropdownMenuItem(
+                                          child: Text(
+                                            province,
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          value: province,
+                                        );
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedProvince = value;
+                                        });
+                                      },
+                                      validator: (value) {
+                                        if (value == null) {
+                                          return 'لطفا استان خود را انتخاب کنید';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 25.0.h),
+                              // Row 2
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                        suffixIcon: Icon(
+                                          Icons.apartment_outlined,
+                                          color: Colors.white,
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        labelStyle:
+                                            TextStyle(color: Colors.white),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: YellowColor),
+                                        ),
+                                        labelText: 'نام شهر',
+                                        helperText: "",
+                                        helperStyle:
+                                            TextStyle(color: Colors.white),
+                                      ),
+                                      style: TextStyle(color: Colors.white),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _selectedCity = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(width: 13.0.w),
+                                  Expanded(
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                        suffixIcon: Icon(
+                                          Icons.home_outlined,
+                                          color: Colors.white,
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        labelStyle:
+                                            TextStyle(color: Colors.white),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: YellowColor),
+                                        ),
+                                        labelText: 'آدرس',
+                                        helperText: "",
+                                        helperStyle:
+                                            TextStyle(color: Colors.white),
+                                      ),
+                                      style: TextStyle(color: Colors.white),
+                                      onChanged: (value) {
+                                        _businessName = value;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              // Row 3
+                              SizedBox(height: 25.0.h),
+
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                          suffixIcon: Icon(
+                                            Icons.local_mall_outlined,
+                                            color: Colors.white,
+                                          ),
+                                          border: OutlineInputBorder(),
+                                          labelStyle:
+                                              TextStyle(color: Colors.white),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: YellowColor),
+                                          ),
+                                          labelText: 'نام فروشگاه',
+                                          helperText: "",
+                                          helperStyle:
+                                              TextStyle(color: Colors.white),
+                                        ),
+                                        style: TextStyle(color: Colors.white),
+                                        onChanged: (value) {
+                                          _businessName = value;
+                                        },
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'لطفا نام فروشگاه خود را وارد کنید';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                    SizedBox(width: 13.0.w),
+                                    Expanded(
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                          suffixIcon: Icon(
+                                            Icons.table_bar_outlined,
+                                            color: Colors.white,
+                                          ),
+                                          border: OutlineInputBorder(),
+                                          labelStyle:
+                                              TextStyle(color: Colors.white),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: YellowColor),
+                                          ),
+                                          labelText: "تعداد میز",
+                                          helperText: "",
+                                          helperStyle:
+                                              TextStyle(color: Colors.white),
+                                        ),
+                                        style: TextStyle(color: Colors.white),
+                                        onChanged: (value) {
+                                          _businessOwnerFirstName = value;
+                                        },
+                                        validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return "لطفا تعداد میز را وارد کنید";
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ]),
+                              SizedBox(height: 25.0.h),
+
+                              // Row 4
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                      child: TextFormField(
+                                    decoration: InputDecoration(
+                                      suffixIcon: Icon(
+                                        Icons.phone,
+                                        color: Colors.white,
+                                      ),
+                                      border: OutlineInputBorder(),
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.white),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: YellowColor),
+                                      ),
+                                      labelText: "شماره تلفن همراه",
+                                      helperText: "",
+                                      helperStyle:
+                                          TextStyle(color: Colors.white),
+                                    ),
+                                    style: TextStyle(color: Colors.white),
+                                    keyboardType: TextInputType.number,
+                                    onChanged: (value) {
+                                      _businessOwnerPhone = int.tryParse(value);
                                     },
-                                    child: Text(
-                                      'دریافت کد تایید',
-                                      style: TextStyle(color: Colors.black),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return "لطفا شماره خود را وارد کنید";
+                                      }
+                                      return null;
+                                    },
+                                  )),
+                                  SizedBox(width: 13.0.w),
+                                  Expanded(
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                        suffixIcon: Icon(
+                                          Icons.phone_android_outlined,
+                                          color: Colors.white,
+                                        ),
+                                        border: OutlineInputBorder(),
+                                        labelStyle:
+                                            TextStyle(color: Colors.white),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: YellowColor),
+                                        ),
+                                        labelText: 'آدرس صفحه اینستاگرام',
+                                        helperText: "",
+                                        helperStyle:
+                                            TextStyle(color: Colors.white),
+                                      ),
+                                      style: TextStyle(color: Colors.white),
+                                      onChanged: (value) {
+                                        _businessName = value;
+                                      },
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        "کد را دریافت نکرده اید؟",
-                                        textDirection: TextDirection.ltr,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20.w,
-                                        ),
-                                      ),
-                                      Text(
-                                        "درخواست مجدد",
-                                        textDirection: TextDirection.ltr,
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 20.w,
-                                        ),
-                                      ),
-                                    ],
+                                ],
+                              ),
+
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                        // width: 50,
+                                        height: 50,
+                                        child: Column(
+                                          children: [
+                                            ElevatedButton(
+                                                style: ButtonStyle(
+                                                    backgroundColor:
+                                                        MaterialStateProperty.all<Color>(
+                                                            Colors.transparent),
+                                                    shape: MaterialStateProperty.all<
+                                                            RoundedRectangleBorder>(
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                    5),
+                                                            side: BorderSide(
+                                                                color: Colors
+                                                                    .white)))),
+                                                onPressed: () {
+                                                  myAlert();
+                                                },
+                                                child: Text('افزودن لوگو')),
+                                            SizedBox(
+                                              height: 8.h,
+                                            ),
+                                            //if image not null show the image
+                                            //if image null show text
+                                            image != null
+                                                ? Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 20),
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      child: Image.file(
+                                                        //to show image, you type like this.
+                                                        File(image!.path),
+                                                        fit: BoxFit.cover,
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        height: 300,
+                                                      ),
+                                                    ),
+                                                  )
+                                                : Text(
+                                                    "No Image",
+                                                    style:
+                                                        TextStyle(fontSize: 10),
+                                                  ),
+                                          ],
+                                        ))
+                                  ]),
+                              SizedBox(height: 25.0.h),
+                              //button to submit the form
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 4,
+                                height: 70.h,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: YellowColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return ConfirmationDialog(
+                                              phoneNumber:
+                                                  '$_businessOwnerPhone');
+                                        },
+                                      );
+                                    }
+                                  },
+                                  child: Text(
+                                    'ثبت اطلاعات',
+                                    style: TextStyle(color: Colors.black),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -308,14 +592,16 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                   ),
                 ],
               ),
-            ],
+            ),
           ),
         ),
         SizedBox(
           height: 20.r,
         ),
-        Text("مراحل ثبت نام",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.w)),
+        Text(
+          "مراحل ثبت نام",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.w),
+        ),
         SizedBox(
           height: 20.r,
         ),
