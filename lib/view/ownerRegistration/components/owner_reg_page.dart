@@ -2,12 +2,16 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:FastFeed/utils/constants.dart';
 import 'package:FastFeed/view/verifyCode/components/verifyCode.dart';
 import '../../home/components/header_panel.dart';
+import '../../../model/entity/store.dart';
 
 class OwenerRegisterScreen extends StatefulWidget {
   const OwenerRegisterScreen({Key? key}) : super(key: key);
@@ -88,7 +92,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                       ],
                     ),
                   ),
-                  SizedBox(height:20),
+                  SizedBox(height: 20),
                   ElevatedButton(
                     //if user click this button. user can upload image from camera
                     onPressed: () {
@@ -110,13 +114,15 @@ class _OwnerRegisterState extends State<OwnerRegister> {
   }
 
 //form field variables
-  String? _selectedBusinessType;
-  String? _selectedProvince;
-  String? _selectedCity;
-  String? _businessName;
-  String? _businessOwnerFirstName;
-  String? _businessOwnerLastName;
-  int? _businessOwnerPhone;
+  late String _title;
+  String? _logo;
+  late String _business_type;
+  late String _state;
+  String? _city;
+  String? _address;
+  late int _telephone_number;
+  late int _tables_count ;
+  String? _instagram_page_link;
 
   @override
   Widget build(BuildContext context) {
@@ -171,13 +177,12 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   Expanded(
                                     child: DropdownButtonFormField<String>(
                                       style: TextStyle(fontSize: 20.w),
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         suffixIcon: Icon(
                                           Icons.store_mall_directory_outlined,
                                           color: Colors.white,
                                         ),
                                         border: OutlineInputBorder(),
-                                        errorStyle: TextStyle(fontSize: 10),
                                         labelStyle:
                                             TextStyle(color: Colors.white),
                                         enabledBorder: OutlineInputBorder(
@@ -195,20 +200,20 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                             TextStyle(color: Colors.white),
                                       ),
                                       dropdownColor: YellowColor,
-                                      value: _selectedBusinessType,
-                                      items: _businessTypes.map((businessType) {
+                                      value: _businessTypes[0],
+                                      items: _businessTypes.map((business_type) {
                                         return DropdownMenuItem(
                                           child: Text(
-                                            businessType,
+                                            business_type,
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
-                                          value: businessType,
+                                          value: business_type,
                                         );
                                       }).toList(),
                                       onChanged: (value) {
                                         setState(() {
-                                          _selectedBusinessType = value;
+                                          _business_type = value!;
                                         });
                                       },
                                       validator: (value) {
@@ -219,10 +224,11 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       },
                                     ),
                                   ),
-                                  SizedBox(width: 13.0.w),
+                                  SizedBox(width: 16.0.w),
                                   Expanded(
                                     child: DropdownButtonFormField<String>(
                                       menuMaxHeight: 200,
+                                      style: TextStyle(fontSize: 15.w),
                                       decoration: InputDecoration(
                                         labelText: 'انتخاب استان',
                                         helperText: "",
@@ -233,19 +239,16 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           color: Colors.white,
                                         ),
                                         border: OutlineInputBorder(),
-                                        labelStyle:
-                                            TextStyle(color: Colors.white),
+                                        labelStyle: TextStyle(color: Colors.white),
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.white),
+                                          borderSide: BorderSide(color: Colors.white),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: YellowColor),
+                                          borderSide: BorderSide(color: YellowColor),
                                         ),
                                       ),
                                       dropdownColor: YellowColor,
-                                      value: _selectedProvince,
+                                      value: Proviences[0],
                                       items: Proviences.map((province) {
                                         return DropdownMenuItem(
                                           child: Text(
@@ -258,7 +261,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       }).toList(),
                                       onChanged: (value) {
                                         setState(() {
-                                          _selectedProvince = value;
+                                          _state = value!;
                                         });
                                       },
                                       validator: (value) {
@@ -279,7 +282,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                 children: [
                                   Expanded(
                                     child: TextFormField(
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         suffixIcon: Icon(
                                           Icons.apartment_outlined,
                                           color: Colors.white,
@@ -303,12 +306,12 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       style: TextStyle(color: Colors.white),
                                       onChanged: (value) {
                                         setState(() {
-                                          _selectedCity = value;
+                                          _city = value;
                                         });
                                       },
                                     ),
                                   ),
-                                  SizedBox(width: 13.0.w),
+                                  SizedBox(width: 16.0.w),
                                   Expanded(
                                     child: TextFormField(
                                       decoration: InputDecoration(
@@ -334,7 +337,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       ),
                                       style: TextStyle(color: Colors.white),
                                       onChanged: (value) {
-                                        _businessName = value;
+                                        _address = value;
                                       },
                                     ),
                                   ),
@@ -372,7 +375,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         ),
                                         style: TextStyle(color: Colors.white),
                                         onChanged: (value) {
-                                          _businessName = value;
+                                          _title = value;
                                         },
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
@@ -382,7 +385,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         },
                                       ),
                                     ),
-                                    SizedBox(width: 13.0.w),
+                                    SizedBox(width: 16.0.w),
                                     Expanded(
                                       child: TextFormField(
                                         decoration: InputDecoration(
@@ -391,24 +394,24 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                             color: Colors.white,
                                           ),
                                           border: OutlineInputBorder(),
-                                          labelStyle:
-                                              TextStyle(color: Colors.white),
+                                          labelStyle: TextStyle(color: Colors.white),
                                           enabledBorder: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.white),
+                                            borderSide: BorderSide(color: Colors.white),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: YellowColor),
+                                            borderSide: BorderSide(color: YellowColor),
                                           ),
                                           labelText: "تعداد میز",
                                           helperText: "",
-                                          helperStyle:
-                                              TextStyle(color: Colors.white),
+                                          helperStyle: TextStyle(color: Colors.white),
                                         ),
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
                                         style: TextStyle(color: Colors.white),
                                         onChanged: (value) {
-                                          _businessOwnerFirstName = value;
+                                          _tables_count = int.parse(value);
                                         },
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
@@ -451,8 +454,11 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     ),
                                     style: TextStyle(color: Colors.white),
                                     keyboardType: TextInputType.number,
+                                        inputFormatters: <TextInputFormatter>[
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
                                     onChanged: (value) {
-                                      _businessOwnerPhone = int.tryParse(value);
+                                      _telephone_number = int.parse(value);
                                     },
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -461,7 +467,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       return null;
                                     },
                                   )),
-                                  SizedBox(width: 13.0.w),
+                                  SizedBox(width: 16.0.w),
                                   Expanded(
                                     child: TextFormField(
                                       decoration: InputDecoration(
@@ -487,7 +493,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       ),
                                       style: TextStyle(color: Colors.white),
                                       onChanged: (value) {
-                                        _businessName = value;
+                                        _instagram_page_link = value;
                                       },
                                     ),
                                   ),
@@ -568,14 +574,27 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   ),
                                   onPressed: () {
                                     if (_formKey.currentState!.validate()) {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return ConfirmationDialog(
-                                              phoneNumber:
-                                                  '$_businessOwnerPhone');
-                                        },
+                                      Store store = Store(
+                                        title: _title,
+                                        logo: _logo,
+                                        business_type: _business_type,
+                                        state: _state,
+                                        city: _city,
+                                        address: _address,
+                                        telephone_number: _telephone_number,
+                                        tables_count: _tables_count,
+                                        instagram_page_link: _instagram_page_link
                                       );
+
+                                      Get.toNamed(SubscriptionPage,arguments:[1,store]);
+
+                                      // showDialog(
+                                      //   context: context,
+                                      //   builder: (BuildContext context) {
+                                      //     return ConfirmationDialog(
+                                      //         phoneNumber: '$_telephone_number');
+                                      //   },
+                                      // );
                                     }
                                   },
                                   child: Text(
