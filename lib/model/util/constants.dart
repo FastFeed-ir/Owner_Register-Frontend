@@ -8,4 +8,7 @@ var options = BaseOptions(
   connectTimeout: const Duration(seconds: 50),
   receiveTimeout: const Duration(seconds: 50),
   contentType: 'application/json',
+  headers: {
+    "Authorization": "Token a9fdf10516ea0d626f84408a4f032c890648cdea",
+  },
 );
