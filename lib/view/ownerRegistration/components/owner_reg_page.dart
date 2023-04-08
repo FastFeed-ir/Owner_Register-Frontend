@@ -177,7 +177,6 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           color: Colors.white,
                                         ),
                                         border: OutlineInputBorder(),
-                                        errorStyle: TextStyle(fontSize: 10),
                                         labelStyle:
                                             TextStyle(color: Colors.white),
                                         enabledBorder: OutlineInputBorder(
@@ -219,10 +218,11 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       },
                                     ),
                                   ),
-                                  SizedBox(width: 13.0.w),
+                                  SizedBox(width: 16.0.w),
                                   Expanded(
                                     child: DropdownButtonFormField<String>(
                                       menuMaxHeight: 200,
+                                      style: TextStyle(fontSize: 15.w),
                                       decoration: InputDecoration(
                                         labelText: 'انتخاب استان',
                                         helperText: "",
@@ -308,7 +308,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       },
                                     ),
                                   ),
-                                  SizedBox(width: 13.0.w),
+                                  SizedBox(width: 16.0.w),
                                   Expanded(
                                     child: TextFormField(
                                       decoration: InputDecoration(
@@ -382,7 +382,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         },
                                       ),
                                     ),
-                                    SizedBox(width: 13.0.w),
+                                    SizedBox(width: 16.0.w),
                                     Expanded(
                                       child: TextFormField(
                                         decoration: InputDecoration(
@@ -461,7 +461,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       return null;
                                     },
                                   )),
-                                  SizedBox(width: 13.0.w),
+                                  SizedBox(width: 16.0.w),
                                   Expanded(
                                     child: TextFormField(
                                       decoration: InputDecoration(
