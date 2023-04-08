@@ -13,8 +13,8 @@ import 'package:FastFeed/model/entity/store.dart';
 
 class VerifySubscriptonScreen extends StatefulWidget {
   var subscription = Get.arguments;
-
-  VerifySubscriptonScreen({super.key});
+  VerifySubscriptonScreen({super.key,required this.store});
+  Store store;
 
   @override
   State<VerifySubscriptonScreen> createState() => _VerifySubScreenState();
@@ -32,6 +32,8 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
   final _viewModel = SubscriptionViewModel();
   final _storeViewModel = StoreViewModel();
 
+  Store get store => widget.store;
+
   @override
   void initState() {
     // TODO isEdit, storeId
@@ -42,6 +44,8 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
     if (price == 0) tax = 0;
     totalCost = price + tax;
     pageType = widget.subscription[4];
+    // Store store = widget.store;
+
   }
 
   @override
@@ -148,13 +152,14 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
                 onPressed: () {
                   // ToDo Get To Bank Gateway then Get To SuccessfulPurchase or UnSuccessfulPurchasePage
                   if(pageType[0] == 1){ // Store
+                    _storeViewModel.addStore(store);
+
                     _addSubscripton();
                     // Store store = pageType[1];
                     // store.title
-                    _storeViewModel.addStore(store);
-                    // TODO send Store Api with add function
                     Get.toNamed(SuccessfulPurchasePage,arguments: [period, totalCost, /*store.title*/],);
                   }else{ // revival
+                    _storeViewModel.editStore(store);
                     _editSubscripton();
                     Get.toNamed(HomePage);
                   }
