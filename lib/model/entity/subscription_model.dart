@@ -1,17 +1,17 @@
 class SubscriptionModel {
   int? id;
-  late int storeId;
-  late String period;
-  late double amount;
-  late String url;
-  late String startDate;
+  int? storeId;
+  String? period;
+  double? price;
+  String? url;
+  String? startDate;
   SubscriptionModel({
     this.id,
-    required this.storeId,
-    required this.period,
-    required this.amount,
-    required this.url,
-    required this.startDate,
+    this.storeId,
+    this.period,
+    this.price,
+    this.url,
+    this.startDate,
   });
 
   factory SubscriptionModel.fromJson(Map<String, dynamic> json) {
@@ -19,7 +19,7 @@ class SubscriptionModel {
       id: json['id'],
       storeId: json['store'],
       period: json['period'],
-      amount: double.parse(json['amount']),
+      price: double.parse(json['price']),
       url: json['url'],
       startDate: json['start_date'],
     );
@@ -28,7 +28,7 @@ class SubscriptionModel {
   Map<String, dynamic> toJson() => {
     'store': storeId,
     'period': period,
-    'amount':amount,
+    'price':price,
     'url': url,
     'start_date':startDate,
   };
