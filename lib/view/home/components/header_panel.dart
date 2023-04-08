@@ -130,11 +130,16 @@ Widget subsMenu(String? text) {
       backgroundColor: WhiteColor,
     ),
     child: Wrap(
-      alignment: WrapAlignment.spaceAround,
+      alignment: WrapAlignment.spaceBetween,
       children: [
         RichText(
           text: TextSpan(
             children: [
+              WidgetSpan(
+                child: SizedBox(
+                  width: 8.0.w,
+                ),
+              ),
               WidgetSpan(
                 child: Icon(Icons.assignment_outlined,
                     color: BlackColor, size: 30.r),
