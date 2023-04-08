@@ -6,8 +6,13 @@ import 'package:FastFeed/view/maskgroup/components/maskGroup.dart';
 import 'view/contact_about_rules/components/about.dart';
 import 'view/contact_about_rules/components/contactus.dart';
 import 'view/contact_about_rules/components/rules.dart';
+import 'view/home/components/homePage.dart';
+import 'view/home/components/restaurant_list.dart';
 import 'view/ownerRegistration/components/owner_reg_page.dart';
 import 'view/subscription/components/subscription.dart';
+import 'view/subscription/components/successful_purchase.dart';
+import 'view/subscription/components/unsuccessful_purchase.dart';
+import 'view/subscription/components/verify_subscription.dart';
 
 
 void main() {
@@ -30,8 +35,13 @@ class MyApp extends StatelessWidget {
             GetPage(name: RulesPage, page: ()=> RulesScreen()),
             GetPage(name: AboutPage, page: ()=> AboutScreen()),
             GetPage(name: ContactUsPage, page: ()=> ContactUsScreen()),
+            GetPage(name: HomePage, page: ()=> HomeScreen()),
             GetPage(name: OwnerRegisterPage, page: ()=> OwenerRegisterScreen()),
             GetPage(name: SubscriptionPage, page: ()=> SubscriptionScreen()),
+            GetPage(name: VerifySubscriptonPage, page: ()=> VerifySubscriptonScreen()),
+            GetPage(name: SuccessfulPurchasePage, page: ()=> SuccessfulPurchaseScreen()),
+            GetPage(name: UnSuccessfulPurchasePage, page: ()=> UnSuccessfulPurchaseScreen()),
+            GetPage(name: RestaurantListPage, page: ()=> RestaurantListScreen()),
           ],
           // title: 'FastFeed',
           initialRoute: MaskGroupPage,

@@ -4,6 +4,7 @@ import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:FastFeed/view/header_footer/components/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'Sub_style.dart';
 
 class SubscriptionScreen extends StatelessWidget {
@@ -13,7 +14,7 @@ class SubscriptionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: WhiteColor,
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -35,12 +36,12 @@ class Subscription extends StatelessWidget {
     // TODO: implement build
     return Container(
       padding: EdgeInsets.only(
-        left: 150.0.r,
-        top: 51.0.r,
-        right: 150.0.r,
+        left: 150.0.w,
+        top: 51.0.h,
+        right: 150.0.w,
       ),
       width: 1920.w,
-      //height: 1080.0.r,
+      height: 720.0.h,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -48,17 +49,17 @@ class Subscription extends StatelessWidget {
             child: TitleStyle(text: "خرید اشتراک "),
           ),
           SizedBox(
-            height: 20.r,
+            height: 20.h,
           ),
           ListView.builder(
             itemCount: SubscriptionList.length,
             shrinkWrap: true,
-            padding: EdgeInsets.only(left: 700.r,),
+            padding: EdgeInsets.only(left: 700.w,),
             itemBuilder: (BuildContext context, int index) {
               if(index == 0) {
                 free = YellowColor;
               } else {
-                free = Color(0xFFFFFFFF);
+                free = WhiteColor;
               }
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +67,7 @@ class Subscription extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: 800.w,
-                    height: 110.r,
+                    height: 110.h,
                     child: ListTile(
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -79,10 +80,9 @@ class Subscription extends StatelessWidget {
                           Icon(Icons.arrow_back_ios_new_rounded, color: BlackColor, size: 25.r,),
                         ],
                       ),
-                      // TO DO
+                      // TODO
                       onTap: () {
-                        // SubscriptionList[index].price for price
-                        print(SubscriptionList[index].price);
+                        Get.toNamed(VerifySubscriptonPage,arguments: [SubscriptionList[index].deadline,SubscriptionList[index].priceText,SubscriptionList[index].price,]);
                       },
                       shape: RoundedRectangleBorder(
                         //<-- SEE HERE
@@ -96,7 +96,7 @@ class Subscription extends StatelessWidget {
                       tileColor: free,
                     ),
                   ),
-                  SizedBox(height: 20.r,),
+                  SizedBox(height: 20.h,),
                 ],
               );
             },
