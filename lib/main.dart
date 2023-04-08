@@ -14,7 +14,6 @@ import 'view/subscription/components/successful_purchase.dart';
 import 'view/subscription/components/unsuccessful_purchase.dart';
 import 'view/subscription/components/verify_subscription.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: HomePage, page: ()=> HomeScreen()),
             GetPage(name: OwnerRegisterPage, page: ()=> OwenerRegisterScreen()),
             GetPage(name: SubscriptionPage, page: ()=> SubscriptionScreen()),
-            GetPage(name: VerifySubscriptonPage, page: ()=> VerifySubscriptonScreen()),
+            // GetPage(name: VerifySubscriptonPage, page: ()=> VerifySubscriptonScreen()),
             GetPage(name: SuccessfulPurchasePage, page: ()=> SuccessfulPurchaseScreen()),
             GetPage(name: UnSuccessfulPurchasePage, page: ()=> UnSuccessfulPurchaseScreen()),
             GetPage(name: RestaurantListPage, page: ()=> RestaurantListScreen()),
