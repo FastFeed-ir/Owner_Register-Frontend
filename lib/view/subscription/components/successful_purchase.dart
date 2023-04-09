@@ -16,16 +16,15 @@ class SuccessfulPurchaseScreen extends StatefulWidget {
 
 class _SuccessfulPurchaseState extends State<SuccessfulPurchaseScreen> {
   late String period = "";
-  late int price = 0;
+  late int amount = 0;
   late String storeName;
 
   @override
   void initState() {
     period = widget.subscription[0];
-    price = widget.subscription[1];
+    amount = widget.subscription[1];
     storeName = widget.subscription[2];
   }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -105,7 +104,7 @@ class _SuccessfulPurchaseState extends State<SuccessfulPurchaseScreen> {
                 PurchaseStyle(text: "مبلغ :"),
                 Row(
                   children: [
-                    PurchaseStyle(text: "${price}".seRagham()),
+                    PurchaseStyle(text: "${amount}".seRagham()),
                     PurchaseStyle(text: " تومان"),
                   ],
                 ),

@@ -16,13 +16,13 @@ class UnSuccessfulPurchaseScreen extends StatefulWidget {
 
 class _UnSuccessfulPurchaseState extends State<UnSuccessfulPurchaseScreen> {
   late String period = "";
-  late int price = 0;
+  late int amount = 0;
   late String storeName="";
 
   @override
   void initState() {
     period = widget.subscription[0];
-    price = widget.subscription[1];
+    amount = widget.subscription[1];
     storeName = widget.subscription[2];
   }
 
@@ -102,7 +102,7 @@ class _UnSuccessfulPurchaseState extends State<UnSuccessfulPurchaseScreen> {
                 PurchaseStyle(text: "مبلغ :"),
                 Row(
                   children: [
-                    PurchaseStyle(text: "${price}".seRagham()),
+                    PurchaseStyle(text: "${amount}".seRagham()),
                     PurchaseStyle(text: " تومان"),
                   ],
                 ),
