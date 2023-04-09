@@ -7,7 +7,7 @@ class Product {
   int? inventory;
   bool isAvailable;
   bool? isFeatured;
-  double discountPercentage;
+  double? discountPercentage;
   int collectionId;
   int storeId;
 
@@ -15,12 +15,12 @@ class Product {
     this.id,
     required this.title,
     this.image,
-    required this.description,
+    this.description,
     required this.unitPrice,
     this.inventory,
     required this.isAvailable,
     this.isFeatured,
-    required this.discountPercentage,
+    this.discountPercentage,
     required this.collectionId,
     required this.storeId,
   });
