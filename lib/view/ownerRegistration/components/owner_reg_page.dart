@@ -9,7 +9,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:FastFeed/utils/constants.dart';
-import 'package:FastFeed/view/verifyCode/components/verifyCode.dart';
 import '../../home/components/header_panel.dart';
 import '../../../model/entity/store.dart';
 
@@ -587,14 +586,6 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       );
 
                                       Get.toNamed(SubscriptionPage,arguments:[1,store]);
-
-                                      // showDialog(
-                                      //   context: context,
-                                      //   builder: (BuildContext context) {
-                                      //     return ConfirmationDialog(
-                                      //         phoneNumber: '$_telephone_number');
-                                      //   },
-                                      // );
                                     }
                                   },
                                   child: Text(
