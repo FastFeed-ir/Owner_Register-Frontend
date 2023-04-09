@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:FastFeed/utils/constants.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class ConfirmationDialog extends StatefulWidget {
   final String phoneNumber;
@@ -55,7 +57,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
     // print(code);
     // code to verify the confirmation code entered by the user
     //TODO send code for verification
-    Navigator.of(context).pop();
+    Get.toNamed(HomePage);
   }
 
   @override

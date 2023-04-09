@@ -1,6 +1,7 @@
 import 'package:FastFeed/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:FastFeed/view/login&signUp/component/login&signUp.dart';
 import 'package:get/get.dart';
 import 'HF_style.dart';
 
@@ -49,8 +50,15 @@ class Header extends StatelessWidget {
                   width: 257.0.w,
                   height: 72.0.h,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Get.toNamed(HomePage,arguments: ID);
+                    onPressed: () async {
+                      // Get.toNamed(HomePage);
+                      final String? phoneNumber = await showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return PhoneNumberDialog();
+                        },
+                      );
+                      print(phoneNumber);
                     },
                     style: buttonStyle_build(257, 72, 10, YellowColor),
                     child: HTextStyle(text: 'ورود / عضویت',),
