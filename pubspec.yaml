@@ -41,6 +41,7 @@ dependencies:
   persian_number_utility: ^1.1.3
   http: ^0.13.5
   image_picker: ^0.8.7+1
+  material_color_gen: ^2.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
