@@ -48,37 +48,40 @@ class CategoriesScreenState extends State<CategoriesScreen> {
           child: const Text('دسته بندی ها'),
         ),
       ),
-      body: Center(
-        child: SizedBox(
-          width: 600,
-          child: Material(
-            color: Colors.white,
-            elevation: 8.0,
-            shadowColor: Colors.grey,
-            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(height: 16.0),
-                  textFormField(_collectionTitleController, 'عنوان دسته بندی'),
-                  const SizedBox(height: 16.0),
-                  ElevatedButton(
-                    onPressed: _addCollection,
-                    child: const Text('افزودن دسته بندی'),
-                  ),
-                  const SizedBox(height: 16.0),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: _collections.length,
-                      itemBuilder: (context, index) {
-                        Collection collection = _collections[index];
-                        return expandedCard(collection, index);
-                      },
+      body: Directionality(
+        textDirection: TextDirection.ltr,
+        child: Center(
+          child: SizedBox(
+            width: 600,
+            child: Material(
+              color: Colors.white,
+              elevation: 8.0,
+              shadowColor: Colors.grey,
+              borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: 16.0),
+                    textFormField(_collectionTitleController, 'عنوان دسته بندی'),
+                    const SizedBox(height: 16.0),
+                    ElevatedButton(
+                      onPressed: _addCollection,
+                      child: const Text('افزودن دسته بندی'),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 16.0),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: _collections.length,
+                        itemBuilder: (context, index) {
+                          Collection collection = _collections[index];
+                          return expandedCard(collection, index);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
