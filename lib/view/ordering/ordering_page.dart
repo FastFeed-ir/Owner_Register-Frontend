@@ -55,9 +55,17 @@ class OrderPageState extends State<OrderPage> {
           Container(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: 'Enter your message',
                 border: OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.send),
+                  onPressed: () {
+                    String message = _textEditingController.text;
+                    sendMessage(message);
+                    _textEditingController.clear();
+                  },
+                ),
               ),
               onSubmitted: (message) {
                 sendMessage(message);
