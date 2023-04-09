@@ -1,16 +1,18 @@
 
 class Store{
-  String title;
+  int? id;
+  late String title;
   String? logo;
-  String business_type;
-  String state;
+  late String business_type;
+  late String state;
   String? city ;
   String? address ;
-  int telephone_number;
-  int tables_count;
+  late int telephone_number;
+  late int tables_count;
   String? instagram_page_link;
 
   Store({
+    this.id,
     required this.title,
     this.logo,
     required this.business_type,

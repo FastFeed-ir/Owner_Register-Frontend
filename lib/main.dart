@@ -14,7 +14,6 @@ import 'view/subscription/components/successful_purchase.dart';
 import 'view/subscription/components/unsuccessful_purchase.dart';
 import 'view/subscription/components/verify_subscription.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
