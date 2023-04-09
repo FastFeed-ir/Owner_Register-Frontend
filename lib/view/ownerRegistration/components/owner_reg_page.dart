@@ -613,15 +613,9 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         instagram_page_link:
                                             _instagram_page_link,
                                       );
+
                                       Get.toNamed(SubscriptionPage,
                                           arguments: store);
-                                      // showDialog(
-                                      //   context: context,
-                                      //   builder: (BuildContext context) {
-                                      //     return ConfirmationDialog(
-                                      //         phoneNumber: '$_telephone_number');
-                                      //   },
-                                      // );
                                     }
                                   },
                                   child: Text(
