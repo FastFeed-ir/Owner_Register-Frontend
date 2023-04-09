@@ -35,7 +35,9 @@ class Product {
         inventory: json['inventory'],
         isAvailable: json['is_available'],
         isFeatured: json['is_featured'],
-        discountPercentage: double.tryParse(json['discount_percentage']),
+        discountPercentage: json["discount_percentage"] == null
+            ? null
+            : double.parse(json["discount_percentage"]),
         collectionId: json['collection'],
         storeId: json['store']);
   }

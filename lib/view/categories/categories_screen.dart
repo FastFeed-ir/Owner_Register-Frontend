@@ -292,6 +292,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
       _viewModel.addProduct(product).asStream().listen((productId) {
         product.id = productId;
         setState(() {
+          collection.products ??= [];
           collection.products!.add(product);
           _productTitleController.clear();
           _productDescriptionController.clear();
