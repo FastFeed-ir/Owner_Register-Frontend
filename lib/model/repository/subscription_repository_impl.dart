@@ -7,15 +7,17 @@ import 'subscription_repository.dart';
 class SubscriptionRepositoryImpl extends SubscriptonRepository{
   var dio = Dio(options);
   @override
-  Future<List<SubscriptionModel>> getSubscription() async{
+  Future<List<SubscriptionModel>> getSubscription(int id) async{
     var response = await dio.get('subscriptions/');
-    print('response: ${response.statusMessage}');
+    print('response: ${response.statusMessage} responceCode: ${response.statusCode}');
     if(response.data is List){
       List<dynamic> dataList = response.data;
       List<SubscriptionModel> subscriptions = [];
       for(var data in dataList){
         if(data is Map<String, dynamic>){
-          subscriptions.add(SubscriptionModel.fromJson(data));
+          var sub = SubscriptionModel.fromJson(data);
+          if(sub.business_owner == id)
+            subscriptions.add(sub);
         }
       }
       return subscriptions;
@@ -27,7 +29,7 @@ class SubscriptionRepositoryImpl extends SubscriptonRepository{
   @override
   Future<void> addSubscription(SubscriptionModel subscription)  async{
     var response = await dio.post('subscriptions/',data: subscription);
-    print('response: ${response.statusMessage}');
+    print('add:  response: ${response.statusMessage}    data: ${response.data}');
   }
 
   @override
@@ -36,7 +38,7 @@ class SubscriptionRepositoryImpl extends SubscriptonRepository{
       'subscriptions/${subscription.id}/',
       data: subscription,
     );
-    print('response: ${response.statusMessage}');
+    print('edit:  response: ${response.statusMessage}    data: ${response.data}');
   }
 
   Future<void> deleteSubscription(SubscriptionModel subscription) async{
