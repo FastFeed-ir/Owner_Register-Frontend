@@ -1,14 +1,14 @@
 
 class Store{
   int? id;
-  String title;
+  late String title;
   String? logo;
-  String business_type;
-  String state;
+  late String business_type;
+  late String state;
   String? city ;
   String? address ;
-  int telephone_number;
-  int tables_count;
+  late int telephone_number;
+  late int tables_count;
   String? instagram_page_link;
 
   Store({
