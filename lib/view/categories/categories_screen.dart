@@ -277,10 +277,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
     var unitPrice = _productUnitPriceController.text.trim();
     var discountPercentage = _productDiscountPercentageController.text.trim();
     var inventory = _productInventoryController.text.trim();
-    if (title.isNotEmpty &&
-        unitPrice.isNotEmpty &&
-        discountPercentage.isNotEmpty &&
-        inventory.isNotEmpty) {
+    if (title.isNotEmpty && unitPrice.isNotEmpty) {
       Product product = Product(
         title: title,
         description: description,
@@ -294,7 +291,6 @@ class CategoriesScreenState extends State<CategoriesScreen> {
       _viewModel.addProduct(product).asStream().listen((productId) {
         product.id = productId;
         setState(() {
-          collection.products ??= [];
           collection.products!.add(product);
           _productTitleController.clear();
           _productDescriptionController.clear();
@@ -327,11 +323,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
     var unitPrice = _productUnitPriceController.text.trim();
     var discountPercentage = _productDiscountPercentageController.text.trim();
     var inventory = _productInventoryController.text.trim();
-    if (title.isNotEmpty &&
-        description.isNotEmpty &&
-        unitPrice.isNotEmpty &&
-        discountPercentage.isNotEmpty &&
-        inventory.isNotEmpty) {
+    if (title.isNotEmpty && unitPrice.isNotEmpty) {
       Product newProduct = Product(
         title: title,
         description: description,
