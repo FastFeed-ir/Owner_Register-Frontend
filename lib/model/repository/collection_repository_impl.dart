@@ -15,7 +15,11 @@ class CollectionRepositoryImpl extends CollectionRepository {
       List<Collection> collections = [];
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
-          collections.add(Collection.fromJson(data));
+          var collectionServer = Collection.fromJson(data);
+          //TODO fix storeId
+          if (collectionServer.storeId == 1) {
+            collections.add(collectionServer);
+          }
         }
       }
       return collections;
@@ -33,7 +37,11 @@ class CollectionRepositoryImpl extends CollectionRepository {
       List<Product> products = [];
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
-          products.add(Product.fromJson(data));
+          var productServer = Product.fromJson(data);
+          //TODO fix storeId
+          if (productServer.storeId == 1) {
+            products.add(productServer);
+          }
         }
       }
       return products;

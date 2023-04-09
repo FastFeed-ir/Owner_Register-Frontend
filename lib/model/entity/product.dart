@@ -9,6 +9,7 @@ class Product {
   bool? isFeatured;
   double discountPercentage;
   int collectionId;
+  int storeId;
 
   Product({
     this.id,
@@ -21,21 +22,22 @@ class Product {
     this.isFeatured,
     required this.discountPercentage,
     required this.collectionId,
+    required this.storeId,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
-      id: json['id'],
-      title: json['title'],
-      image: json['image'],
-      description: json['description'],
-      unitPrice: double.parse(json['unit_price']),
-      inventory: json['inventory'],
-      isAvailable: json['is_available'],
-      isFeatured: json['is_featured'],
-      discountPercentage: double.parse(json['discount_percentage']),
-      collectionId: json['collection'],
-    );
+        id: json['id'],
+        title: json['title'],
+        image: json['image'],
+        description: json['description'],
+        unitPrice: double.parse(json['unit_price']),
+        inventory: json['inventory'],
+        isAvailable: json['is_available'],
+        isFeatured: json['is_featured'],
+        discountPercentage: double.parse(json['discount_percentage']),
+        collectionId: json['collection'],
+        storeId: json['store']);
   }
 
   Map<String, dynamic> toJson() => {

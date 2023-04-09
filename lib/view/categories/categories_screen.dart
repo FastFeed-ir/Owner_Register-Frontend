@@ -2,6 +2,7 @@ import 'package:FastFeed/view/categories/components/text_form_field.dart';
 import 'package:FastFeed/view/categories/components/text_form_field_number.dart';
 import 'package:FastFeed/view_model/collection_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 
 import '../../model/entity/collection.dart';
 import '../../model/entity/product.dart';
@@ -35,8 +36,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
   @override
   void initState() {
     super.initState();
-    getCollections();
-    getProducts();
+    loadData();
   }
 
   @override
@@ -236,27 +236,22 @@ class CategoriesScreenState extends State<CategoriesScreen> {
     );
   }
 
-  void getCollections() {
+  void loadData() {
     _viewModel.getCollections();
-    _viewModel.collections.stream.listen((list) {
-      setState(() {
-        _collections.addAll(list);
-      });
-    });
-  }
-
-  void getProducts() {
     _viewModel.getProducts();
-    _viewModel.products.stream.listen((list) {
-      setState(() {
-        for (var collection in _collections) {
-          for (var product in list) {
-            if (product.collectionId == collection.id) {
-              collection.products = [];
-              collection.products!.add(product);
+    _viewModel.collections.stream.listen((listCollections) {
+      _viewModel.products.stream.listen((listProducts) {
+        setState(() {
+          _collections.addAll(listCollections);
+          for (var collection in _collections) {
+            collection.products = [];
+            for (var product in listProducts) {
+              if (product.collectionId == collection.id) {
+                collection.products!.add(product);
+              }
             }
           }
-        }
+        });
       });
     });
   }
@@ -289,10 +284,12 @@ class CategoriesScreenState extends State<CategoriesScreen> {
       Product product = Product(
         title: title,
         description: description,
-        unitPrice: double.parse(unitPrice),
+        unitPrice: double.parse(unitPrice.toEnglishDigit()),
         isAvailable: _checkBoxValue,
-        discountPercentage: double.parse(discountPercentage),
+        discountPercentage: double.parse(discountPercentage.toEnglishDigit()),
+        inventory: int.parse(inventory.toEnglishDigit()),
         collectionId: collection.id ?? 0,
+        storeId: widget.storeId,
       );
       _viewModel.addProduct(product).asStream().listen((productId) {
         product.id = productId;
@@ -325,19 +322,36 @@ class CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   void _editProduct(Collection collection, Product product) {
-    String title = _productTitleController.text.trim();
-    String description = _productDescriptionController.text.trim();
-    double? unitPrice =
-        double.tryParse(_productUnitPriceController.text.trim());
-    if (title.isNotEmpty && unitPrice != null) {
-      _viewModel.editProduct(product);
+    var title = _productTitleController.text.trim();
+    var description = _productDescriptionController.text.trim();
+    var unitPrice = _productUnitPriceController.text.trim();
+    var discountPercentage = _productDiscountPercentageController.text.trim();
+    var inventory = _productInventoryController.text.trim();
+    if (title.isNotEmpty &&
+        description.isNotEmpty &&
+        unitPrice.isNotEmpty &&
+        discountPercentage.isNotEmpty &&
+        inventory.isNotEmpty) {
+      Product newProduct = Product(
+        title: title,
+        description: description,
+        unitPrice: double.parse(unitPrice.toEnglishDigit()),
+        isAvailable: _checkBoxValue,
+        discountPercentage: double.parse(discountPercentage.toEnglishDigit()),
+        inventory: int.parse(inventory.toEnglishDigit()),
+        collectionId: collection.id ?? 0,
+        id: product.id,
+        storeId: widget.storeId,
+      );
+      _viewModel.editProduct(newProduct);
       setState(() {
-        product.title = title;
-        product.description = description;
-        product.unitPrice = unitPrice;
-        _productDescriptionController.clear();
+        var index = collection.products?.indexOf(product);
+        collection.products?.replaceRange(index!, index + 1, [newProduct]);
         _productTitleController.clear();
+        _productDescriptionController.clear();
         _productUnitPriceController.clear();
+        _productDiscountPercentageController.clear();
+        _productInventoryController.clear();
       });
       Navigator.pop(context);
     }
