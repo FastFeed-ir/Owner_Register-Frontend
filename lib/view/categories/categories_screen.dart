@@ -283,8 +283,9 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         description: description,
         unitPrice: double.parse(unitPrice.toEnglishDigit()),
         isAvailable: _checkBoxValue,
-        discountPercentage: double.parse(discountPercentage.toEnglishDigit()),
-        inventory: int.parse(inventory.toEnglishDigit()),
+        discountPercentage:
+            double.tryParse(discountPercentage.toEnglishDigit()),
+        inventory: int.tryParse(inventory.toEnglishDigit()),
         collectionId: collection.id ?? 0,
         storeId: widget.storeId,
       );
@@ -329,8 +330,9 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         description: description,
         unitPrice: double.parse(unitPrice.toEnglishDigit()),
         isAvailable: _checkBoxValue,
-        discountPercentage: double.parse(discountPercentage.toEnglishDigit()),
-        inventory: int.parse(inventory.toEnglishDigit()),
+        discountPercentage:
+            double.tryParse(discountPercentage.toEnglishDigit()),
+        inventory: int.tryParse(inventory.toEnglishDigit()),
         collectionId: collection.id ?? 0,
         id: product.id,
         storeId: widget.storeId,
