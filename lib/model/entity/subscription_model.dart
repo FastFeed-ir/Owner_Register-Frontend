@@ -1,15 +1,15 @@
 class SubscriptionModel {
   int? id;
   int? storeId;
-  String? period;
-  double? price;
+  late int period;
+  late double price;
   String? url;
   String? startDate;
   SubscriptionModel({
     this.id,
     this.storeId,
-    this.period,
-    this.price,
+    required this.period,
+    required this.price,
     this.url,
     this.startDate,
   });
