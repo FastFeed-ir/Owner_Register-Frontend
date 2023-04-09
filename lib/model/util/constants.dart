@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 const baseUrl = 'http://87.107.146.132:8050/';
 
-var options = BaseOptions(
+final options = BaseOptions(
   baseUrl: baseUrl,
   validateStatus: (status) => true,
   connectTimeout: const Duration(seconds: 50),
@@ -12,3 +12,5 @@ var options = BaseOptions(
     "Authorization": "Token a9fdf10516ea0d626f84408a4f032c890648cdea",
   },
 );
+
+final dio = Dio(options);
