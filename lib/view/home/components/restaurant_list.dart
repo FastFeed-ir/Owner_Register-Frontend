@@ -144,7 +144,7 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {Get.toNamed(CategoriesPage);},
                     child: SubButtonTextStyle(
                       text: 'تغییر منو',
                     ),

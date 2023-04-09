@@ -7,7 +7,7 @@ import 'package:get/get_core/src/get_main.dart';
 class ConfirmationDialog extends StatefulWidget {
   final String phoneNumber;
   ConfirmationDialog({required this.phoneNumber});
-
+  int ID = 1;
   @override
   _ConfirmationDialogState createState() => _ConfirmationDialogState();
 }
@@ -57,7 +57,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
     // print(code);
     // code to verify the confirmation code entered by the user
     //TODO send code for verification
-    Get.toNamed(HomePage);
+    Get.toNamed(HomePage, arguments: widget.ID);
   }
 
   @override

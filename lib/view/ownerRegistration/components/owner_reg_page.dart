@@ -239,7 +239,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   Expanded(
                                     child: DropdownButtonFormField<String>(
                                       menuMaxHeight: 200,
-                                      style: TextStyle(fontSize: 15.w),
+                                      style: TextStyle(fontSize: 20.w),
                                       decoration: InputDecoration(
                                         labelText: 'انتخاب استان',
                                         helperText: "",
@@ -520,7 +520,6 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   ),
                                 ],
                               ),
-
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
