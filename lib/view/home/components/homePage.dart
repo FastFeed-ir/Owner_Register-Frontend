@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import 'Home_style.dart';
 import 'header_panel.dart';
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
+  HomeScreen({Key? key}) : super(key: key);
+  int ID = Get.arguments;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -16,8 +16,8 @@ class HomeScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              HeaderPanel(),
-              Home(),
+              HeaderPanel(ID: ID),
+              Home(ID: ID),
               Footer(),
             ],
           ),
@@ -27,8 +27,8 @@ class HomeScreen extends StatelessWidget {
   }
 }
 class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
-
+  Home({Key? key, required this.ID}) : super(key: key);
+  int ID;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -59,7 +59,7 @@ class Home extends StatelessWidget {
                 child:
                   ElevatedButton(
                     onPressed: () {
-                      Get.toNamed(OwnerRegisterPage);
+                      Get.toNamed(OwnerRegisterPage, arguments: ID);
                     },
                     child: HomeTextStyle(text: "ثبت فروشگاه"),
                     style: buttonStyle_build(130, 100, 60, YellowColor),

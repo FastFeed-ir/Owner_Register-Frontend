@@ -9,12 +9,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:FastFeed/utils/constants.dart';
-import 'package:FastFeed/view/verifyCode/components/verifyCode.dart';
 import '../../home/components/header_panel.dart';
 import '../../../model/entity/store.dart';
 
 class OwenerRegisterScreen extends StatefulWidget {
-  const OwenerRegisterScreen({Key? key}) : super(key: key);
+  OwenerRegisterScreen({Key? key}) : super(key: key);
+  var ID = Get.arguments;
 
   @override
   _OwenerRegisterScreen createState() => _OwenerRegisterScreen();
@@ -29,8 +29,10 @@ class _OwenerRegisterScreen extends State<OwenerRegisterScreen> {
           child: Container(
             child: Column(
               children: [
-                HeaderPanel(),
-                OwnerRegister(),
+                HeaderPanel(ID : widget.ID),
+                OwnerRegister(
+                  Id: widget.ID,
+                ),
                 SizedBox(height: 20.r),
                 Footer(),
               ],
@@ -43,7 +45,8 @@ class _OwenerRegisterScreen extends State<OwenerRegisterScreen> {
 }
 
 class OwnerRegister extends StatefulWidget {
-  const OwnerRegister({Key? key}) : super(key: key);
+  OwnerRegister({Key? key, required this.Id}) : super(key: key);
+  var Id;
 
   @override
   State<OwnerRegister> createState() => _OwnerRegisterState();
@@ -51,7 +54,8 @@ class OwnerRegister extends StatefulWidget {
 
 class _OwnerRegisterState extends State<OwnerRegister> {
   //dropdown options for type of business
-  final List<String> _businessTypes = ['رستوران', 'کافه'];
+  var business_owner ;
+  final List<String> _businessTypes = ['انتخاب','رستوران', 'کافه'];
   final _formKey = GlobalKey<FormState>();
   XFile? image;
 
@@ -115,13 +119,16 @@ class _OwnerRegisterState extends State<OwnerRegister> {
 
 //form field variables
   late String _title;
-  String? _logo;
-  late String _business_type;
-  late String _state;
+  XFile? _logo;
+  late String _business_type_text;
+  late int _business_type;
+  late String _state_text;
+  late int _state;
   String? _city;
   String? _address;
-  late int _telephone_number;
-  late int _tables_count ;
+  late String _telephone_number;
+  late int _tables_count;
+
   String? _instagram_page_link;
 
   @override
@@ -201,7 +208,8 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       ),
                                       dropdownColor: YellowColor,
                                       value: _businessTypes[0],
-                                      items: _businessTypes.map((business_type) {
+                                      items:
+                                          _businessTypes.map((business_type) {
                                         return DropdownMenuItem(
                                           child: Text(
                                             business_type,
@@ -213,7 +221,10 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       }).toList(),
                                       onChanged: (value) {
                                         setState(() {
-                                          _business_type = value!;
+                                          _business_type_text = value!;
+                                          // TODO index of businestype
+                                          _business_type =
+                                              _businessTypes.indexOf(value);
                                         });
                                       },
                                       validator: (value) {
@@ -239,12 +250,15 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           color: Colors.white,
                                         ),
                                         border: OutlineInputBorder(),
-                                        labelStyle: TextStyle(color: Colors.white),
+                                        labelStyle:
+                                            TextStyle(color: Colors.white),
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(color: Colors.white),
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(color: YellowColor),
+                                          borderSide:
+                                              BorderSide(color: YellowColor),
                                         ),
                                       ),
                                       dropdownColor: YellowColor,
@@ -261,7 +275,10 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       }).toList(),
                                       onChanged: (value) {
                                         setState(() {
-                                          _state = value!;
+                                          _state_text = value!;
+                                          // TODO index of _state
+                                          _state =
+                                              Proviences.indexOf(value);
                                         });
                                       },
                                       validator: (value) {
@@ -394,16 +411,20 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                             color: Colors.white,
                                           ),
                                           border: OutlineInputBorder(),
-                                          labelStyle: TextStyle(color: Colors.white),
+                                          labelStyle:
+                                              TextStyle(color: Colors.white),
                                           enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(color: Colors.white),
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(color: YellowColor),
+                                            borderSide:
+                                                BorderSide(color: YellowColor),
                                           ),
                                           labelText: "تعداد میز",
                                           helperText: "",
-                                          helperStyle: TextStyle(color: Colors.white),
+                                          helperStyle:
+                                              TextStyle(color: Colors.white),
                                         ),
                                         keyboardType: TextInputType.number,
                                         inputFormatters: <TextInputFormatter>[
@@ -454,11 +475,11 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     ),
                                     style: TextStyle(color: Colors.white),
                                     keyboardType: TextInputType.number,
-                                        inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly
-                                        ],
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
                                     onChanged: (value) {
-                                      _telephone_number = int.parse(value);
+                                      _telephone_number = value;
                                     },
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -510,18 +531,22 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           children: [
                                             ElevatedButton(
                                                 style: ButtonStyle(
-                                                    backgroundColor:
-                                                        MaterialStateProperty.all<Color>(
-                                                            Colors.transparent),
-                                                    shape: MaterialStateProperty.all<
-                                                            RoundedRectangleBorder>(
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    5),
-                                                            side: BorderSide(
-                                                                color: Colors
-                                                                    .white)))),
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all<
+                                                              Color>(
+                                                          Colors.transparent),
+                                                  shape:
+                                                      MaterialStateProperty.all<
+                                                          RoundedRectangleBorder>(
+                                                    RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                      side: BorderSide(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ),
                                                 onPressed: () {
                                                   myAlert();
                                                 },
@@ -574,7 +599,9 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   ),
                                   onPressed: () {
                                     if (_formKey.currentState!.validate()) {
+                                      business_owner = widget.Id;
                                       Store store = Store(
+                                        business_owner: business_owner,
                                         title: _title,
                                         logo: _logo,
                                         business_type: _business_type,
@@ -583,11 +610,11 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         address: _address,
                                         telephone_number: _telephone_number,
                                         tables_count: _tables_count,
-                                        instagram_page_link: _instagram_page_link
+                                        instagram_page_link:
+                                            _instagram_page_link,
                                       );
-
-                                      Get.toNamed(SubscriptionPage,arguments:[1,store]);
-
+                                      Get.toNamed(SubscriptionPage,
+                                          arguments: store);
                                       // showDialog(
                                       //   context: context,
                                       //   builder: (BuildContext context) {
