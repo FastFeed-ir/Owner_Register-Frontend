@@ -26,7 +26,8 @@ String VerifySubscriptonPage = "/verifySubscriptonPage";
 String SuccessfulPurchasePage = "/successfulPurchasePage";
 String UnSuccessfulPurchasePage = "/unSuccessfulPurchasePage";
 String RestaurantListPage = "/restaurantListPage";
-
+String CategoriesPage = "/categoriesPage";
+String PhoneNumbePage = "/phoneNumbePage";
 //Strings, Names, Address
 const AppName = "فست فید";
 const AppNameEn = "FastFeed";
@@ -62,6 +63,7 @@ String RulesPhrase =
     "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه \nروزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود\n ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را\n می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی \nایجاد کرد."
 ;
 List<String> Proviences = [
+  'انتخاب',
   'آذربایجان شرقی',
   'آذربایجان غربی',
   'اردبیل',

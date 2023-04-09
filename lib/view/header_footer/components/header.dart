@@ -7,7 +7,6 @@ import 'HF_style.dart';
 
 class Header extends StatelessWidget {
   Header({Key? key}) : super(key: key);
-  int ID = 1;
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -1,3 +1,5 @@
+import 'package:FastFeed/view/categories/categories_screen.dart';
+import 'package:FastFeed/view/login&signUp/component/login&signUp.dart';
 import 'package:FastFeed/view/maskgroup/components/maskGroup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +16,7 @@ import 'view/subscription/components/subscription.dart';
 import 'view/subscription/components/successful_purchase.dart';
 import 'view/subscription/components/unsuccessful_purchase.dart';
 import 'view/subscription/components/verify_subscription.dart';
+import 'package:material_color_gen/material_color_gen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,15 +52,25 @@ class MyApp extends StatelessWidget {
                 name: UnSuccessfulPurchasePage,
                 page: () => UnSuccessfulPurchaseScreen()),
             GetPage(
-                name: RestaurantListPage, page: () => RestaurantListScreen()),
+              name: RestaurantListPage,
+              page: () => RestaurantListScreen(),
+            ),
+            GetPage(
+              name: CategoriesPage,
+              page: () => CategoriesScreen(storeId: 1),
+            ),
+            GetPage(
+              name: PhoneNumbePage,
+              page: () => PhoneNumberDialog(),
+            ),
           ],
           // title: 'FastFeed',
           initialRoute: MaskGroupPage,
           textDirection: TextDirection.rtl,
           defaultTransition: Transition.noTransition,
           theme: ThemeData(
-              //TODO set primary color
-              primarySwatch: Colors.deepOrange),
+            primarySwatch: YellowColor.toMaterialColor(),
+          ),
           debugShowCheckedModeBanner: false,
           builder: (context, child) {
             return MediaQuery(
