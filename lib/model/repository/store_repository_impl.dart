@@ -7,15 +7,17 @@ class StoreRepositoryImpl extends StoreRepository {
   var dio = Dio(options);
 
   @override
-  Future<List<Store>> getStores() async {
+  Future<List<Store>> getStores(int id) async {
     var response = await dio.get('stores/');
-    print('response: ${response.statusMessage}');
+    print('response: ${response.statusMessage}   responceCode: ${response.statusCode}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
       List<Store> stores = [];
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
-          stores.add(Store.fromJson(data));
+          var store = Store.fromJson(data);
+          if(store.business_owner == id)
+          stores.add(store);
         }
       }
       return stores;
@@ -24,12 +26,15 @@ class StoreRepositoryImpl extends StoreRepository {
     }
   }
   @override
-  Future<void> addStore(Store store) async {
+  Future<Store> addStore(Store store) async {
     var response = await dio.post(
       'stores/',
       data: store,
     );
     print('response: ${response.statusMessage}');
+    print('response: ${response.data}');
+    final newStore = Store.fromJson(response.data);
+    return newStore;
   }
   @override
   Future<void> editStore(Store store) async {
