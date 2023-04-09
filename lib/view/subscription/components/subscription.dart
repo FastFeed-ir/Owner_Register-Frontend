@@ -1,7 +1,7 @@
 import 'package:FastFeed/utils/constants.dart';
 import 'package:FastFeed/view/contact_about_rules/components/ACR_style.dart';
 import 'package:FastFeed/view/header_footer/components/footer.dart';
-import 'package:FastFeed/view/header_footer/components/header.dart';
+import 'package:FastFeed/view/home/components/header_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,13 +9,11 @@ import 'Sub_style.dart';
 
 class SubscriptionScreen extends StatefulWidget {
   var pageType = Get.arguments;
-
   @override
   State<SubscriptionScreen> createState() => _SubscriptionScreenState();
 }
 
 class _SubscriptionScreenState extends State<SubscriptionScreen> {
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,7 +22,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Header(),
+              HeaderPanel(ID: 4),
               subscription(),
               Footer(),
             ],
@@ -76,7 +74,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            SubscriptionList[index].priceText,
+                            SubscriptionList[index].amountText,
                             style: TextStyle(color: RedColor, fontSize: 28.sp,fontFamily: "IranSansWeb"),
                           ),
                           Icon(Icons.arrow_back_ios_new_rounded, color: BlackColor, size: 25.r,),
@@ -84,7 +82,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       ),
                       // TODO
                       onTap: () {
-                        Get.toNamed(VerifySubscriptonPage,arguments: [SubscriptionList[index].periodText, SubscriptionList[index].period,SubscriptionList[index].priceText,SubscriptionList[index].price,widget.pageType]);
+                        Get.toNamed(VerifySubscriptonPage,arguments: [SubscriptionList[index].periodText, SubscriptionList[index].period,SubscriptionList[index].amountText,SubscriptionList[index].amount,widget.pageType]);
                       },
                       shape: RoundedRectangleBorder(
                         //<-- SEE HERE

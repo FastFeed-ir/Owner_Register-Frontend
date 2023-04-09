@@ -23,9 +23,9 @@ class SubTypeTextStyle extends StatelessWidget {
 class SubscriptionItem{
   late String periodText;
   late int period;
-  late String priceText;
-  late int price;
-  SubscriptionItem(this.periodText, this.period,this.priceText, this.price,);
+  late String amountText;
+  late int amount;
+  SubscriptionItem(this.periodText, this.period,this.amountText, this.amount,);
 
 }
 List<SubscriptionItem> SubscriptionList =[

@@ -9,13 +9,14 @@ class StoreViewModel extends ChangeNotifier {
   StreamController<List<Store>> stores =
   StreamController<List<Store>>();
 
-  void getStores() async {
-    stores.add(await repository.getStores());
+  void getStores(int id) async {
+    stores.add(await repository.getStores(id));
     notifyListeners();
   }
-  void addStore(Store store) async {
-    repository.addStore(store);
+  Future<Store> addStore(Store store) async {
+    var newStore = await repository.addStore(store);
     notifyListeners();
+    return newStore;
   }
   void editStore(Store store) async {
     repository.editStore(store);

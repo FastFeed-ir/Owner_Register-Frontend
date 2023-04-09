@@ -1,18 +1,21 @@
+import 'package:image_picker/image_picker.dart';
 
 class Store{
   int? id;
-  late String title;
-  String? logo;
-  late String business_type;
-  late String state;
+  int? business_owner;
+  String? title;
+  XFile? logo;
+  int? business_type;
+  int? state;
   String? city ;
   String? address ;
-  late int telephone_number;
-  late int tables_count;
+  String? telephone_number;
+  int? tables_count;
   String? instagram_page_link;
 
   Store({
     this.id,
+    required this.business_owner,
     required this.title,
     this.logo,
     required this.business_type,
@@ -25,6 +28,8 @@ class Store{
 });
   factory Store.fromJson(Map<String, dynamic> json) {
     return Store(
+      id: json['id'],
+      business_owner: json['business_owner'],
       title: json['title'],
       logo: json['logo'],
       business_type: json['business_type'],
@@ -37,6 +42,7 @@ class Store{
     );
   }
   Map<String, dynamic> toJson() => {
+    'business_owner' : business_owner,
     'title': title,
     'logo': logo,
     'business_type': business_type,

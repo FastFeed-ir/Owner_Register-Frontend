@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import 'HF_style.dart';
 
 class Header extends StatelessWidget {
-  const Header({Key? key}) : super(key: key);
-
+  Header({Key? key}) : super(key: key);
+  int ID = 1;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -59,7 +59,6 @@ class Header extends StatelessWidget {
                         },
                       );
                       print(phoneNumber);
-
                     },
                     style: buttonStyle_build(257, 72, 10, YellowColor),
                     child: HTextStyle(text: 'ورود / عضویت',),

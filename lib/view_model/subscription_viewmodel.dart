@@ -7,8 +7,8 @@ class SubscriptionViewModel extends ChangeNotifier{
   var repository = SubscriptionRepositoryImpl();
   StreamController<List<SubscriptionModel>> subscriptions =
   StreamController<List<SubscriptionModel>>();
-  void getSubscriptions() async{
-    subscriptions.add(await repository.getSubscription());
+  void getSubscriptions(int id) async{
+    subscriptions.add(await repository.getSubscription(id));
     notifyListeners();
   }
   void addSubscriptions(SubscriptionModel subscription) async{

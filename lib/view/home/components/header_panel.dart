@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import '../../header_footer/components/HF_style.dart';
 
 class HeaderPanel extends StatelessWidget {
-  const HeaderPanel({Key? key}) : super(key: key);
-
+  HeaderPanel({Key? key, required this.ID}) : super(key: key);
+  int ID ;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -70,6 +70,8 @@ class HeaderPanel extends StatelessWidget {
   }
 }
 Widget profileMenu() {
+  // TODO get ID form Api ***
+  int id = 1;
   return PopupMenuButton(
     icon: Icon(
       Icons.person_outline,
@@ -79,7 +81,7 @@ Widget profileMenu() {
       if (choice == 'view_profile') {
         // TODO Get.toNamed(ProfilePage);
       } else if (choice == 'buy_subscription') {
-        Get.toNamed(OwnerRegisterPage);
+        Get.toNamed(OwnerRegisterPage, arguments: id);
       } else if (choice == 'exit') {
         //SharedPreferences prefs = await SharedPreferences.getInstance();
         //await prefs.remove('user.api_token');
@@ -124,8 +126,9 @@ Widget profileMenu() {
 }
 
 Widget subsMenu(String? text) {
+  int id = 1;
   return TextButton(
-    onPressed: () => Get.toNamed(RestaurantListPage),
+    onPressed: () => Get.toNamed(RestaurantListPage,arguments: id),
     style: TextButton.styleFrom(
       backgroundColor: WhiteColor,
     ),

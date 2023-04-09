@@ -1,19 +1,22 @@
-import 'package:FastFeed/view_model/collection_viewmodel.dart';
+import 'package:FastFeed/view/categories/components/text_form_field.dart';
+import 'package:FastFeed/view/categories/components/text_form_field_number.dart';
+import 'package:FastFeed/view_model/collection_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 
 import '../../model/entity/collection.dart';
 import '../../model/entity/product.dart';
 
-class CategoriesItem extends StatefulWidget {
-  const CategoriesItem({super.key, required this.storeId});
+class CategoriesScreen extends StatefulWidget {
+  const CategoriesScreen({super.key, required this.storeId});
 
   final int storeId;
 
   @override
-  CategoriesItemState createState() => CategoriesItemState();
+  CategoriesScreenState createState() => CategoriesScreenState();
 }
 
-class CategoriesItemState extends State<CategoriesItem> {
+class CategoriesScreenState extends State<CategoriesScreen> {
   final TextEditingController _collectionTitleController =
       TextEditingController();
   final TextEditingController _productTitleController = TextEditingController();
@@ -33,8 +36,7 @@ class CategoriesItemState extends State<CategoriesItem> {
   @override
   void initState() {
     super.initState();
-    getCollections();
-    getProducts();
+    loadData();
   }
 
   @override
@@ -46,34 +48,40 @@ class CategoriesItemState extends State<CategoriesItem> {
           child: const Text('دسته بندی ها'),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: _collectionTitleController,
-              decoration: const InputDecoration(
-                hintText: 'عنوان دسته بندی',
+      body: Center(
+        child: SizedBox(
+          width: 600,
+          child: Material(
+            color: Colors.white,
+            elevation: 8.0,
+            shadowColor: Colors.grey,
+            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 16.0),
+                  textFormField(_collectionTitleController, 'عنوان دسته بندی'),
+                  const SizedBox(height: 16.0),
+                  ElevatedButton(
+                    onPressed: _addCollection,
+                    child: const Text('افزودن دسته بندی'),
+                  ),
+                  const SizedBox(height: 16.0),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: _collections.length,
+                      itemBuilder: (context, index) {
+                        Collection collection = _collections[index];
+                        return expandedCard(collection, index);
+                      },
+                    ),
+                  ),
+                ],
               ),
-              onSubmitted: (_) => _addCollection(),
-              textAlign: TextAlign.right,
             ),
-            const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: _addCollection,
-              child: const Text('افزودن دسته بندی'),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _collections.length,
-                itemBuilder: (context, index) {
-                  Collection collection = _collections[index];
-                  return expandedCard(collection, index);
-                },
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -145,18 +153,7 @@ class CategoriesItemState extends State<CategoriesItem> {
         alignment: Alignment.centerRight,
         child: const Text('ویرایش دسته بندی'),
       ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextField(
-            controller: _collectionTitleController,
-            decoration: const InputDecoration(
-              hintText: 'عنوان',
-            ),
-            textAlign: TextAlign.right,
-          ),
-        ],
-      ),
+      content: textFormField(_collectionTitleController, 'عنوان'),
       actions: [
         TextButton(
           child: const Text('لغو'),
@@ -188,51 +185,16 @@ class CategoriesItemState extends State<CategoriesItem> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(
-              controller: _productTitleController,
-              decoration: const InputDecoration(
-                hintText: 'عنوان',
-              ),
-              textAlign: TextAlign.right,
-            ),
+            textFormField(_productTitleController, 'عنوان'),
             const SizedBox(height: 8.0),
-            TextField(
-              controller: _productDescriptionController,
-              decoration: const InputDecoration(
-                hintText: 'توضیحات',
-              ),
-              textAlign: TextAlign.right,
-            ),
+            textFormField(_productDescriptionController, 'توضیحات'),
             const SizedBox(height: 8.0),
-            TextField(
-              controller: _productUnitPriceController,
-              decoration: const InputDecoration(
-                hintText: 'قیمت',
-              ),
-              textAlign: TextAlign.right,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
+            textFormFieldNumber(_productUnitPriceController, 'قیمت'),
             const SizedBox(height: 8.0),
-            TextField(
-              controller: _productDiscountPercentageController,
-              decoration: const InputDecoration(
-                hintText: 'درصد تخفیف',
-              ),
-              textAlign: TextAlign.right,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
+            textFormFieldNumber(
+                _productDiscountPercentageController, 'درصد تخفیف'),
             const SizedBox(height: 8.0),
-            TextField(
-              controller: _productInventoryController,
-              decoration: const InputDecoration(
-                hintText: 'تعداد',
-              ),
-              textAlign: TextAlign.right,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-            ),
+            textFormFieldNumber(_productInventoryController, 'تعداد'),
             const SizedBox(height: 8.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -274,27 +236,22 @@ class CategoriesItemState extends State<CategoriesItem> {
     );
   }
 
-  void getCollections() {
+  void loadData() {
     _viewModel.getCollections();
-    _viewModel.collections.stream.listen((list) {
-      setState(() {
-        _collections.addAll(list);
-      });
-    });
-  }
-
-  void getProducts() {
     _viewModel.getProducts();
-    _viewModel.products.stream.listen((list) {
-      setState(() {
-        for (var collection in _collections) {
-          for (var product in list) {
-            if (product.collectionId == collection.id) {
-              collection.products = [];
-              collection.products!.add(product);
+    _viewModel.collections.stream.listen((listCollections) {
+      _viewModel.products.stream.listen((listProducts) {
+        setState(() {
+          _collections.addAll(listCollections);
+          for (var collection in _collections) {
+            collection.products = [];
+            for (var product in listProducts) {
+              if (product.collectionId == collection.id) {
+                collection.products!.add(product);
+              }
             }
           }
-        }
+        });
       });
     });
   }
@@ -304,10 +261,12 @@ class CategoriesItemState extends State<CategoriesItem> {
     int storeId = widget.storeId;
     if (title.isNotEmpty) {
       var collection = Collection(title: title, storeId: storeId);
-      _viewModel.addCollection(collection);
-      setState(() {
-        _collections.add(collection);
-        _collectionTitleController.clear();
+      _viewModel.addCollection(collection).asStream().listen((collectionId) {
+        collection.id = collectionId;
+        setState(() {
+          _collections.add(collection);
+          _collectionTitleController.clear();
+        });
       });
     }
   }
@@ -318,30 +277,32 @@ class CategoriesItemState extends State<CategoriesItem> {
     var unitPrice = _productUnitPriceController.text.trim();
     var discountPercentage = _productDiscountPercentageController.text.trim();
     var inventory = _productInventoryController.text.trim();
-    if (title.isNotEmpty &&
-        unitPrice.isNotEmpty &&
-        discountPercentage.isNotEmpty &&
-        inventory.isNotEmpty) {
+    if (title.isNotEmpty && unitPrice.isNotEmpty) {
       Product product = Product(
         title: title,
         description: description,
-        unitPrice: double.parse(unitPrice),
+        unitPrice: double.parse(unitPrice.toEnglishDigit()),
         isAvailable: _checkBoxValue,
-        discountPercentage: double.parse(discountPercentage),
+        discountPercentage:
+            double.tryParse(discountPercentage.toEnglishDigit()),
+        inventory: int.tryParse(inventory.toEnglishDigit()),
         collectionId: collection.id ?? 0,
+        storeId: widget.storeId,
       );
-      _viewModel.addProduct(product);
-      setState(() {
-        collection.products ??= [];
-        collection.products!.add(product);
-        _productTitleController.clear();
-        _productDescriptionController.clear();
-        _productUnitPriceController.clear();
-        _productDiscountPercentageController.clear();
-        _productInventoryController.clear();
-        _checkBoxValue = false;
+      _viewModel.addProduct(product).asStream().listen((productId) {
+        product.id = productId;
+        setState(() {
+          collection.products ??= [];
+          collection.products!.add(product);
+          _productTitleController.clear();
+          _productDescriptionController.clear();
+          _productUnitPriceController.clear();
+          _productDiscountPercentageController.clear();
+          _productInventoryController.clear();
+          _checkBoxValue = false;
+        });
+        Navigator.pop(context);
       });
-      Navigator.pop(context);
     }
   }
 
@@ -359,19 +320,33 @@ class CategoriesItemState extends State<CategoriesItem> {
   }
 
   void _editProduct(Collection collection, Product product) {
-    String title = _productTitleController.text.trim();
-    String description = _productDescriptionController.text.trim();
-    double? unitPrice =
-        double.tryParse(_productUnitPriceController.text.trim());
-    if (title.isNotEmpty && unitPrice != null) {
-      _viewModel.editProduct(product);
+    var title = _productTitleController.text.trim();
+    var description = _productDescriptionController.text.trim();
+    var unitPrice = _productUnitPriceController.text.trim();
+    var discountPercentage = _productDiscountPercentageController.text.trim();
+    var inventory = _productInventoryController.text.trim();
+    if (title.isNotEmpty && unitPrice.isNotEmpty) {
+      Product newProduct = Product(
+        title: title,
+        description: description,
+        unitPrice: double.parse(unitPrice.toEnglishDigit()),
+        isAvailable: _checkBoxValue,
+        discountPercentage:
+            double.tryParse(discountPercentage.toEnglishDigit()),
+        inventory: int.tryParse(inventory.toEnglishDigit()),
+        collectionId: collection.id ?? 0,
+        id: product.id,
+        storeId: widget.storeId,
+      );
+      _viewModel.editProduct(newProduct);
       setState(() {
-        product.title = title;
-        product.description = description;
-        product.unitPrice = unitPrice;
-        _productDescriptionController.clear();
+        var index = collection.products?.indexOf(product);
+        collection.products?.replaceRange(index!, index + 1, [newProduct]);
         _productTitleController.clear();
+        _productDescriptionController.clear();
         _productUnitPriceController.clear();
+        _productDiscountPercentageController.clear();
+        _productInventoryController.clear();
       });
       Navigator.pop(context);
     }

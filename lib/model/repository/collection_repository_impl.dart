@@ -1,5 +1,4 @@
 import 'package:FastFeed/model/entity/product.dart';
-import 'package:dio/dio.dart';
 
 import '../entity/collection.dart';
 import '../util/constants.dart';
@@ -7,8 +6,6 @@ import 'collection_repository.dart';
 
 // ignore_for_file: avoid_print
 class CollectionRepositoryImpl extends CollectionRepository {
-  var dio = Dio(options);
-
   @override
   Future<List<Collection>> getCollections() async {
     var response = await dio.get('collections/');
@@ -18,7 +15,11 @@ class CollectionRepositoryImpl extends CollectionRepository {
       List<Collection> collections = [];
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
-          collections.add(Collection.fromJson(data));
+          var collectionServer = Collection.fromJson(data);
+          //TODO fix storeId
+          if (collectionServer.storeId == 1) {
+            collections.add(collectionServer);
+          }
         }
       }
       return collections;
@@ -36,7 +37,11 @@ class CollectionRepositoryImpl extends CollectionRepository {
       List<Product> products = [];
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
-          products.add(Product.fromJson(data));
+          var productServer = Product.fromJson(data);
+          //TODO fix storeId
+          if (productServer.storeId == 1) {
+            products.add(productServer);
+          }
         }
       }
       return products;
@@ -46,21 +51,25 @@ class CollectionRepositoryImpl extends CollectionRepository {
   }
 
   @override
-  Future<void> addCollection(Collection collection) async {
+  Future<Collection> addCollection(Collection collection) async {
     var response = await dio.post(
       'collections/',
       data: collection,
     );
     print('response: ${response.statusMessage}');
+    final newCollection = Collection.fromJson(response.data);
+    return newCollection;
   }
 
   @override
-  Future<void> addProduct(Product product) async {
+  Future<Product> addProduct(Product product) async {
     var response = await dio.post(
       'products/',
       data: product,
     );
     print('response: ${response.statusMessage}');
+    final newProduct = Product.fromJson(response.data);
+    return newProduct;
   }
 
   @override
