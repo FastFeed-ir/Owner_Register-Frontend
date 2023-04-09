@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: HomePage, page: ()=> HomeScreen()),
             GetPage(name: OwnerRegisterPage, page: ()=> OwenerRegisterScreen()),
             GetPage(name: SubscriptionPage, page: ()=> SubscriptionScreen()),
-            // GetPage(name: VerifySubscriptonPage, page: ()=> VerifySubscriptonScreen()),
+            GetPage(name: VerifySubscriptonPage, page: ()=> VerifySubscriptonScreen()),
             GetPage(name: SuccessfulPurchasePage, page: ()=> SuccessfulPurchaseScreen()),
             GetPage(name: UnSuccessfulPurchasePage, page: ()=> UnSuccessfulPurchaseScreen()),
             GetPage(name: RestaurantListPage, page: ()=> RestaurantListScreen()),
