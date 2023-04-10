@@ -11,9 +11,10 @@ class SubscriptionViewModel extends ChangeNotifier{
     subscriptions.add(await repository.getSubscription(id));
     notifyListeners();
   }
-  void addSubscriptions(SubscriptionModel subscription) async{
-    repository.addSubscription(subscription);
+  Future<int?> addSubscriptions(SubscriptionModel subscription) async{
+    var code = await repository.addSubscription(subscription);
     notifyListeners();
+    return code;
   }
   void editSubscriptions(SubscriptionModel subscription) async{
     repository.editSubscription(subscription);

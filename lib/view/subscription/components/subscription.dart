@@ -22,7 +22,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              HeaderPanel(ID: 4),
+              // TODO get ID
+              HeaderPanel(ID: 1),
               subscription(),
               Footer(),
             ],
@@ -82,7 +83,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       ),
                       // TODO
                       onTap: () {
-                        Get.toNamed(VerifySubscriptonPage,arguments: [SubscriptionList[index].periodText, SubscriptionList[index].period,SubscriptionList[index].amountText,SubscriptionList[index].amount,widget.pageType]);
+                        Get.toNamed(VerifySubscriptonPage,arguments: [SubscriptionList[index].periodText, SubscriptionList[index].period,SubscriptionList[index].amountText,SubscriptionList[index].amount,widget.pageType,]);
                       },
                       shape: RoundedRectangleBorder(
                         //<-- SEE HERE

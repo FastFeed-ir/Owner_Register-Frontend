@@ -27,9 +27,10 @@ class SubscriptionRepositoryImpl extends SubscriptonRepository{
   }
 
   @override
-  Future<void> addSubscription(SubscriptionModel subscription)  async{
+  Future<int?> addSubscription(SubscriptionModel subscription)  async{
     var response = await dio.post('subscriptions/',data: subscription);
     print('add:  response: ${response.statusMessage}    data: ${response.data}');
+    return response.statusCode;
   }
 
   @override

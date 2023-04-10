@@ -1,5 +1,6 @@
 import 'package:FastFeed/utils/constants.dart';
 import 'package:FastFeed/view/header_footer/components/footer.dart';
+import 'package:FastFeed/view/home/components/header_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,6 @@ import '../../../model/entity/store.dart';
 import '../../../model/entity/subscription_model.dart';
 import '../../../view_model/store_viewmodel.dart';
 import '../../../view_model/subscription_viewmodel.dart';
-import '../../header_footer/components/header.dart';
 import 'Sub_style.dart';
 
 class VerifySubscriptonScreen extends StatefulWidget {
@@ -55,7 +55,8 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Header(),
+              // TODO get ID
+              HeaderPanel(ID: 1),
               verifySubscripton(),
               Footer(),
             ],
@@ -153,25 +154,21 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
                   if (pageType is Store) {
                     // Store
                     Store store = pageType;
-                    _storeViewModel.addStore(store).asStream().listen((event) {
+                    _storeViewModel.addStore(store).asStream().listen((event) async {
                       storeId = event.id ?? 0;
                       storeName = event.title ?? '';
+                      _business_owner = store.business_owner?? 0;
                       _addSubscripton();
                     });
-                    _business_owner = store.business_owner!;
-                    Get.toNamed(
-                      SuccessfulPurchasePage,
-                      arguments: [period, totalCost, storeName],
-                    );
                     // TODO send Store Api with add function
                   } else {
                     // revival
                     SubscriptionModel sub = pageType;
-                    ID = sub.id!;
-                    _business_owner = sub.business_owner!;
+                    ID = sub.id ?? 0;
+                    _business_owner = sub.business_owner ?? 0;
                     storeId = sub.store!;
                     _editSubscripton();
-                    Get.toNamed(HomePage);
+                    Get.toNamed(HomePage,arguments: _business_owner);
                   }
                   //Get.toNamed(UnSuccessfulPurchasePage,arguments: [period, amount+tax],);
                 },
@@ -196,7 +193,16 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
       period: period,
       amount: amount,
     );
-    _viewModel.addSubscriptions(subscription);
+    _viewModel.addSubscriptions(subscription).asStream().listen((event) {
+      print(event);
+      if(event == 201 ){
+        Get.toNamed(
+          SuccessfulPurchasePage,
+          arguments: [period, totalCost, storeName, business_owner],
+        );
+      }
+    });
+
   }
 
   void _editSubscripton() {
@@ -213,6 +219,5 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
       amount: amount,
     );
     _viewModel.editSubscriptions(subscription);
-    //Navigator.pop(context);
   }
 }

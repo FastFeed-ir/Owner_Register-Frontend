@@ -15,15 +15,17 @@ class SuccessfulPurchaseScreen extends StatefulWidget {
 }
 
 class _SuccessfulPurchaseState extends State<SuccessfulPurchaseScreen> {
-  late String period = "";
+
+  late int period ;
   late int amount = 0;
   late String storeName;
-
+  late int business_owner;
   @override
   void initState() {
     period = widget.subscription[0];
     amount = widget.subscription[1];
     storeName = widget.subscription[2];
+    business_owner = widget.subscription[3];
   }
   @override
   Widget build(BuildContext context) {
@@ -140,7 +142,12 @@ class _SuccessfulPurchaseState extends State<SuccessfulPurchaseScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 PurchaseStyle(text: "مدت اشتراک :"),
-                PurchaseStyle(text: period),
+                Row(
+                  children: [
+                    PurchaseStyle(text: "${period/30}"),
+                    PurchaseStyle(text: " ماه"),
+                  ],
+                ),
               ],
             ),
             SizedBox(
@@ -162,6 +169,7 @@ class _SuccessfulPurchaseState extends State<SuccessfulPurchaseScreen> {
                 ElevatedButton(
                   onPressed: () {
                     // ToDO Get QR Code
+                    Get.toNamed(HomePage, arguments: business_owner);
                   },
                   child: SubBuyTextStyle(text: "دریافت QR"),
                   style: buttonStyle_build(396, 70, 10, YellowColor),
