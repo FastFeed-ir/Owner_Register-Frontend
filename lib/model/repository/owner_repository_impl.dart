@@ -25,17 +25,20 @@ class OwnerRepositoryImpl extends OwnerRepository {
     }
   }
   @override
-  Future<void> addOwner(Owner owner) async {
+  Future<Owner> addOwner(Owner owner) async {
     var response = await dio.post(
-      'stores/',
+      'owners/',
       data: owner,
     );
     print('response: ${response.statusMessage}');
+    print('response: ${response.data}');
+    final newOwner = Owner.fromJson(response.data);
+    return newOwner;
   }
   @override
   Future<void> editOwner(Owner owner) async {
     var response = await dio.patch(
-      'stores/${owner.id}/',
+      'owners/${owner.id}/',
       data: owner,
     );
     print('response: ${response.statusMessage}');
@@ -43,7 +46,7 @@ class OwnerRepositoryImpl extends OwnerRepository {
   @override
   Future<void> deleteOwner(Owner owner) async {
     var response = await dio.delete(
-      'stores/${owner.id}/',
+      'owners/${owner.id}/',
     );
     print('response: ${response.statusMessage}');
   }

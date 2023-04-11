@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:FastFeed/utils/constants.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import '../../../model/entity/owner.dart';
+import '../../../view_model/owner_viewmodel.dart';
 
 class ConfirmationDialog extends StatefulWidget {
   final String phoneNumber;
@@ -22,6 +24,9 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
   // final _codeController = TextEditingController();
   Timer? _timer;
   int _resendSeconds = 100;
+
+  final _viewModel = OwnerViewModel();
+  final List<Owner> _owners = [];
 
   @override
   void initState() {
@@ -57,7 +62,26 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
     // print(code);
     // code to verify the confirmation code entered by the user
     //TODO send code for verification
-    Get.toNamed(HomePage, arguments: widget.ID);
+    _viewModel.getOwners();
+    _viewModel.owners.stream.listen((list) {
+      setState(() {
+        _owners.addAll(list);
+      });
+      bool temp = false;
+      for (Owner i in _owners) {
+        if (i.phone_number == widget.phoneNumber) {
+          temp = true;
+          //TODO change widget.ID to i.id
+          Get.toNamed(HomePage, arguments: widget.ID);
+        }
+      }
+      if (temp==false) {
+        Owner owner = Owner(phone_number: widget.phoneNumber);
+        _viewModel.addOwner(owner);
+        //TODO change widget.ID to owner.id
+        Get.toNamed(HomePage, arguments: widget.ID);
+      }
+    });
   }
 
   @override
@@ -153,7 +177,9 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
         maxLength: 1,
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
-        style: TextStyle(fontFamily: 'IranSansWeb',),
+        style: TextStyle(
+          fontFamily: 'IranSansWeb',
+        ),
         decoration: InputDecoration(
           counter: SizedBox.shrink(),
           border: OutlineInputBorder(),
