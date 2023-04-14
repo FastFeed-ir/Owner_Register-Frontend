@@ -13,7 +13,7 @@ class Header extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(
         150.0.w,
         12.0.h,
-        143.0.w,
+        120.0.w,
         12.0.h,
       ),
       decoration: const BoxDecoration(
