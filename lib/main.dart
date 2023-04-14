@@ -39,30 +39,14 @@ class MyApp extends StatelessWidget {
             GetPage(name: AboutPage, page: () => AboutScreen()),
             GetPage(name: ContactUsPage, page: () => ContactUsScreen()),
             GetPage(name: HomePage, page: () => HomeScreen()),
-            GetPage(
-                name: OwnerRegisterPage, page: () => OwenerRegisterScreen()),
+            GetPage(name: OwnerRegisterPage, page: () => OwenerRegisterScreen()),
             GetPage(name: SubscriptionPage, page: () => SubscriptionScreen()),
-            GetPage(
-                name: VerifySubscriptonPage,
-                page: () => VerifySubscriptonScreen()),
-            GetPage(
-                name: SuccessfulPurchasePage,
-                page: () => SuccessfulPurchaseScreen()),
-            GetPage(
-                name: UnSuccessfulPurchasePage,
-                page: () => UnSuccessfulPurchaseScreen()),
-            GetPage(
-              name: RestaurantListPage,
-              page: () => RestaurantListScreen(),
-            ),
-            GetPage(
-              name: CategoriesPage,
-              page: () => CategoriesScreen(storeId: 1),
-            ),
-            GetPage(
-              name: PhoneNumbePage,
-              page: () => PhoneNumberDialog(),
-            ),
+            GetPage(name: VerifySubscriptonPage, page: () => VerifySubscriptonScreen()),
+            GetPage(name: SuccessfulPurchasePage, page: () => SuccessfulPurchaseScreen()),
+            GetPage(name: UnSuccessfulPurchasePage, page: () => UnSuccessfulPurchaseScreen()),
+            GetPage(name: RestaurantListPage, page: () => RestaurantListScreen(),),
+            GetPage(name: CategoriesPage, page: () => CategoriesScreen(storeId: 1),),
+            GetPage(name: PhoneNumbePage, page: () => PhoneNumberDialog(),),
           ],
           // title: 'FastFeed',
           initialRoute: MaskGroupPage,

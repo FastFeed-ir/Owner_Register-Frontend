@@ -146,7 +146,7 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
                 child: SubTitleStyle(text: "قوانین "),
               ),
               SizedBox(
-                width: 10.w,
+                width: 20.w,
               ),
               ElevatedButton(
                 onPressed: () {
