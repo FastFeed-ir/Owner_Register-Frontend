@@ -44,8 +44,8 @@ Widget restaurantTitle(String? name, String? RestaurantLogo, String? date) {
         children: [
           Image.asset(
             RestaurantLogo!,
-            height: 200.h,
-            width: 200.w,
+            height: 150.h,
+            width: 150.w,
           ),
         ],
       ),
@@ -114,23 +114,3 @@ class RestaurantSubs {
     required this.date,
   });
 }
-
-List<RestaurantSubs> Restaurants = [
-  /*
-  RestaurantSubs(
-    name: "عرفان جوجه",
-    logoImg: RestaurantLogoDef,
-    date: DateTime.now().toPersianDate(),
-  ),
-  RestaurantSubs(
-    name: "عادل جوجه",
-    logoImg: RestaurantLogoDef,
-    date: DateTime.now().toPersianDate(),
-  ),
-  RestaurantSubs(
-    name: "دانیال جوجه",
-    logoImg: RestaurantLogoDef,
-    date: DateTime.now().toPersianDate(),
-  ),
-*/
-];
