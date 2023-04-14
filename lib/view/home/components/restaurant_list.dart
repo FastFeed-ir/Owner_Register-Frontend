@@ -98,13 +98,12 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
       //height: ((300 * _subs.length) + 300).h,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ListView.builder(
             itemCount: _subs.length,
             shrinkWrap: true,
-            padding: EdgeInsets.only(
-              left: 700.w,
-            ),
+           padding: EdgeInsets.only(left: 300.w, right: 300.w,),
             itemBuilder: (BuildContext context, int index) {
               // TODO loaing
               SubscriptionModel subscriptionModel = _subs[index];
