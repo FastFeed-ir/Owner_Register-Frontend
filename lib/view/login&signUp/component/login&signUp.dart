@@ -45,7 +45,7 @@ class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
                     borderSide: BorderSide(color: YellowColor),
                   ),
                   labelText: "شماره تلفن همراه",
-                  helperText: "",
+                  helperText: "شماره با ۰۹ شروع می‌شود",
                   hintText: "09123456789",
                   helperStyle: TextStyle(
                     color: Colors.black,
@@ -77,7 +77,7 @@ class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: YellowColor,
-                fixedSize: Size.fromWidth(200),
+                fixedSize: Size.fromWidth(250),
               ),
               onPressed: () {
                 if (_formKey.currentState?.validate() == true) {
