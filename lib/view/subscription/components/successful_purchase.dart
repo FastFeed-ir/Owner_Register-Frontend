@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import '../../../utils/constants.dart';
 import 'Sub_style.dart';
-
+import '../components/qr_code.dart';
 class SuccessfulPurchaseScreen extends StatefulWidget {
   var subscription = Get.arguments;
 
@@ -20,12 +20,14 @@ class _SuccessfulPurchaseState extends State<SuccessfulPurchaseScreen> {
   late int amount = 0;
   late String storeName;
   late int business_owner;
+  late String url;
   @override
   void initState() {
     period = widget.subscription[0];
     amount = widget.subscription[1];
     storeName = widget.subscription[2];
     business_owner = widget.subscription[3];
+    url = widget.subscription[4];
   }
   @override
   Widget build(BuildContext context) {
@@ -167,8 +169,8 @@ class _SuccessfulPurchaseState extends State<SuccessfulPurchaseScreen> {
                   height: 30.h,
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    // ToDO Get QR Code
+                  onPressed: () async{
+                    createQr(url);
                     Get.toNamed(HomePage, arguments: business_owner);
                   },
                   child: SubBuyTextStyle(text: "دریافت QR"),

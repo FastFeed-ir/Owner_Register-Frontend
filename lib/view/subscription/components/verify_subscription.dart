@@ -26,6 +26,7 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
   late String storeName;
   late int storeId;
   late int period;
+  late String url = "";
   late String amountText = "";
   late double amount = 0;
   late double tax = 364000;
@@ -193,12 +194,12 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
       period: period,
       amount: amount,
     );
-    _viewModel.addSubscriptions(subscription).asStream().listen((event) {
+    _viewModel.addSubscriptions(subscription).asStream().listen((event) async{
       print(event);
-      if(event == 201 ){
+      if(event.id! > 0){
         Get.toNamed(
           SuccessfulPurchasePage,
-          arguments: [period, totalCost, storeName, business_owner],
+          arguments: [period, totalCost, storeName, business_owner,event.url],
         );
       }
     });
