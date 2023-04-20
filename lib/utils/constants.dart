@@ -28,7 +28,7 @@ String UnSuccessfulPurchasePage = "/unSuccessfulPurchasePage";
 String RestaurantListPage = "/restaurantListPage";
 String CategoriesPage = "/categoriesPage";
 String PhoneNumbePage = "/phoneNumbePage";
-String ProfilePage = "profilePage";
+String ProfilePage = "/profilePage";
 //Strings, Names, Address
 const AppName = "فست فید";
 const AppNameEn = "FastFeed";
