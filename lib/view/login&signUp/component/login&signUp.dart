@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:FastFeed/utils/constants.dart';
 import 'package:FastFeed/view/verifyCode/components/verifyCode.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PhoneNumberDialog extends StatefulWidget {
@@ -56,6 +57,9 @@ class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
                   fontFamily: IranSansWeb,
                 ),
                 keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
                 onChanged: (value) {
                   _phoneController = value;
                 },

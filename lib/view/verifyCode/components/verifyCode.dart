@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:FastFeed/utils/constants.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../../../model/entity/owner.dart';
@@ -87,7 +88,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('تایید شماره تلفن همراه'),
+      title: Text('تایید شماره تلفن همراه',style: TextStyle(fontFamily: "IranSansWeb",)),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -109,58 +110,67 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
               _buildDigitInput(5, t0),
             ],
           ),
-          SizedBox(height: 16),
-          Opacity(
-            opacity: (_resendSeconds != 0) ? 1.00 : 0.00,
-            child: SizedBox(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.timer_outlined, size: 17),
-                  Text(
-                    ' $_resendSeconds ثانیه تا ارسال مجدد  ',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontFamily: 'IranSansWeb',
-                    ),
+          SizedBox(height: 24),
+          SizedBox(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Visibility(
+                  visible: (_resendSeconds != 0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.timer_outlined, size: 17),
+                      Text(
+                        ' $_resendSeconds ثانیه تا ارسال مجدد  ',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: 'IranSansWeb',
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          ),
-          Opacity(
-            opacity: (_resendSeconds == 0) ? 1.00 : 0.00,
-            child: SizedBox(
-              child: TextButton.icon(
-                // style: ButtonStyle( color: Colors.red,),
-                onPressed: (_resendSeconds == 0) ? _resendCode : null,
-                icon: Icon(
-                  Icons.restart_alt_outlined,
-                  size: 20,
-                  color: RedColor,
                 ),
-                label: Text(
-                  "ارسال مجدد",
-                  style: TextStyle(fontSize: 15, color: RedColor),
-                ),
-              ),
+                Visibility(
+                  visible: (_resendSeconds == 0),
+                  child: Row(
+                    children: [
+                      TextButton.icon(
+                        onPressed: (_resendSeconds == 0) ? _resendCode : null,
+                        icon: Icon(
+                          Icons.restart_alt_outlined,
+                          size: 20,
+                          color: RedColor,
+                        ),
+                        label: Text(
+                          "ارسال مجدد",
+                          style: TextStyle(fontSize: 15, color: RedColor,fontFamily: "IranSansWeb",),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
         ],
       ),
       actions: [
-        TextButton(
-          style: TextButton.styleFrom(
-            backgroundColor: YellowColor,
-            fixedSize: Size.fromWidth(150),
-          ),
-          onPressed: () => _confirmCode(
-              t0.text + t1.text + t2.text + t3.text + t4.text + t5.text),
-          child: Text(
-            'تایید',
-            style: TextStyle(
-              fontSize: 15,
-              color: Colors.black,
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: YellowColor,
+              fixedSize: Size.fromWidth(250),
+            ),
+            onPressed: () => _confirmCode(
+                t0.text + t1.text + t2.text + t3.text + t4.text + t5.text),
+            child: Text(
+              'تایید',
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.black,
+                fontFamily: "IranSansWeb",
+              ),
             ),
           ),
         ),
@@ -173,6 +183,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
     return SizedBox(
       width: 42,
       child: TextField(
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         controller: t,
         maxLength: 1,
         keyboardType: TextInputType.number,
@@ -186,11 +197,12 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
         ),
         onChanged: (value) {
           if (value.length == 1) {
-            if (index < 6) {
+            if (index < 6 && index!=0) {
               FocusScope.of(context).previousFocus();
-            } else {
-              FocusScope.of(context).unfocus();
             }
+          }
+          if(value.isEmpty && index < 5) {
+            FocusScope.of(context).nextFocus();
           }
         },
       ),
