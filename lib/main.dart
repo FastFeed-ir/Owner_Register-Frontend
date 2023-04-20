@@ -21,6 +21,7 @@ import 'view/subscription/components/verify_subscription.dart';
 import 'package:material_color_gen/material_color_gen.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,);
   runApp(const MyApp());

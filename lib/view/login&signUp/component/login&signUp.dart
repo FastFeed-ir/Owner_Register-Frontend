@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:FastFeed/utils/constants.dart';
 import 'package:FastFeed/view/verifyCode/components/verifyCode.dart';
@@ -46,7 +47,7 @@ class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
                     borderSide: BorderSide(color: YellowColor),
                   ),
                   labelText: "شماره تلفن همراه",
-                  helperText: "شماره با ۰۹ شروع می‌شود",
+                  helperText: "شماره با ۹ شروع می‌شود",
                   hintText: "09123456789",
                   helperStyle: TextStyle(
                     color: Colors.black,
@@ -64,7 +65,7 @@ class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
                   _phoneController = value;
                 },
                 validator: (value) {
-                  if (value == null || value.isEmpty || value.length!=11) {
+                  if (value == null || value.isEmpty || value.length!=10) {
                     return "لطفا شماره خود را وارد کنید";
                   }
                   return null;
@@ -83,16 +84,34 @@ class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
                 backgroundColor: YellowColor,
                 fixedSize: Size.fromWidth(250),
               ),
-              onPressed: () {
+              onPressed: () async {
+                print('+98${_phoneController}');
                 if (_formKey.currentState?.validate() == true) {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return ConfirmationDialog(
-                        phoneNumber: _phoneController,
-                      );
-                    },
-                  );
+                  FirebaseAuth auth = FirebaseAuth.instance;
+                  try {
+                    await auth.verifyPhoneNumber(
+                      phoneNumber: '+98${_phoneController}',
+                        verificationCompleted: (PhoneAuthCredential credential) async{},
+                        verificationFailed: (e){
+                          throw Exception(e.toString());
+                        },
+                        codeSent: ((String verificationId,int? resendToken) async{
+                          await Future.delayed(Duration(seconds: 2));
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return ConfirmationDialog(
+                                phoneNumber: '+98${_phoneController}',
+                                verificationId: verificationId,
+                              );
+                            },
+                          );
+                        }),
+                        codeAutoRetrievalTimeout: (String verificationId){}
+                    );
+                  } on FirebaseAuthException catch(e){
+                    print(e.toString());
+                  }
                 }
               },
               child: Text(
