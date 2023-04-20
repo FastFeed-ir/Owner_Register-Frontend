@@ -1,10 +1,10 @@
 import 'package:FastFeed/view/categories/categories_screen.dart';
 import 'package:FastFeed/view/login&signUp/component/login&signUp.dart';
 import 'package:FastFeed/view/maskgroup/components/maskGroup.dart';
+import 'package:FastFeed/view/profile/edit_profile_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import 'utils/constants.dart';
 import 'view/contact_about_rules/components/about.dart';
 import 'view/contact_about_rules/components/contactus.dart';
