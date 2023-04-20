@@ -6,7 +6,8 @@ import '../../header_footer/components/HF_style.dart';
 
 class HeaderPanel extends StatelessWidget {
   HeaderPanel({Key? key, required this.ID}) : super(key: key);
-  int ID ;
+  int ID;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,7 +40,7 @@ class HeaderPanel extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: 550.0.w,
+            width: 600.0.w,
             height: 72.0.h,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -47,11 +48,9 @@ class HeaderPanel extends StatelessWidget {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(HomePage);
+                    Get.toNamed(HomePage, arguments: ID);
                   },
-                  child: HTextStyle(
-                    text: 'خانه',
-                  ),
+                  child: warpText('خانه', Icons.home_outlined),
                 ),
                 SizedBox(
                   width: 40.w,
@@ -68,71 +67,71 @@ class HeaderPanel extends StatelessWidget {
       ),
     );
   }
-}
-Widget profileMenu() {
-  // TODO get ID form Api ***
-  int id = 1;
-  return PopupMenuButton(
-    icon: Icon(
-      Icons.person_outline,
-      size: 35.r,
-    ),
-    onSelected: (String choice) async {
-      if (choice == 'view_profile') {
-        // TODO Get.toNamed(ProfilePage);
-      } else if (choice == 'buy_subscription') {
-        Get.toNamed(OwnerRegisterPage, arguments: id);
-      } else if (choice == 'exit') {
-        //SharedPreferences prefs = await SharedPreferences.getInstance();
-        //await prefs.remove('user.api_token');
-      }
-    },
-    itemBuilder: (BuildContext context) => [
-      PopupMenuItem(
-        value: 'view_profile',
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text('مشاهده حساب کاربری'),
-            SizedBox(width: 8.w),
-            Icon(Icons.person_outline),
-          ],
+  Widget profileMenu() {
+    // TODO get ID form Api ***
+    return PopupMenuButton(
+      child: warpText("پروفایل",Icons.person_outline,),
+      onSelected: (String choice) async {
+        if (choice == 'view_profile') {
+          Get.toNamed(ProfilePage, arguments: ID);
+        } else if (choice == 'buy_subscription') {
+          Get.toNamed(OwnerRegisterPage, arguments: ID);
+        } else if (choice == 'exit') {
+          //SharedPreferences prefs = await SharedPreferences.getInstance();
+          //await prefs.remove('user.api_token');
+        }
+      },
+      itemBuilder: (BuildContext context) => [
+        PopupMenuItem(
+          value: 'view_profile',
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text('مشاهده حساب کاربری'),
+              SizedBox(width: 8.w),
+              Icon(Icons.person_outline),
+            ],
+          ),
         ),
-      ),
-      PopupMenuItem(
-        value: 'buy_subscription',
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text('خرید اشتراک'),
-            SizedBox(width: 8.w),
-            Icon(Icons.shopping_cart_outlined),
-          ],
+        PopupMenuItem(
+          value: 'buy_subscription',
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text('ثبت فروشگاه'),
+              SizedBox(width: 8.w),
+              Icon(Icons.shopping_cart_outlined),
+            ],
+          ),
         ),
-      ),
-      PopupMenuItem(
-        value: 'exit',
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text('خروج'),
-            SizedBox(width: 8.w),
-            Icon(Icons.exit_to_app_outlined),
-          ],
+        PopupMenuItem(
+          value: 'exit',
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text('خروج'),
+              SizedBox(width: 8.w),
+              Icon(Icons.exit_to_app_outlined),
+            ],
+          ),
         ),
-      ),
-    ],
-  );
-}
+      ],
+    );
+  }
 
-Widget subsMenu(String? text) {
-  int id = 1;
-  return TextButton(
-    onPressed: () => Get.toNamed(RestaurantListPage,arguments: id),
-    style: TextButton.styleFrom(
-      backgroundColor: WhiteColor,
-    ),
-    child: Wrap(
+  Widget subsMenu(String? text) {
+    int id = 1;
+    return TextButton(
+      onPressed: () => Get.toNamed(RestaurantListPage, arguments: id),
+      style: TextButton.styleFrom(
+        backgroundColor: WhiteColor,
+      ),
+      child: warpText(text, Icons.assignment_outlined),
+    );
+  }
+
+  Widget warpText(String? text, IconData? myIcon) {
+    return Wrap(
       alignment: WrapAlignment.spaceBetween,
       children: [
         RichText(
@@ -144,8 +143,7 @@ Widget subsMenu(String? text) {
                 ),
               ),
               WidgetSpan(
-                child: Icon(Icons.assignment_outlined,
-                    color: BlackColor, size: 30.r),
+                child: Icon(myIcon,color: BlackColor, size: 35.r),
               ),
               TextSpan(
                 text: text,
@@ -160,6 +158,8 @@ Widget subsMenu(String? text) {
           ),
         ),
       ],
-    ),
-  );
+    );
+  }
+
 }
+

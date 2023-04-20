@@ -55,33 +55,34 @@ class Footer extends StatelessWidget {
           ),
           Expanded(
             child: Column(
+              //mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) =>
-                            buildInfoDialog(context, "درباره ", AboutUsPhrase),
-                      );
-                    },
-                    child: FTextStyle(
-                      text: 'درباره فست فید',
-                    ),
+                SizedBox(height: 20.h,),
+                GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          buildInfoDialog(context, "درباره ", AboutUsPhrase),
+                    );
+                  },
+                  child: FTextStyle(
+                    text: 'درباره فست فید',
                   ),
                 ),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) =>
-                            buildInfoDialog(context, "قوانین ", RulesPhrase),
-                      );
-                    },
-                    child: FTextStyle(
-                      text: 'قوانین سایت',
-                    ),
+                SizedBox(
+                  height: 33.h,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          buildInfoDialog(context, "قوانین ", RulesPhrase),
+                    );
+                  },
+                  child: FTextStyle(
+                    text: 'قوانین فست فید',
                   ),
                 ),
               ],
@@ -91,14 +92,46 @@ class Footer extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                  child: FTextStyle(text: "تلفن :" + "\t\t\t\t" + Phone),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 45.w,
+                      ),
+                      FTextStyle(text: "تلفن :"),
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                      FTextStyle(text: Phone),
+                    ],
+                  ),
                 ),
                 Expanded(
-                  child: FTextStyle(text: "ایمیل :" + "\t\t\t\t" + Email),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 45.w,
+                      ),
+                      FTextStyle(text: "ایمیل :"),
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                      FTextStyle(text: Email),
+                    ],
+                  ),
                 ),
                 Expanded(
-                  child: FTextStyle(text: "آدرس :" + "\t\t\t\t" + Address),
-                ),
+                    child: Row(
+                  children: [
+                    SizedBox(
+                      width: 45.w,
+                    ),
+                    FTextStyle(text: "آدرس :"),
+                    SizedBox(
+                      width: 20.w,
+                    ),
+                    FTextStyle(text: Address),
+                  ],
+                )),
                 Expanded(
                   child: Row(
                     children: [
