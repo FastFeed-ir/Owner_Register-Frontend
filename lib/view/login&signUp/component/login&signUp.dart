@@ -48,7 +48,7 @@ class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
                   ),
                   labelText: "شماره تلفن همراه",
                   helperText: "شماره با ۹ شروع می‌شود",
-                  hintText: "09123456789",
+                  hintText: "9123456789",
                   helperStyle: TextStyle(
                     color: Colors.black,
                   ),
@@ -82,7 +82,7 @@ class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: YellowColor,
-                fixedSize: Size.fromWidth(250),
+                fixedSize: Size.fromWidth(150),
               ),
               onPressed: () async {
                 print('+98${_phoneController}');

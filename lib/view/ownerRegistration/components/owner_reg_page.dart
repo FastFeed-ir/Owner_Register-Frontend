@@ -166,7 +166,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         hintStyle: TextStyle(color: Colors.white),
                                         helperStyle: TextStyle(color: Colors.white),
                                       ),
-                                      dropdownColor: YellowColor,
+                                      dropdownColor: BlackColor,
 
                                       items:
                                           _businessTypes.map((business_type) {
@@ -224,7 +224,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                               BorderSide(color: YellowColor),
                                         ),
                                       ),
-                                      dropdownColor: YellowColor,
+                                      dropdownColor: BlackColor,
                                       items: Proviences.map((province) {
                                         return DropdownMenuItem(
                                           child: Text(
@@ -433,7 +433,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                             BorderSide(color: YellowColor),
                                       ),
                                       errorStyle: TextStyle(color: YellowColor,fontWeight: FontWeight.bold),
-                                      labelText: "شماره تلفن همراه",
+                                      labelText: "شماره تلفن فروشگاه",
                                       helperText: "* الزامی",
                                       helperStyle:
                                           TextStyle(color: Colors.white),
@@ -448,7 +448,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     },
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return "لطفا شماره خود را وارد کنید";
+                                        return "لطفا شماره تلفن فروشگاه را وارد کنید";
                                       }
                                       return null;
                                     },
@@ -457,12 +457,9 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   Expanded(
                                     child: TextFormField(
                                       decoration: InputDecoration(
-                                        suffixIcon: ImageIcon(
-                                          AssetImage(
-                                            Instagram,
-                                          ),
+                                        suffixIcon: Icon(
+                                        Icons.phone_android_outlined,
                                           color: Colors.white,
-                                          size: 25,
                                         ),
                                         border: OutlineInputBorder(),
                                         labelStyle:
@@ -475,7 +472,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           borderSide:
                                               BorderSide(color: YellowColor),
                                         ),
-                                        labelText: 'آدرس صفحه اینستاگرام',
+                                        labelText: 'آدرس شبکه های اجتماعی',
                                         helperText: "* اختیاری",
                                         helperStyle:
                                             TextStyle(color: Colors.white),
