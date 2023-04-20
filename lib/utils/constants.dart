@@ -28,6 +28,7 @@ String UnSuccessfulPurchasePage = "/unSuccessfulPurchasePage";
 String RestaurantListPage = "/restaurantListPage";
 String CategoriesPage = "/categoriesPage";
 String PhoneNumbePage = "/phoneNumbePage";
+String ProfilePage = "/profilePage";
 //Strings, Names, Address
 const AppName = "فست فید";
 const AppNameEn = "FastFeed";
@@ -35,7 +36,7 @@ const AppVersion = "";
 String Phone = "31234567 (031)";
 String Email = "fastfeed@gmail.com";
 String Name = "";
-String Address = "اصفهان _ میدان آزادی _ دانشگاه اصفهان";
+String Address = "اصفهان - میدان آزادی - دانشگاه اصفهان";
 String PageUrl = "";
 // Images
 String Linkedin = "assets/images/linkedin.png";
@@ -124,18 +125,21 @@ Widget buildInfoDialog(BuildContext context, String? text, String? Phrase) {
       ],
     ),
     actions: <Widget>[
-      ElevatedButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        child: const Text(
-          'متوجه شدم',
-          style: TextStyle(
-            color: BlackColor,
-            fontFamily: "IranSansWeb",
+      Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(
+            'متوجه شدم',
+            style: TextStyle(
+              color: BlackColor,
+              fontFamily: "IranSansWeb",
+              fontSize: 24.sp,
+            ),
           ),
+          style: buttonStyle_build(190, 55, 10, YellowColor),
         ),
-        style: buttonStyle_build(190, 55, 10, YellowColor),
       ),
     ],
   );

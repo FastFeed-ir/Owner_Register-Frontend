@@ -1,10 +1,12 @@
 import 'package:FastFeed/view/categories/categories_screen.dart';
 import 'package:FastFeed/view/login&signUp/component/login&signUp.dart';
 import 'package:FastFeed/view/maskgroup/components/maskGroup.dart';
+import 'package:FastFeed/view/profile/edit_profile_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import 'utils/constants.dart';
 import 'view/contact_about_rules/components/about.dart';
 import 'view/contact_about_rules/components/contactus.dart';
@@ -18,7 +20,10 @@ import 'view/subscription/components/unsuccessful_purchase.dart';
 import 'view/subscription/components/verify_subscription.dart';
 import 'package:material_color_gen/material_color_gen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,);
   runApp(const MyApp());
 }
 
@@ -39,30 +44,15 @@ class MyApp extends StatelessWidget {
             GetPage(name: AboutPage, page: () => AboutScreen()),
             GetPage(name: ContactUsPage, page: () => ContactUsScreen()),
             GetPage(name: HomePage, page: () => HomeScreen()),
-            GetPage(
-                name: OwnerRegisterPage, page: () => OwenerRegisterScreen()),
+            GetPage(name: OwnerRegisterPage, page: () => OwenerRegisterScreen()),
+            GetPage(name: ProfilePage, page: () => EditProfileDialog(),),
             GetPage(name: SubscriptionPage, page: () => SubscriptionScreen()),
-            GetPage(
-                name: VerifySubscriptonPage,
-                page: () => VerifySubscriptonScreen()),
-            GetPage(
-                name: SuccessfulPurchasePage,
-                page: () => SuccessfulPurchaseScreen()),
-            GetPage(
-                name: UnSuccessfulPurchasePage,
-                page: () => UnSuccessfulPurchaseScreen()),
-            GetPage(
-              name: RestaurantListPage,
-              page: () => RestaurantListScreen(),
-            ),
-            GetPage(
-              name: CategoriesPage,
-              page: () => CategoriesScreen(storeId: 1),
-            ),
-            GetPage(
-              name: PhoneNumbePage,
-              page: () => PhoneNumberDialog(),
-            ),
+            GetPage(name: VerifySubscriptonPage, page: () => VerifySubscriptonScreen()),
+            GetPage(name: SuccessfulPurchasePage, page: () => SuccessfulPurchaseScreen()),
+            GetPage(name: UnSuccessfulPurchasePage, page: () => UnSuccessfulPurchaseScreen()),
+            GetPage(name: RestaurantListPage, page: () => RestaurantListScreen(),),
+            GetPage(name: CategoriesPage, page: () => CategoriesScreen(storeId: 1),),
+            GetPage(name: PhoneNumbePage, page: () => PhoneNumberDialog(),),
           ],
           // title: 'FastFeed',
           initialRoute: MaskGroupPage,

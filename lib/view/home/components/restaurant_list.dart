@@ -7,6 +7,7 @@ import '../../../utils/constants.dart';
 import '../../../view_model/store_viewmodel.dart';
 import '../../../view_model/subscription_viewmodel.dart';
 import '../../header_footer/components/footer.dart';
+import '../../subscription/components/qr_code.dart';
 import 'Home_style.dart';
 import 'header_panel.dart';
 
@@ -90,21 +91,20 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
     }
     return Container(
       padding: EdgeInsets.only(
-        left: 150.0.w,
-        top: 51.0.h,
-        right: 150.0.w,
+        left: 100.0.w,
+        top: 60.0.h,
+        right: 100.0.w,
       ),
       width: 1920.w,
       //height: ((300 * _subs.length) + 300).h,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ListView.builder(
             itemCount: _subs.length,
             shrinkWrap: true,
-            padding: EdgeInsets.only(
-              left: 700.w,
-            ),
+           padding: EdgeInsets.only(left: 240.w, right: 200.w,top: 20.h,),
             itemBuilder: (BuildContext context, int index) {
               // TODO loaing
               SubscriptionModel subscriptionModel = _subs[index];
@@ -128,8 +128,7 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
       children: [
         ListTile(
           // ToDo get name from API
-          title: restaurantTitle(store.title,
-              RestaurantLogoDef, subscriptionModel.startDate),
+          title: restaurantTitle(store.title, RestaurantLogoDef, subscriptionModel.startDate,subscriptionModel.period),
           shape: RoundedRectangleBorder(
             //<-- SEE HERE
             side: BorderSide(width: 2.w),
@@ -138,10 +137,10 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
           subtitle: Column(
             children: [
               SizedBox(
-                height: 20.h,
+                height: 10.h,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
                     onPressed: () {Get.toNamed(CategoriesPage);},
@@ -149,8 +148,9 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
                       text: 'تغییر منو',
                     ),
                     style:
-                    buttonStyle_build(300, 70, 20, YellowColor),
+                    buttonStyle_build(150, 70, 20, YellowColor),
                   ),
+                  SizedBox(width: 720.w,),
                   ElevatedButton(
                     onPressed: () {
                       var id = subscriptionModel.id;
@@ -165,7 +165,33 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
                       text: 'تمدید اشتراک',
                     ),
                     style:
-                    buttonStyle_build(300, 70, 20, YellowColor),
+                    buttonStyle_build(150, 70, 20, YellowColor),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              Row(
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {/* TODO Get.toNamed(StoreRegistration);*/},
+                    child: SubButtonTextStyle(
+                      text: 'ویرایش اطلاعات',
+                    ),
+                    style: buttonStyle_build(150, 70, 20, YellowColor),
+                  ),
+                  SizedBox(width: 720.w,),
+                  ElevatedButton(
+                    onPressed: () {
+                      createQr(subscriptionModel.url!);
+                    },
+                    child: SubButtonTextStyle(
+                      text: 'دریافت QR',
+                    ),
+                    style:
+                    buttonStyle_build(150, 70, 20, YellowColor),
                   ),
                 ],
               ),
