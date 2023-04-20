@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +10,7 @@ import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:FastFeed/utils/constants.dart';
 import '../../home/components/header_panel.dart';
 import '../../../model/entity/store.dart';
+import 'dart:html' as html;
 
 class OwenerRegisterScreen extends StatefulWidget {
   OwenerRegisterScreen({Key? key}) : super(key: key);
@@ -33,7 +33,7 @@ class _OwenerRegisterScreen extends State<OwenerRegisterScreen> {
                 OwnerRegister(
                   Id: widget.ID,
                 ),
-                SizedBox(height: 20.r),
+                SizedBox(height: 32.r),
                 Footer(),
               ],
             ),
@@ -47,7 +47,6 @@ class _OwenerRegisterScreen extends State<OwenerRegisterScreen> {
 class OwnerRegister extends StatefulWidget {
   OwnerRegister({Key? key, required this.Id}) : super(key: key);
   var Id;
-
   @override
   State<OwnerRegister> createState() => _OwnerRegisterState();
 }
@@ -55,67 +54,26 @@ class OwnerRegister extends StatefulWidget {
 class _OwnerRegisterState extends State<OwnerRegister> {
   //dropdown options for type of business
   var business_owner ;
-  final List<String> _businessTypes = ['انتخاب','رستوران', 'کافه'];
+  final List<String> _businessTypes = ['کافه', 'رستوران'];
   final _formKey = GlobalKey<FormState>();
-  XFile? image;
+  html.File? _image;
 
-  final ImagePicker picker = ImagePicker();
+  final picker = ImagePicker();
 
-  //we can upload image from camera or from gallery based on parameter
-  Future getImage(ImageSource media) async {
-    var img = await picker.pickImage(source: media);
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-    setState(() {
-      image = img;
+    setState(() async{
+      if (pickedFile != null) {
+        final bytes = await pickedFile.readAsBytes();
+        final blob = html.Blob([bytes]);
+        _image = html.File([blob], pickedFile.path!);
+      } else {
+        print('No image selected.');
+      }
     });
   }
 
-  //show popup dialog
-  void myAlert() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            title: Text('Please choose media to select'),
-            content: Container(
-              height: MediaQuery.of(context).size.height / 6,
-              child: Column(
-                children: [
-                  ElevatedButton(
-                    //if user click this button, user can upload image from gallery
-                    onPressed: () {
-                      Navigator.pop(context);
-                      getImage(ImageSource.gallery);
-                    },
-                    child: Row(
-                      children: [
-                        Icon(Icons.image),
-                        Text('From Gallery'),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    //if user click this button. user can upload image from camera
-                    onPressed: () {
-                      Navigator.pop(context);
-                      getImage(ImageSource.camera);
-                    },
-                    child: Row(
-                      children: [
-                        Icon(Icons.camera),
-                        Text('From Camera'),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
 
 //form field variables
   late String _title;
@@ -175,7 +133,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   color: Colors.white,
                                 ),
                               ),
-                              SizedBox(height: 25.h),
+                              SizedBox(height: 24.h),
                               // Row 1
                               Row(
                                 mainAxisAlignment:
@@ -183,7 +141,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                 children: [
                                   Expanded(
                                     child: DropdownButtonFormField<String>(
-                                      style: TextStyle(fontSize: 20.w),
+                                      style: TextStyle(fontSize: 20.w,fontFamily: "IranSansWeb",),
                                       decoration: const InputDecoration(
                                         suffixIcon: Icon(
                                           Icons.store_mall_directory_outlined,
@@ -200,14 +158,16 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           borderSide:
                                               BorderSide(color: YellowColor),
                                         ),
+                                        errorStyle: TextStyle(color: YellowColor,fontWeight: FontWeight.bold),
                                         labelText: 'انتخاب نوع کسب و کار',
                                         hoverColor: Colors.white,
-                                        helperText: "",
-                                        helperStyle:
-                                            TextStyle(color: Colors.white),
+                                        helperText: "* الزامی",
+                                        hintText: "انتخاب نوع کسب و کار",
+                                        hintStyle: TextStyle(color: Colors.white),
+                                        helperStyle: TextStyle(color: Colors.white),
                                       ),
-                                      dropdownColor: YellowColor,
-                                      value: _businessTypes[0],
+                                      dropdownColor: BlackColor,
+
                                       items:
                                           _businessTypes.map((business_type) {
                                         return DropdownMenuItem(
@@ -239,10 +199,13 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   Expanded(
                                     child: DropdownButtonFormField<String>(
                                       menuMaxHeight: 200,
-                                      style: TextStyle(fontSize: 20.w),
+                                      style: TextStyle(fontSize: 20.w,fontFamily: "IranSansWeb",),
                                       decoration: InputDecoration(
+                                        errorStyle: TextStyle(color: YellowColor,fontWeight: FontWeight.bold),
                                         labelText: 'انتخاب استان',
-                                        helperText: "",
+                                        helperText: "* الزامی",
+                                        hintText: "انتخاب استان",
+                                        hintStyle: TextStyle(color: Colors.white),
                                         helperStyle:
                                             TextStyle(color: Colors.white),
                                         suffixIcon: Icon(
@@ -261,8 +224,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                               BorderSide(color: YellowColor),
                                         ),
                                       ),
-                                      dropdownColor: YellowColor,
-                                      value: Proviences[0],
+                                      dropdownColor: BlackColor,
                                       items: Proviences.map((province) {
                                         return DropdownMenuItem(
                                           child: Text(
@@ -291,7 +253,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 25.0.h),
+                              SizedBox(height: 24.0.h),
                               // Row 2
                               Row(
                                 mainAxisAlignment:
@@ -316,11 +278,11 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                               BorderSide(color: YellowColor),
                                         ),
                                         labelText: 'نام شهر',
-                                        helperText: "",
+                                        helperText: "* اختیاری",
                                         helperStyle:
                                             TextStyle(color: Colors.white),
                                       ),
-                                      style: TextStyle(color: Colors.white),
+                                      style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
                                       onChanged: (value) {
                                         setState(() {
                                           _city = value;
@@ -348,11 +310,11 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                               BorderSide(color: YellowColor),
                                         ),
                                         labelText: 'آدرس',
-                                        helperText: "",
+                                        helperText: "* اختیاری",
                                         helperStyle:
                                             TextStyle(color: Colors.white),
                                       ),
-                                      style: TextStyle(color: Colors.white),
+                                      style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
                                       onChanged: (value) {
                                         _address = value;
                                       },
@@ -361,7 +323,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                 ],
                               ),
                               // Row 3
-                              SizedBox(height: 25.0.h),
+                              SizedBox(height: 24.0.h),
 
                               Row(
                                   mainAxisAlignment:
@@ -385,12 +347,13 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                             borderSide:
                                                 BorderSide(color: YellowColor),
                                           ),
+                                          errorStyle: TextStyle(color: YellowColor,fontWeight: FontWeight.bold),
                                           labelText: 'نام فروشگاه',
-                                          helperText: "",
+                                          helperText: "* الزامی",
                                           helperStyle:
                                               TextStyle(color: Colors.white),
                                         ),
-                                        style: TextStyle(color: Colors.white),
+                                        style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
                                         onChanged: (value) {
                                           _title = value;
                                         },
@@ -421,8 +384,9 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                             borderSide:
                                                 BorderSide(color: YellowColor),
                                           ),
+                                          errorStyle: TextStyle(color: YellowColor,fontWeight: FontWeight.bold),
                                           labelText: "تعداد میز",
-                                          helperText: "",
+                                          helperText: "* الزامی",
                                           helperStyle:
                                               TextStyle(color: Colors.white),
                                         ),
@@ -430,7 +394,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         inputFormatters: <TextInputFormatter>[
                                           FilteringTextInputFormatter.digitsOnly
                                         ],
-                                        style: TextStyle(color: Colors.white),
+                                        style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
                                         onChanged: (value) {
                                           _tables_count = int.parse(value);
                                         },
@@ -443,7 +407,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       ),
                                     ),
                                   ]),
-                              SizedBox(height: 25.0.h),
+                              SizedBox(height: 24.0.h),
 
                               // Row 4
                               Row(
@@ -468,12 +432,13 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         borderSide:
                                             BorderSide(color: YellowColor),
                                       ),
-                                      labelText: "شماره تلفن همراه",
-                                      helperText: "",
+                                      errorStyle: TextStyle(color: YellowColor,fontWeight: FontWeight.bold),
+                                      labelText: "شماره تلفن فروشگاه",
+                                      helperText: "* الزامی",
                                       helperStyle:
                                           TextStyle(color: Colors.white),
                                     ),
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
                                       FilteringTextInputFormatter.digitsOnly
@@ -483,7 +448,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     },
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return "لطفا شماره خود را وارد کنید";
+                                        return "لطفا شماره تلفن فروشگاه را وارد کنید";
                                       }
                                       return null;
                                     },
@@ -493,7 +458,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                     child: TextFormField(
                                       decoration: InputDecoration(
                                         suffixIcon: Icon(
-                                          Icons.phone_android_outlined,
+                                        Icons.phone_android_outlined,
                                           color: Colors.white,
                                         ),
                                         border: OutlineInputBorder(),
@@ -507,12 +472,12 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           borderSide:
                                               BorderSide(color: YellowColor),
                                         ),
-                                        labelText: 'آدرس صفحه اینستاگرام',
-                                        helperText: "",
+                                        labelText: 'آدرس شبکه های اجتماعی',
+                                        helperText: "* اختیاری",
                                         helperStyle:
                                             TextStyle(color: Colors.white),
                                       ),
-                                      style: TextStyle(color: Colors.white),
+                                      style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
                                       onChanged: (value) {
                                         _instagram_page_link = value;
                                       },
@@ -520,75 +485,62 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   ),
                                 ],
                               ),
+                              //logo
+                              SizedBox(height: 24.0.h),
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SizedBox(
                                         // width: 50,
-                                        height: 50,
+                                        height: 130,
                                         child: Column(
                                           children: [
                                             ElevatedButton(
-                                                style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all<
-                                                              Color>(
-                                                          Colors.transparent),
-                                                  shape:
-                                                      MaterialStateProperty.all<
-                                                          RoundedRectangleBorder>(
-                                                    RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5),
+                                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(5),
                                                       side: BorderSide(
                                                           color: Colors.white),
                                                     ),
                                                   ),
                                                 ),
                                                 onPressed: () {
-                                                  myAlert();
+                                                  getImage();
                                                 },
-                                                child: Text('افزودن لوگو')),
+                                                child: Text('افزودن لوگو',style: TextStyle(color:WhiteColor),)),
                                             SizedBox(
                                               height: 8.h,
                                             ),
                                             //if image not null show the image
                                             //if image null show text
-                                            image != null
+                                            _image != null
                                                 ? Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 20),
+                                                    padding: const EdgeInsets.symmetric(horizontal: 50),
                                                     child: ClipRRect(
                                                       borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      child: Image.file(
+                                                          BorderRadius.circular(8),
+                                                      child: Image.network(
                                                         //to show image, you type like this.
-                                                        File(image!.path),
+                                                        '${html.Url.createObjectUrl(_image!)}',
                                                         fit: BoxFit.cover,
-                                                        width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
-                                                        height: 300,
+                                                        width: 100,
+                                                        height: 85,
                                                       ),
                                                     ),
                                                   )
                                                 : Text(
-                                                    "No Image",
+                                                    "",
                                                     style:
                                                         TextStyle(fontSize: 10),
                                                   ),
                                           ],
                                         ))
                                   ]),
-                              SizedBox(height: 25.0.h),
+                              SizedBox(height: 16.h),
                               //button to submit the form
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 4,
-                                height: 70.h,
+                                height: 60.h,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: YellowColor,
@@ -690,7 +642,11 @@ class _OwnerRegisterState extends State<OwnerRegister> {
           height: 150.r,
         ),
         Text("مزایای همکاری با فست فید",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.w)),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.w),
+        ),
+        SizedBox(
+          height: 20.r,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

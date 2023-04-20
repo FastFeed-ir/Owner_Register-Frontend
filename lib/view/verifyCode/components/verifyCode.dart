@@ -173,7 +173,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
           child: TextButton(
             style: TextButton.styleFrom(
               backgroundColor: YellowColor,
-              fixedSize: Size.fromWidth(250),
+              fixedSize: Size.fromWidth(150),
             ),
             onPressed: () => verifyOTP(widget.verificationId,
                 t0.text + t1.text + t2.text + t3.text + t4.text + t5.text),
