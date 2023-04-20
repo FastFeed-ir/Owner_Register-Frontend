@@ -13,7 +13,6 @@ class ConfirmationDialog extends StatefulWidget {
   final verificationId;
 
   ConfirmationDialog({required this.phoneNumber,required this.verificationId});
-  int ID = 1;
   @override
   _ConfirmationDialogState createState() => _ConfirmationDialogState();
 }
@@ -88,15 +87,13 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
       for (Owner i in _owners) {
         if (i.phone_number == widget.phoneNumber) {
           temp = true;
-          //TODO change widget.ID to i.id
-          Get.toNamed(HomePage, arguments: widget.ID);
+          Get.toNamed(HomePage, arguments: i.id);
         }
       }
       if (temp==false) {
         Owner owner = Owner(phone_number: widget.phoneNumber);
         _viewModel.addOwner(owner);
-        //TODO change widget.ID to owner.id
-        Get.toNamed(HomePage, arguments: widget.ID);
+        Get.toNamed(HomePage, arguments: owner.id);
       }
     });
   }
