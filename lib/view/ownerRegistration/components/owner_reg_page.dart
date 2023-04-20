@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,12 +10,11 @@ import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:FastFeed/utils/constants.dart';
 import '../../home/components/header_panel.dart';
 import '../../../model/entity/store.dart';
-import 'dart:convert';
 import 'dart:html' as html;
 
 class OwenerRegisterScreen extends StatefulWidget {
   OwenerRegisterScreen({Key? key}) : super(key: key);
-  var ID = 1;//Get.arguments;
+  var ID = Get.arguments;
 
   @override
   _OwenerRegisterScreen createState() => _OwenerRegisterScreen();
