@@ -73,7 +73,7 @@ class HeaderPanel extends StatelessWidget {
       child: warpText("پروفایل",Icons.person_outline,),
       onSelected: (String choice) async {
         if (choice == 'view_profile') {
-          // TODO Get.toNamed(ProfilePage);
+          Get.toNamed(ProfilePage, arguments: ID);
         } else if (choice == 'buy_subscription') {
           Get.toNamed(OwnerRegisterPage, arguments: ID);
         } else if (choice == 'exit') {
