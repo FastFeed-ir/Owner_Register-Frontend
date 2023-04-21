@@ -13,6 +13,10 @@ class OwnerViewModel extends ChangeNotifier {
     owners.add(await repository.getOwners());
     notifyListeners();
   }
+  void searchOwners(int id) async {
+    owners.add(await repository.searchOwners(id));
+    notifyListeners();
+  }
   Future<Owner> addOwner(Owner owner) async {
     var newOwner = await repository.addOwner(owner);
     notifyListeners();

@@ -16,7 +16,28 @@ class OwnerRepositoryImpl extends OwnerRepository {
       List<Owner> owners = [];
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
-          owners.add(Owner.fromJson(data));
+          var owner = Owner.fromJson(data);
+          owners.add(owner);
+        }
+      }
+      return owners;
+    } else {
+      throw Exception('Invalid response');
+    }
+  }
+  @override
+  Future<List<Owner>> searchOwners(int id)  async {
+    var response = await dio.get('owners/');
+    print('response: ${response.statusMessage}');
+    if (response.data is List) {
+      List<dynamic> dataList = response.data;
+      List<Owner> owners = [];
+      for (var data in dataList) {
+        if (data is Map<String, dynamic>) {
+          var owner = Owner.fromJson(data);
+          if(owner.id == id) {
+            owners.add(owner);
+          }
         }
       }
       return owners;
@@ -50,4 +71,6 @@ class OwnerRepositoryImpl extends OwnerRepository {
     );
     print('response: ${response.statusMessage}');
   }
+
+
 }
