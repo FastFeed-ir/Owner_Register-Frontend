@@ -3,6 +3,8 @@ import 'package:FastFeed/view/login&signUp/component/login&signUp.dart';
 import 'package:FastFeed/view/maskgroup/components/maskGroup.dart';
 import 'package:FastFeed/view/profile/edit_profile_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'utils/constants.dart';
@@ -18,7 +20,10 @@ import 'view/subscription/components/unsuccessful_purchase.dart';
 import 'view/subscription/components/verify_subscription.dart';
 import 'package:material_color_gen/material_color_gen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,);
   runApp(const MyApp());
 }
 
