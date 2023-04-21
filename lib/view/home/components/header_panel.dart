@@ -68,7 +68,6 @@ class HeaderPanel extends StatelessWidget {
     );
   }
   Widget profileMenu() {
-    // TODO get ID form Api ***
     return PopupMenuButton(
       child: warpText("پروفایل",Icons.person_outline,),
       onSelected: (String choice) async {
@@ -120,9 +119,8 @@ class HeaderPanel extends StatelessWidget {
   }
 
   Widget subsMenu(String? text) {
-    int id = 1;
     return TextButton(
-      onPressed: () => Get.toNamed(RestaurantListPage, arguments: id),
+      onPressed: () => Get.toNamed(RestaurantListPage, arguments: ID),
       style: TextButton.styleFrom(
         backgroundColor: WhiteColor,
       ),
