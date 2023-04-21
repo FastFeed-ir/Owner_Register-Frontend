@@ -48,22 +48,26 @@ Widget restaurantTitle(String? name, String? RestaurantLogo, String? startDate, 
   int month = finishJal.month;
   int day = finishJal.day;
   int remainingDays = _remainingDays(Jalali.now(), finishJal);
+  double percent = (1.0 * (remainingDays) / period!);
   return Wrap(
+    alignment: WrapAlignment.spaceBetween,
     children: [
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 20.h,),
-          Image.asset(
-            RestaurantLogo!,
-            height: 150.h,
-            width: 150.w,
+          Container(
+            width: 200.w,
+            height: 200.h,
+            padding: EdgeInsets.only(top: 30.h),
+            alignment: Alignment.center,
+            child: Image.asset(
+              RestaurantLogo!,
+              height: 200.h,
+              width: 200.w,
+            ),
           ),
         ],
-      ),
-      SizedBox(
-        width: 20.w,
       ),
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,7 +79,7 @@ Widget restaurantTitle(String? name, String? RestaurantLogo, String? startDate, 
             name!,
             style: TextStyle(
               fontSize: 32.0.sp,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.bold,
               fontFamily: IranSansWeb,
               color: BlackColor,
             ),
@@ -105,29 +109,29 @@ Widget restaurantTitle(String? name, String? RestaurantLogo, String? startDate, 
           ),
         ],
       ),
-      SizedBox(
-        width: 425.w,
-      ),
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          circularPercent(remainingDays),
+          circularPercent(remainingDays, percent),
         ],
       ),
+
     ],
   );
 }
 
-Widget circularPercent(int remainingDays) {
-  return SizedBox(
-    height: 200.h,
+Widget circularPercent(int remainingDays, double percent) {
+  return Container(
     width: 200.w,
+    height: 200.h,
+    padding: EdgeInsets.only(left: 10.w),
+    alignment: Alignment.centerLeft,
     child: CircularPercentIndicator(
-      radius: 80.0.r,
+      radius: 90.0.r,
       lineWidth: 20.0.w,
       animation: true,
-      percent: remainingDays >= 100 ? remainingDays * 0.001 : remainingDays * 0.01,
+      percent: percent,
       center: Text(
         "${remainingDays.toString().toPersianDigit()} روز باقی مانده ",
         style: TextStyle(
