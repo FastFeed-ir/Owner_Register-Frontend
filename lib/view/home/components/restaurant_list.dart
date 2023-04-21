@@ -98,7 +98,7 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
               itemBuilder: (BuildContext context, int index) {
                 // TODO loaing
                 SubscriptionModel subscriptionModel = _subs[index];
-                Store store = Store(business_owner: 0, title: '', business_type: 0, state: 0, telephone_number: '', tables_count: 0);
+                Store store = Store(business_owner: 0, title: '', business_type: 0, state: 0, owner_phone_number: '', tables_count: 0);
                 for(var item in _stores) {
                   if(subscriptionModel.store == item.id){
                     store = item;
@@ -170,7 +170,6 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
                       style:
                       buttonStyle_build(150, 70, 20, YellowColor),
                     ),
-                    //SizedBox(width: 720.w,),
                     ElevatedButton(
                       onPressed: () {
                         var id = subscriptionModel.id;
@@ -179,7 +178,7 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
                         period = subscriptionModel.period!;
                         amount = subscriptionModel.amount!;
                         SubscriptionModel subModel = SubscriptionModel(id: id,business_owner: business_owner, store: storeId, period: period, amount: amount,);
-                        Get.toNamed(SubscriptionPage, arguments: subModel);
+                        Get.toNamed(SubscriptionPage, arguments: [id,subModel]);
                       },
                       child: SubButtonTextStyle(
                         text: 'تمدید اشتراک',

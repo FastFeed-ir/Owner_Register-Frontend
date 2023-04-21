@@ -67,7 +67,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
       if (pickedFile != null) {
         final bytes = await pickedFile.readAsBytes();
         final blob = html.Blob([bytes]);
-        _image = html.File([blob], pickedFile.path!);
+        _image = html.File([blob], pickedFile.path);
       } else {
         print('No image selected.');
       }
@@ -84,7 +84,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
   late int _state;
   String? _city;
   String? _address;
-  late String _telephone_number;
+  late String _owner_phone_number;
   late int _tables_count;
 
   String? _instagram_page_link;
@@ -183,8 +183,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         setState(() {
                                           _business_type_text = value!;
                                           // TODO index of businestype
-                                          _business_type =
-                                              _businessTypes.indexOf(value);
+                                          _business_type = _businessTypes.indexOf(value)+1;
                                         });
                                       },
                                       validator: (value) {
@@ -240,7 +239,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           _state_text = value!;
                                           // TODO index of _state
                                           _state =
-                                              Proviences.indexOf(value);
+                                              Proviences.indexOf(value)+1;
                                         });
                                       },
                                       validator: (value) {
@@ -444,7 +443,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       FilteringTextInputFormatter.digitsOnly
                                     ],
                                     onChanged: (value) {
-                                      _telephone_number = value;
+                                      _owner_phone_number = value;
                                     },
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -559,7 +558,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         state: _state,
                                         city: _city,
                                         address: _address,
-                                        telephone_number: _telephone_number,
+                                        owner_phone_number: _owner_phone_number,
                                         tables_count: _tables_count,
                                         instagram_page_link:
                                             _instagram_page_link,

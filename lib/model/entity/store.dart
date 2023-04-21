@@ -9,7 +9,7 @@ class Store{
   int? state;
   String? city ;
   String? address ;
-  String? telephone_number;
+  String? owner_phone_number;
   int? tables_count;
   String? instagram_page_link;
 
@@ -22,7 +22,7 @@ class Store{
     required this.state,
     this.city,
     this.address,
-    required this.telephone_number,
+    required this.owner_phone_number,
     required this.tables_count,
     this.instagram_page_link,
 });
@@ -36,7 +36,7 @@ class Store{
       state: json['state'],
       city: json['city'],
       address: json['address'],
-      telephone_number: json['telephone_number'],
+      owner_phone_number: json['owner_phone_number'],
       tables_count: json['tables_count'],
       instagram_page_link: json['instagram_page_link'],
     );
@@ -49,7 +49,7 @@ class Store{
     'state': state,
     'city': city,
     'address': address,
-    'telephone_number': telephone_number,
+    'owner_phone_number': owner_phone_number,
     'tables_count': tables_count,
     'instagram_page_link': instagram_page_link,
   };
