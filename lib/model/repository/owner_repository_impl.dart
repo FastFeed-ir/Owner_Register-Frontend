@@ -46,6 +46,26 @@ class OwnerRepositoryImpl extends OwnerRepository {
     }
   }
   @override
+  Future<List<Owner>> searchPhone(String Phone) async{
+    var response = await dio.get('owners/');
+    print('response: ${response.statusMessage}');
+    if (response.data is List) {
+      List<dynamic> dataList = response.data;
+      List<Owner> owners = [];
+      for (var data in dataList) {
+        if (data is Map<String, dynamic>) {
+          var owner = Owner.fromJson(data);
+          if(owner.phone_number == Phone) {
+            owners.add(owner);
+          }
+        }
+      }
+      return owners;
+    } else {
+      throw Exception('Invalid response');
+    }
+  }
+  @override
   Future<Owner> addOwner(Owner owner) async {
     var response = await dio.post(
       'owners/',
@@ -71,6 +91,8 @@ class OwnerRepositoryImpl extends OwnerRepository {
     );
     print('response: ${response.statusMessage}');
   }
+
+
 
 
 }
