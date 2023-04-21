@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../view/contact_about_rules/components/ACR_style.dart';
 import '../view/subscription/components/Sub_style.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 // Colors
 const Color WhiteColor = Color(0xFFFFFFFF);
 const Color BaseColor = Color(0xfff5f5f5);
@@ -143,5 +144,32 @@ Widget buildInfoDialog(BuildContext context, String? text, String? Phrase) {
         ),
       ),
     ],
+  );
+}
+Widget loading(){
+  return Container(
+    padding: EdgeInsets.only(
+      left: 150.0.w,
+      top: 51.0.h,
+      right: 150.0.w,
+    ),
+    width: 1920.w,
+    height: 700.h,
+    child: Center(
+      child: SpinKitCircle(
+          size: 140.r,
+          duration: Duration(seconds: 2),
+          itemBuilder: (context, index){
+            final colors = [YellowColor, RedColor];
+            final color = colors[index % colors.length];
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                color: color,
+                shape: BoxShape.circle,
+              ),
+            );
+          },
+      ),
+    ),
   );
 }
