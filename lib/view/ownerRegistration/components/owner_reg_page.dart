@@ -566,7 +566,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       );
 
                                       Get.toNamed(SubscriptionPage,
-                                          arguments: store);
+                                          arguments: [business_owner, store]);
                                     }
                                   },
                                   child: Text(

@@ -9,7 +9,7 @@ import '../../../model/entity/owner.dart';
 import '../../../view_model/owner_viewmodel.dart';
 
 class ConfirmationDialog extends StatefulWidget {
-  final String phoneNumber;
+  String? phoneNumber;
   final verificationId;
 
   ConfirmationDialog({required this.phoneNumber,required this.verificationId});
@@ -24,7 +24,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
       t3 = TextEditingController(),
       t4 = TextEditingController(),
       t5 = TextEditingController();
-
+  int? id;
   verifyOTP(String verificationId,String userOTP) async{
     FirebaseAuth auth = FirebaseAuth.instance;
     try{
@@ -74,27 +74,25 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
   }
 
   void _confirmCode() {
-
     // print(code);
     // code to verify the confirmation code entered by the user
     //TODO send code for verification
-    _viewModel.getOwners();
-    _viewModel.owners.stream.listen((list) {
+    _viewModel.searchPhone(widget.phoneNumber!);
+    _viewModel.owners.stream.listen((list) async {
       setState(() {
         _owners.addAll(list);
       });
-      bool temp = false;
-      for (Owner i in _owners) {
-        if (i.phone_number == widget.phoneNumber) {
-          temp = true;
-          Get.toNamed(HomePage, arguments: i.id);
+      if(_owners.isNotEmpty){
+        for (Owner i in _owners) {
+            id = i.id;
         }
-      }
-      if (temp==false) {
-        Owner owner = Owner(phone_number: widget.phoneNumber);
-        _viewModel.addOwner(owner);
-        Get.toNamed(HomePage, arguments: owner.id);
-      }
+      }else {
+          Owner owner = Owner(phone_number: widget.phoneNumber);
+          await Future.delayed(Duration(seconds: 5));
+          _viewModel.addOwner(owner);
+          id = owner.id;
+        }
+        Get.toNamed(HomePage, arguments: id);
     });
   }
 
@@ -175,16 +173,18 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
               backgroundColor: YellowColor,
               fixedSize: Size.fromWidth(150),
             ),
-            onPressed: () => verifyOTP(widget.verificationId,
-                t0.text + t1.text + t2.text + t3.text + t4.text + t5.text),
-            child: Text(
-              'تایید',
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.black,
-                fontFamily: "IranSansWeb",
+              child: Text(
+                'تایید',
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.black,
+                  fontFamily: "IranSansWeb",
+                ),
               ),
-            ),
+              onPressed: () {
+              verifyOTP(widget.verificationId,
+              t0.text + t1.text + t2.text + t3.text + t4.text + t5.text);
+            }
           ),
         ),
       ],
