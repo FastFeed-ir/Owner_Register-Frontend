@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:FastFeed/model/entity/subscription_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,10 +36,17 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
   final _subModel = SubscriptionViewModel();
   final _storeModel = StoreViewModel();
 
+  bool _showNoSub = false;
+
   @override
   initState() {
+    super.initState();
     getStore();
-    getSubscripton();
+    getSubscripton().then((_) => Timer(Duration(seconds: 5), (){
+      setState((){
+        _showNoSub = _subs.isEmpty && _stores.isEmpty;
+      });
+    }));
   }
 
   @override
@@ -60,68 +68,79 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
   }
   @override
   Widget restaurantList() {
-    // TODO: implement build
-    if (_subs.isEmpty) {
-      return Container(
+    if (_subs.isEmpty && _stores.isEmpty) {
+      if (_showNoSub) {
+        return noSub();
+      } else {
+        return loading();
+      }
+    } else {
+      return buildList();
+    }
+  }
+  Widget buildList() {
+    return Container(
         padding: EdgeInsets.only(
-          left: 150.0.w,
-          top: 51.0.h,
-          right: 150.0.w,
+          left: 100.0.w,
+          top: 60.0.h,
+          right: 100.0.w,
         ),
         width: 1920.w,
-        height: 700.h,
-        child: Center(
-          //TODO Empty list dialog
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                SadFace,
-                width: 200.w,
-                height: 200.h,
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              RestaurantTextStyle(text: "اشتراکی وجود ندارد"),
-            ],
-          ),
+        //height: ((300 * _subs.length) + 300).h,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ListView.builder(
+              itemCount: _subs.length,
+              shrinkWrap: true,
+              padding: EdgeInsets.only(left: 350.w, right: 350.w,top: 20.h,),
+              itemBuilder: (BuildContext context, int index) {
+                // TODO loaing
+                SubscriptionModel subscriptionModel = _subs[index];
+                Store store = Store(business_owner: 0, title: '', business_type: 0, state: 0, telephone_number: '', tables_count: 0);
+                for(var item in _stores) {
+                  if(subscriptionModel.store == item.id){
+                    store = item;
+                  }
+                }
+                return buildListItem(subscriptionModel, store, index);
+              },
+            ),
+          ],
         ),
       );
-    }
+  }
+
+  Widget noSub() {
     return Container(
       padding: EdgeInsets.only(
-        left: 100.0.w,
-        top: 60.0.h,
-        right: 100.0.w,
+        left: 150.0.w,
+        top: 51.0.h,
+        right: 150.0.w,
       ),
       width: 1920.w,
-      //height: ((300 * _subs.length) + 300).h,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ListView.builder(
-            itemCount: _subs.length,
-            shrinkWrap: true,
-           padding: EdgeInsets.only(left: 240.w, right: 200.w,top: 20.h,),
-            itemBuilder: (BuildContext context, int index) {
-              // TODO loaing
-              SubscriptionModel subscriptionModel = _subs[index];
-              Store store = Store(business_owner: 0, title: '', business_type: 0, state: 0, telephone_number: '', tables_count: 0);
-              for(var item in _stores) {
-                if(subscriptionModel.store == item.id){
-                  store = item;
-                }
-              }
-              return buildlist(subscriptionModel, store, index);
-            },
-          ),
-        ],
+      height: 700.h,
+      child: Center(
+        //TODO Empty list dialog
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              SadFace,
+              width: 200.w,
+              height: 200.h,
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            RestaurantTextStyle(text: "اشتراکی وجود ندارد"),
+          ],
+        ),
       ),
     );
   }
-  Widget buildlist(SubscriptionModel subscriptionModel, Store store, int index){
+  Widget buildListItem(SubscriptionModel subscriptionModel, Store store, int index){
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -130,7 +149,6 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
           // ToDo get name from API
           title: restaurantTitle(store.title, RestaurantLogoDef, subscriptionModel.startDate,subscriptionModel.period),
           shape: RoundedRectangleBorder(
-            //<-- SEE HERE
             side: BorderSide(width: 2.w),
             borderRadius: BorderRadius.circular(20.r),
           ),
@@ -139,61 +157,67 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
               SizedBox(
                 height: 10.h,
               ),
-              Row(
-                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {Get.toNamed(CategoriesPage);},
-                    child: SubButtonTextStyle(
-                      text: 'تغییر منو',
+              Container(
+                padding: EdgeInsets.only(left: 20.w,right: 20.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {Get.toNamed(CategoriesPage);},
+                      child: SubButtonTextStyle(
+                        text: 'تغییر منو',
+                      ),
+                      style:
+                      buttonStyle_build(150, 70, 20, YellowColor),
                     ),
-                    style:
-                    buttonStyle_build(150, 70, 20, YellowColor),
-                  ),
-                  SizedBox(width: 720.w,),
-                  ElevatedButton(
-                    onPressed: () {
-                      var id = subscriptionModel.id;
-                      var business_owner = subscriptionModel.business_owner;
-                      var storeId = subscriptionModel.store;
-                      period = subscriptionModel.period!;
-                      amount = subscriptionModel.amount!;
-                      SubscriptionModel subModel = SubscriptionModel(id: id,business_owner: business_owner, store: storeId, period: period, amount: amount,);
-                      Get.toNamed(SubscriptionPage, arguments: subModel);
-                    },
-                    child: SubButtonTextStyle(
-                      text: 'تمدید اشتراک',
+                    //SizedBox(width: 720.w,),
+                    ElevatedButton(
+                      onPressed: () {
+                        var id = subscriptionModel.id;
+                        var business_owner = subscriptionModel.business_owner;
+                        var storeId = subscriptionModel.store;
+                        period = subscriptionModel.period!;
+                        amount = subscriptionModel.amount!;
+                        SubscriptionModel subModel = SubscriptionModel(id: id,business_owner: business_owner, store: storeId, period: period, amount: amount,);
+                        Get.toNamed(SubscriptionPage, arguments: subModel);
+                      },
+                      child: SubButtonTextStyle(
+                        text: 'تمدید اشتراک',
+                      ),
+                      style:
+                      buttonStyle_build(150, 70, 20, YellowColor),
                     ),
-                    style:
-                    buttonStyle_build(150, 70, 20, YellowColor),
-                  ),
-                ],
+                  ],
+                ),
               ),
               SizedBox(
                 height: 20.h,
               ),
-              Row(
-                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {/* TODO Get.toNamed(StoreRegistration);*/},
-                    child: SubButtonTextStyle(
-                      text: 'ویرایش اطلاعات',
+              Container(
+                padding: EdgeInsets.only(left: 20.w,right: 20.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {/* TODO Get.toNamed(StoreRegistration);*/},
+                      child: SubButtonTextStyle(
+                        text: 'ویرایش اطلاعات',
+                      ),
+                      style: buttonStyle_build(150, 70, 20, YellowColor),
                     ),
-                    style: buttonStyle_build(150, 70, 20, YellowColor),
-                  ),
-                  SizedBox(width: 720.w,),
-                  ElevatedButton(
-                    onPressed: () {
-                      createQr(subscriptionModel.url!);
-                    },
-                    child: SubButtonTextStyle(
-                      text: 'دریافت QR',
+                    //SizedBox(width: 720.w,),
+                    ElevatedButton(
+                      onPressed: () {
+                        createQr(subscriptionModel.url!);
+                      },
+                      child: SubButtonTextStyle(
+                        text: 'دریافت QR',
+                      ),
+                      style:
+                      buttonStyle_build(150, 70, 20, YellowColor),
                     ),
-                    style:
-                    buttonStyle_build(150, 70, 20, YellowColor),
-                  ),
-                ],
+                  ],
+                ),
               ),
               SizedBox(
                 height: 20.h,
@@ -202,12 +226,12 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
           ),
         ),
         SizedBox(
-          height: 20.h,
+          height: 30.h,
         ),
       ],
     );
   }
-  void getSubscripton() {
+  Future<void> getSubscripton() async {
     _subModel.getSubscriptions(widget.Id);
     _subModel.subscriptions.stream.listen((list) {
       setState(() {
