@@ -14,6 +14,11 @@ class SubscriptionScreen extends StatefulWidget {
 }
 
 class _SubscriptionScreenState extends State<SubscriptionScreen> {
+  int? Id;
+  @override
+  void initState() {
+    Id = widget.pageType[0];
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -23,7 +28,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
           child: Column(
             children: [
               // TODO get ID
-              HeaderPanel(ID: 1),
+              HeaderPanel(ID: Id!),
               subscription(),
               Footer(),
             ],
@@ -32,7 +37,6 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       ),
     );
   }
-
   Widget subscription(){
     late Color free = Color(0xFFFFFFFF);
     return Container(
@@ -83,7 +87,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       ),
                       // TODO
                       onTap: () {
-                        Get.toNamed(VerifySubscriptonPage,arguments: [SubscriptionList[index].periodText, SubscriptionList[index].period,SubscriptionList[index].amountText,SubscriptionList[index].amount,widget.pageType,]);
+                        Get.toNamed(VerifySubscriptonPage,arguments: [Id,SubscriptionList[index].periodText, SubscriptionList[index].period,SubscriptionList[index].amountText,SubscriptionList[index].amount,widget.pageType[1],]);
                       },
                       shape: RoundedRectangleBorder(
                         //<-- SEE HERE

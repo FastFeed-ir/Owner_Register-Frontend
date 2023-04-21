@@ -50,14 +50,12 @@ class Header extends StatelessWidget {
                   height: 72.0.h,
                   child: ElevatedButton(
                     onPressed: () async {
-                      // Get.toNamed(HomePage);
                       final String? phoneNumber = await showDialog<String>(
                         context: context,
                         builder: (BuildContext context) {
                           return PhoneNumberDialog();
                         },
                       );
-                      print(phoneNumber);
                     },
                     style: buttonStyle_build(257, 72, 10, YellowColor),
                     child: HTextStyle(text: 'ورود / عضویت',),

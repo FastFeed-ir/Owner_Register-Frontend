@@ -21,7 +21,8 @@ class VerifySubscriptonScreen extends StatefulWidget {
 }
 
 class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
-  late int ID;
+  late int Id;
+  late int subId;
   late int _business_owner;
   late String storeName;
   late int storeId;
@@ -38,13 +39,14 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
   @override
   void initState() {
     // TODO isEdit, storeId
-    amountText = widget.subscription[0];
-    period = widget.subscription[1];
-    amountText = widget.subscription[2];
-    amount = widget.subscription[3];
+    Id = widget.subscription[0];
+    amountText = widget.subscription[1];
+    period = widget.subscription[2];
+    amountText = widget.subscription[3];
+    amount = widget.subscription[4];
     if (amount == 0) tax = 0;
     totalCost = amount + tax;
-    pageType = widget.subscription[4];
+    pageType = widget.subscription[5];
   }
 
   @override
@@ -57,7 +59,7 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // TODO get ID
-              HeaderPanel(ID: 1),
+              HeaderPanel(ID: Id),
               verifySubscripton(),
               Footer(),
             ],
@@ -161,11 +163,10 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
                       _business_owner = store.business_owner?? 0;
                       _addSubscripton();
                     });
-                    // TODO send Store Api with add function
                   } else {
                     // revival
                     SubscriptionModel sub = pageType;
-                    ID = sub.id ?? 0;
+                    subId = sub.id ?? 0;
                     _business_owner = sub.business_owner ?? 0;
                     storeId = sub.store!;
                     _editSubscripton();
@@ -195,7 +196,6 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
       amount: amount,
     );
     _viewModel.addSubscriptions(subscription).asStream().listen((event) async{
-      print(event);
       if(event.id! > 0){
         Get.toNamed(
           SuccessfulPurchasePage,
@@ -207,7 +207,7 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
   }
 
   void _editSubscripton() {
-    var id = ID;
+    var id = subId;
     var business_owner = _business_owner;
     var store = storeId;
     var period = this.period;
