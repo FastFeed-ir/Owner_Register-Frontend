@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -62,24 +63,24 @@ class _OwnerRegisterState extends State<OwnerRegister> {
 
   final picker = ImagePicker();
 
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    setState(() async{
-      if (pickedFile != null) {
-        final bytes = await pickedFile.readAsBytes();
-        final blob = html.Blob([bytes]);
+  Future<void> getImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      final bytes = await pickedFile.readAsBytes();
+      final blob = html.Blob([bytes]);
+      setState(() {
         _image = html.File([blob], pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+        print(_image);
+      });
+    } else {
+      print('No image selected.');
+    }
   }
 
 
 //form field variables
   late String _title;
-  XFile? _logo;
+  File? _logo;
   late String _business_type_text;
   late int _business_type;
   late String _state_text;
@@ -562,7 +563,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       Store store = Store(
                                         business_owner: business_owner,
                                         title: _title,
-                                        logo: _logo,
+                                        logo: _image,
                                         business_type: _business_type,
                                         state: _state,
                                         city: _city,

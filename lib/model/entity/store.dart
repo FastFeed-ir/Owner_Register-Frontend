@@ -1,10 +1,12 @@
+import 'dart:html';
+
 import 'package:image_picker/image_picker.dart';
 
 class Store{
   int? id;
   int? business_owner;
   String? title;
-  XFile? logo;
+  File? logo;
   int? business_type;
   int? state;
   String? city ;
