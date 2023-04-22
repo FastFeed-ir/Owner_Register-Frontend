@@ -168,13 +168,25 @@ class _SuccessfulPurchaseState extends State<SuccessfulPurchaseScreen> {
                 SizedBox(
                   height: 30.h,
                 ),
-                ElevatedButton(
-                  onPressed: () async{
-                    createQr(url);
-                    Get.toNamed(HomePage, arguments: business_owner);
-                  },
-                  child: SubBuyTextStyle(text: "دریافت QR"),
-                  style: buttonStyle_build(396, 70, 10, YellowColor),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Get.toNamed(HomePage, arguments: business_owner);
+                      },
+                      child: PurchaseStyle(text: "صفحه اصلی"),
+                      style: buttonStyle_build(190, 55, 10, YellowColor),
+                    ),
+                    ElevatedButton(
+                      onPressed: () async{
+                        createQr(url);
+                        Get.toNamed(HomePage, arguments: business_owner);
+                      },
+                      child: PurchaseStyle(text: "دریافت QR"),
+                      style: buttonStyle_build(190, 55, 10, YellowColor),
+                    ),
+                  ],
                 ),
               ],
             ),

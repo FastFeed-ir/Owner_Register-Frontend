@@ -151,14 +151,14 @@ class _UnSuccessfulPurchaseState extends State<UnSuccessfulPurchaseScreen> {
                   onPressed: () {
                     // ToDO Get QR Code
                   },
-                  child: SubBuyTextStyle(text: "امتحان مجدد"),
+                  child: PurchaseStyle(text: "امتحان مجدد"),
                   style: buttonStyle_build(190, 55, 10, YellowColor),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     // ToDO Get QR Code
                   },
-                  child: SubBuyTextStyle(text: "انصراف"),
+                  child: PurchaseStyle(text: "انصراف"),
                   style: buttonStyle_build(190, 55, 10, YellowColor),
                 ),
               ],
