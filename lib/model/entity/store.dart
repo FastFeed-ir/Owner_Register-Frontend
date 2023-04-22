@@ -10,6 +10,7 @@ class Store{
   String? city ;
   String? address ;
   String? owner_phone_number;
+  String? telephone_number;
   int? tables_count;
   String? instagram_page_link;
 
@@ -23,6 +24,7 @@ class Store{
     this.city,
     this.address,
     required this.owner_phone_number,
+    required this.telephone_number,
     required this.tables_count,
     this.instagram_page_link,
 });
@@ -37,6 +39,7 @@ class Store{
       city: json['city'],
       address: json['address'],
       owner_phone_number: json['owner_phone_number'],
+      telephone_number: json['telephone_number'],
       tables_count: json['tables_count'],
       instagram_page_link: json['instagram_page_link'],
     );
@@ -50,6 +53,7 @@ class Store{
     'city': city,
     'address': address,
     'owner_phone_number': owner_phone_number,
+    'telephone_number': telephone_number,
     'tables_count': tables_count,
     'instagram_page_link': instagram_page_link,
   };

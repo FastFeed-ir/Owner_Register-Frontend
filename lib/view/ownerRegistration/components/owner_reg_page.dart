@@ -8,6 +8,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:FastFeed/utils/constants.dart';
+import '../../../model/entity/owner.dart';
+import '../../../view_model/owner_viewmodel.dart';
 import '../../home/components/header_panel.dart';
 import '../../../model/entity/store.dart';
 import 'dart:html' as html;
@@ -85,10 +87,17 @@ class _OwnerRegisterState extends State<OwnerRegister> {
   String? _city;
   String? _address;
   late String _owner_phone_number;
+  late String _telephone_number;
   late int _tables_count;
-
   String? _instagram_page_link;
 
+  final _viewModel = OwnerViewModel();
+  final List<Owner> _owners = [];
+
+  @override
+  void initState() {
+    findPhone();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -443,7 +452,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       FilteringTextInputFormatter.digitsOnly
                                     ],
                                     onChanged: (value) {
-                                      _owner_phone_number = value;
+                                      _telephone_number = value;
                                     },
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -559,6 +568,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         city: _city,
                                         address: _address,
                                         owner_phone_number: _owner_phone_number,
+                                        telephone_number: _telephone_number,
                                         tables_count: _tables_count,
                                         instagram_page_link:
                                             _instagram_page_link,
@@ -693,6 +703,22 @@ class _OwnerRegisterState extends State<OwnerRegister> {
       ],
     ));
   }
+  void findPhone() {
+    // print(code);
+    // code to verify the confirmation code entered by the user
+    //TODO send code for verification
+    _viewModel.searchOwners(widget.Id);
+    _viewModel.owners.stream.listen((list) async {
+      setState(() {
+        _owners.addAll(list);
+      });
+      if(_owners.isNotEmpty){
+        for (Owner item in _owners) {
+          _owner_phone_number = item.phone_number??'';
+        }
+      }
+    });
+  }
 }
 
 class IconRow extends StatelessWidget {
@@ -738,4 +764,5 @@ class IconRow extends StatelessWidget {
       ),
     );
   }
+
 }

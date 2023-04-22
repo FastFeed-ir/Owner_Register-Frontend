@@ -88,7 +88,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
         }
       }else {
           Owner owner = Owner(phone_number: widget.phoneNumber);
-          await Future.delayed(Duration(seconds: 5));
+          await Future.delayed(const Duration(seconds: 5));
           _viewModel.addOwner(owner);
           id = owner.id;
         }

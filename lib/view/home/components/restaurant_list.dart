@@ -98,7 +98,7 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
               itemBuilder: (BuildContext context, int index) {
                 // TODO loaing
                 SubscriptionModel subscriptionModel = _subs[index];
-                Store store = Store(business_owner: 0, title: '', business_type: 0, state: 0, owner_phone_number: '', tables_count: 0);
+                Store store = Store(business_owner: 0, title: '', business_type: 0, state: 0, owner_phone_number: '', tables_count: 0, telephone_number: '');
                 for(var item in _stores) {
                   if(subscriptionModel.store == item.id){
                     store = item;
