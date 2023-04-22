@@ -76,7 +76,6 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
   void _confirmCode() {
     // print(code);
     // code to verify the confirmation code entered by the user
-    //TODO send code for verification
     _viewModel.searchPhone(widget.phoneNumber!);
     _viewModel.owners.stream.listen((list) async {
       setState(() {
@@ -86,20 +85,24 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
         for (Owner i in _owners) {
             id = i.id;
         }
-      }else {
-          Owner owner = Owner(phone_number: widget.phoneNumber);
-          await Future.delayed(const Duration(seconds: 5));
-          _viewModel.addOwner(owner);
-          id = owner.id;
-        }
-        Get.toNamed(HomePage, arguments: id);
+      } else {
+        Owner owner = await Owner(phone_number: widget.phoneNumber);
+        await Future.delayed(const Duration(seconds: 5));
+        await _viewModel.addOwner(owner);
+        loading();
+        _confirmCode();
+      }
+      Get.toNamed(HomePage, arguments: id);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('تایید شماره تلفن همراه',style: TextStyle(fontFamily: "IranSansWeb",)),
+      title: Text('تایید شماره تلفن همراه',
+          style: TextStyle(
+            fontFamily: "IranSansWeb",
+          )),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -154,7 +157,11 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
                         ),
                         label: Text(
                           "ارسال مجدد",
-                          style: TextStyle(fontSize: 15, color: RedColor,fontFamily: "IranSansWeb",),
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: RedColor,
+                            fontFamily: "IranSansWeb",
+                          ),
                         ),
                       ),
                     ],
@@ -169,10 +176,10 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: YellowColor,
-              fixedSize: Size.fromWidth(150),
-            ),
+              style: TextButton.styleFrom(
+                backgroundColor: YellowColor,
+                fixedSize: Size.fromWidth(150),
+              ),
               child: Text(
                 'تایید',
                 style: TextStyle(
@@ -181,11 +188,11 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
                   fontFamily: "IranSansWeb",
                 ),
               ),
-              onPressed: () {
-              verifyOTP(widget.verificationId,
-              t0.text + t1.text + t2.text + t3.text + t4.text + t5.text);
-            }
-          ),
+              onPressed: () async {
+                verifyOTP(widget.verificationId,
+                t0.text + t1.text + t2.text + t3.text + t4.text + t5.text);
+                // _confirmCode();
+              }),
         ),
       ],
       actionsAlignment: MainAxisAlignment.center,
@@ -210,11 +217,11 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
         ),
         onChanged: (value) {
           if (value.length == 1) {
-            if (index < 6 && index!=0) {
+            if (index < 6 && index != 0) {
               FocusScope.of(context).previousFocus();
             }
           }
-          if(value.isEmpty && index < 5) {
+          if (value.isEmpty && index < 5) {
             FocusScope.of(context).nextFocus();
           }
         },
