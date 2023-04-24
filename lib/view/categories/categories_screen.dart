@@ -64,7 +64,8 @@ class CategoriesScreenState extends State<CategoriesScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const SizedBox(height: 16.0),
-                    textFormField(_collectionTitleController, 'عنوان دسته بندی'),
+                    textFormField(
+                        _collectionTitleController, 'عنوان دسته بندی'),
                     const SizedBox(height: 16.0),
                     ElevatedButton(
                       onPressed: _addCollection,
@@ -214,7 +215,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
                     );
                   },
                 ),
-                const Text('موجود بودن')
+                const Text('فعال بودن')
               ],
             ),
           ],
