@@ -7,7 +7,7 @@ import 'collection_repository.dart';
 // ignore_for_file: avoid_print
 class CollectionRepositoryImpl extends CollectionRepository {
   @override
-  Future<List<Collection>> getCollections() async {
+  Future<List<Collection>> getCollections(int storeId) async {
     var response = await dio.get('collections/');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
@@ -16,8 +16,7 @@ class CollectionRepositoryImpl extends CollectionRepository {
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
           var collectionServer = Collection.fromJson(data);
-          //TODO fix storeId
-          if (collectionServer.storeId == 1) {
+          if (collectionServer.storeId == storeId) {
             collections.add(collectionServer);
           }
         }
@@ -29,7 +28,7 @@ class CollectionRepositoryImpl extends CollectionRepository {
   }
 
   @override
-  Future<List<Product>> getProducts() async {
+  Future<List<Product>> getProducts(int storeId) async {
     var response = await dio.get('products/');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
@@ -38,8 +37,7 @@ class CollectionRepositoryImpl extends CollectionRepository {
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
           var productServer = Product.fromJson(data);
-          //TODO fix storeId
-          if (productServer.storeId == 1) {
+          if (productServer.storeId == storeId) {
             products.add(productServer);
           }
         }

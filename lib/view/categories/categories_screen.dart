@@ -241,8 +241,8 @@ class CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   void loadData() {
-    _viewModel.getCollections();
-    _viewModel.getProducts();
+    _viewModel.getCollections(widget.storeId);
+    _viewModel.getProducts(widget.storeId);
     _viewModel.collections.stream.listen((listCollections) {
       _viewModel.products.stream.listen((listProducts) {
         setState(() {
