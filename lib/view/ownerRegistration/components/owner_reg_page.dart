@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:html';
 import 'dart:ui';
 import 'package:flutter/material.dart';
@@ -67,10 +68,12 @@ class _OwnerRegisterState extends State<OwnerRegister> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       final bytes = await pickedFile.readAsBytes();
+
+      String _base64String = base64.encode(bytes);
+      _logo = _base64String;
       final blob = html.Blob([bytes]);
       setState(() {
         _image = html.File([blob], pickedFile.path);
-        print(_image);
       });
     } else {
       print('No image selected.');
@@ -80,17 +83,17 @@ class _OwnerRegisterState extends State<OwnerRegister> {
 
 //form field variables
   late String _title;
-  File? _logo;
+  String _logo ="";
   late String _business_type_text;
   late int _business_type;
   late String _state_text;
   late int _state;
-  String? _city;
-  String? _address;
+  String _city ="";
+  String _address="";
   late String _owner_phone_number;
   late String _telephone_number;
   late int _tables_count;
-  String? _instagram_page_link;
+  String _instagram_page_link = "";
 
   final _viewModel = OwnerViewModel();
   final List<Owner> _owners = [];
@@ -563,7 +566,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       Store store = Store(
                                         business_owner: business_owner,
                                         title: _title,
-                                        logo: _image,
+                                        logo: _logo,
                                         business_type: _business_type,
                                         state: _state,
                                         city: _city,
