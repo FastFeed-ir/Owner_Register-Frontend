@@ -50,9 +50,13 @@ class CollectionRepositoryImpl extends CollectionRepository {
 
   @override
   Future<Collection> addCollection(Collection collection) async {
+    var notNullCollection = Collection(
+        title: collection.title,
+        storeId: collection.storeId,
+        isFeatured: collection.isFeatured ?? false);
     var response = await dio.post(
       'collections/',
-      data: collection,
+      data: notNullCollection,
     );
     print('response: ${response.statusMessage}');
     final newCollection = Collection.fromJson(response.data);
@@ -61,9 +65,20 @@ class CollectionRepositoryImpl extends CollectionRepository {
 
   @override
   Future<Product> addProduct(Product product) async {
+    var notNullProduct = Product(
+        title: product.title,
+        image: product.image ?? "",
+        description: product.description ?? "",
+        unitPrice: product.unitPrice,
+        inventory: product.inventory ?? 0,
+        isAvailable: product.isAvailable,
+        isFeatured: product.isFeatured ?? false,
+        discountPercentage: product.discountPercentage ?? 0.0,
+        collectionId: product.collectionId,
+        storeId: product.storeId);
     var response = await dio.post(
       'products/',
-      data: product,
+      data: notNullProduct,
     );
     print('response: ${response.statusMessage}');
     final newProduct = Product.fromJson(response.data);
@@ -72,18 +87,35 @@ class CollectionRepositoryImpl extends CollectionRepository {
 
   @override
   Future<void> editCollection(Collection collection) async {
+    var notNullCollection = Collection(
+        id: collection.id,
+        title: collection.title,
+        storeId: collection.storeId,
+        isFeatured: collection.isFeatured ?? false);
     var response = await dio.patch(
-      'collections/${collection.id}/',
-      data: collection,
+      'collections/${notNullCollection.id}/',
+      data: notNullCollection,
     );
     print('response: ${response.statusMessage}');
   }
 
   @override
   Future<void> editProduct(Product product) async {
+    var notNullProduct = Product(
+        id: product.id,
+        title: product.title,
+        image: product.image ?? "",
+        description: product.description ?? "",
+        unitPrice: product.unitPrice,
+        inventory: product.inventory ?? 0,
+        isAvailable: product.isAvailable,
+        isFeatured: product.isFeatured ?? false,
+        discountPercentage: product.discountPercentage ?? 0.0,
+        collectionId: product.collectionId,
+        storeId: product.storeId);
     var response = await dio.patch(
-      'products/${product.id}/',
-      data: product,
+      'products/${notNullProduct.id}/',
+      data: notNullProduct,
     );
     print('response: ${response.statusMessage}');
   }

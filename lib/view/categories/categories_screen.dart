@@ -25,9 +25,9 @@ class CategoriesScreenState extends State<CategoriesScreen> {
   final TextEditingController _productUnitPriceController =
       TextEditingController();
   final TextEditingController _productDiscountPercentageController =
-      TextEditingController();
+      TextEditingController(text: "");
   final TextEditingController _productInventoryController =
-      TextEditingController();
+      TextEditingController(text: "");
 
   var _checkBoxValue = false;
   final List<Collection> _collections = [];
