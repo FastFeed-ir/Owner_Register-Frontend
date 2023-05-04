@@ -201,6 +201,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
             textFormFieldNumber(_productInventoryController, 'تعداد'),
             const SizedBox(height: 8.0),
             Row(
+              textDirection: TextDirection.ltr,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 StatefulBuilder(
