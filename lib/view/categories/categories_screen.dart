@@ -33,6 +33,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
       TextEditingController(text: "");
 
   var _checkBoxValue = false;
+  var _gotFromServer = false;
   final List<Collection> _collections = [];
   final _viewModel = CollectionViewModel();
   final _formKey = GlobalKey<FormState>();
@@ -95,13 +96,15 @@ class CategoriesScreenState extends State<CategoriesScreen> {
                         ),
                         const SizedBox(height: 16.0),
                         Expanded(
-                          child: ListView.builder(
-                            itemCount: _collections.length,
-                            itemBuilder: (context, index) {
-                              Collection collection = _collections[index];
-                              return expandedCard(collection, index);
-                            },
-                          ),
+                          child: !_gotFromServer
+                              ? loading()
+                              : ListView.builder(
+                                  itemCount: _collections.length,
+                                  itemBuilder: (context, index) {
+                                    Collection collection = _collections[index];
+                                    return expandedCard(collection, index);
+                                  },
+                                ),
                         ),
                       ],
                     ),
@@ -281,6 +284,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
     _viewModel.collections.stream.listen((listCollections) {
       _viewModel.products.stream.listen((listProducts) {
         setState(() {
+          _gotFromServer = true;
           _collections.addAll(listCollections);
           for (var collection in _collections) {
             collection.products = [];
