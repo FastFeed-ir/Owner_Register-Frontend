@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:FastFeed/view/categories/components/text_form_field.dart';
 import 'package:FastFeed/view/categories/components/text_form_field_number.dart';
 import 'package:FastFeed/view_model/collection_view_model.dart';
@@ -6,6 +8,7 @@ import 'package:persian_number_utility/persian_number_utility.dart';
 
 import '../../model/entity/collection.dart';
 import '../../model/entity/product.dart';
+import '../../utils/constants.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key, required this.storeId});
@@ -25,13 +28,15 @@ class CategoriesScreenState extends State<CategoriesScreen> {
   final TextEditingController _productUnitPriceController =
       TextEditingController();
   final TextEditingController _productDiscountPercentageController =
-      TextEditingController();
+      TextEditingController(text: "");
   final TextEditingController _productInventoryController =
-      TextEditingController();
+      TextEditingController(text: "");
 
   var _checkBoxValue = false;
+  var _gotFromServer = false;
   final List<Collection> _collections = [];
   final _viewModel = CollectionViewModel();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -50,41 +55,64 @@ class CategoriesScreenState extends State<CategoriesScreen> {
       ),
       body: Directionality(
         textDirection: TextDirection.ltr,
-        child: Center(
-          child: SizedBox(
-            width: 600,
-            child: Material(
-              color: Colors.white,
-              elevation: 8.0,
-              shadowColor: Colors.grey,
-              borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(height: 16.0),
-                    textFormField(_collectionTitleController, 'عنوان دسته بندی'),
-                    const SizedBox(height: 16.0),
-                    ElevatedButton(
-                      onPressed: _addCollection,
-                      child: const Text('افزودن دسته بندی'),
-                    ),
-                    const SizedBox(height: 16.0),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: _collections.length,
-                        itemBuilder: (context, index) {
-                          Collection collection = _collections[index];
-                          return expandedCard(collection, index);
-                        },
-                      ),
-                    ),
-                  ],
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: ImageFiltered(
+                imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                child: Image.asset(
+                  OwnerPageimg,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
-          ),
+            Center(
+              child: SizedBox(
+                width: 600,
+                child: Material(
+                  color: Colors.white,
+                  elevation: 8.0,
+                  shadowColor: Colors.grey,
+                  borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const SizedBox(height: 16.0),
+                        Form(
+                          key: _formKey,
+                          child: textFormField(_collectionTitleController,
+                              'عنوان دسته بندی', true),
+                        ),
+                        const SizedBox(height: 16.0),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _addCollection();
+                            }
+                          },
+                          child: const Text('افزودن دسته بندی'),
+                        ),
+                        const SizedBox(height: 16.0),
+                        Expanded(
+                          child: !_gotFromServer
+                              ? loading()
+                              : ListView.builder(
+                                  itemCount: _collections.length,
+                                  itemBuilder: (context, index) {
+                                    Collection collection = _collections[index];
+                                    return expandedCard(collection, index);
+                                  },
+                                ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -116,7 +144,8 @@ class CategoriesScreenState extends State<CategoriesScreen> {
               (product) => ListTile(
                 title: Container(
                   alignment: Alignment.center,
-                  child: Text('${product.title} : ${product.unitPrice} تومان'),
+                  child: Text('${product.title} : '
+                      '${product.unitPrice.toString().toPersianDigit().seRagham()} تومان'),
                 ),
                 subtitle: Container(
                     alignment: Alignment.center,
@@ -156,7 +185,9 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         alignment: Alignment.centerRight,
         child: const Text('ویرایش دسته بندی'),
       ),
-      content: textFormField(_collectionTitleController, 'عنوان'),
+      content: Form(
+          key: _formKey,
+          child: textFormField(_collectionTitleController, 'عنوان', true)),
       actions: [
         TextButton(
           child: const Text('لغو'),
@@ -165,7 +196,9 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         TextButton(
           child: const Text('تایید'),
           onPressed: () {
-            _editCollection(collection);
+            if (_formKey.currentState!.validate()) {
+              _editCollection(collection);
+            }
           },
         ),
       ],
@@ -185,39 +218,45 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         child: Text(stateTitle),
       ),
       content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            textFormField(_productTitleController, 'عنوان'),
-            const SizedBox(height: 8.0),
-            textFormField(_productDescriptionController, 'توضیحات'),
-            const SizedBox(height: 8.0),
-            textFormFieldNumber(_productUnitPriceController, 'قیمت'),
-            const SizedBox(height: 8.0),
-            textFormFieldNumber(
-                _productDiscountPercentageController, 'درصد تخفیف'),
-            const SizedBox(height: 8.0),
-            textFormFieldNumber(_productInventoryController, 'تعداد'),
-            const SizedBox(height: 8.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                StatefulBuilder(
-                  builder: (BuildContext context, StateSetter setState) {
-                    return Checkbox(
-                      value: _checkBoxValue,
-                      onChanged: (newValue) {
-                        setState(() {
-                          _checkBoxValue = newValue!;
-                        });
-                      },
-                    );
-                  },
-                ),
-                const Text('موجود بودن')
-              ],
-            ),
-          ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              textFormField(_productTitleController, 'عنوان', true),
+              const SizedBox(height: 8.0),
+              textFormField(_productDescriptionController, 'توضیحات', false),
+              const SizedBox(height: 8.0),
+              textFormFieldNumber(
+                  _productUnitPriceController, 'قیمت', true, false),
+              const SizedBox(height: 8.0),
+              textFormFieldNumber(_productDiscountPercentageController,
+                  'درصد تخفیف', false, true),
+              const SizedBox(height: 8.0),
+              textFormFieldNumber(
+                  _productInventoryController, 'تعداد', false, false),
+              const SizedBox(height: 8.0),
+              Row(
+                textDirection: TextDirection.ltr,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setState) {
+                      return Checkbox(
+                        value: _checkBoxValue,
+                        onChanged: (newValue) {
+                          setState(() {
+                            _checkBoxValue = newValue!;
+                          });
+                        },
+                      );
+                    },
+                  ),
+                  const Text('فعال بودن')
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       actions: [
@@ -228,9 +267,9 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         TextButton(
           child: const Text('تایید'),
           onPressed: () {
-            if (flag) {
+            if (flag && _formKey.currentState!.validate()) {
               _addProduct(collection);
-            } else {
+            } else if (!flag && _formKey.currentState!.validate()) {
               _editProduct(collection, product!);
             }
           },
@@ -240,11 +279,12 @@ class CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   void loadData() {
-    _viewModel.getCollections();
-    _viewModel.getProducts();
+    _viewModel.getCollections(widget.storeId);
+    _viewModel.getProducts(widget.storeId);
     _viewModel.collections.stream.listen((listCollections) {
       _viewModel.products.stream.listen((listProducts) {
         setState(() {
+          _gotFromServer = true;
           _collections.addAll(listCollections);
           for (var collection in _collections) {
             collection.products = [];

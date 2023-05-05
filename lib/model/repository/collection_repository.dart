@@ -3,9 +3,9 @@ import 'package:FastFeed/model/entity/product.dart';
 import '../entity/collection.dart';
 
 abstract class CollectionRepository {
-  Future<List<Collection>> getCollections();
+  Future<List<Collection>> getCollections(int storeId);
 
-  Future<List<Product>> getProducts();
+  Future<List<Product>> getProducts(int storeId);
 
   Future<Collection> addCollection(Collection collection);
 
