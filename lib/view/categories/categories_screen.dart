@@ -133,7 +133,8 @@ class CategoriesScreenState extends State<CategoriesScreen> {
               (product) => ListTile(
                 title: Container(
                   alignment: Alignment.center,
-                  child: Text('${product.title} : ${product.unitPrice} تومان'),
+                  child: Text('${product.title} : '
+                      '${product.unitPrice.toString().toPersianDigit().seRagham()} تومان'),
                 ),
                 subtitle: Container(
                     alignment: Alignment.center,
