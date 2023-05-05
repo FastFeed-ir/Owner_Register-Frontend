@@ -35,6 +35,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
   var _checkBoxValue = false;
   final List<Collection> _collections = [];
   final _viewModel = CollectionViewModel();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -78,11 +79,18 @@ class CategoriesScreenState extends State<CategoriesScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const SizedBox(height: 16.0),
-                        textFormField(
-                            _collectionTitleController, 'عنوان دسته بندی'),
+                        Form(
+                          key: _formKey,
+                          child: textFormField(_collectionTitleController,
+                              'عنوان دسته بندی', true),
+                        ),
                         const SizedBox(height: 16.0),
                         ElevatedButton(
-                          onPressed: _addCollection,
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _addCollection();
+                            }
+                          },
                           child: const Text('افزودن دسته بندی'),
                         ),
                         const SizedBox(height: 16.0),
@@ -174,7 +182,9 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         alignment: Alignment.centerRight,
         child: const Text('ویرایش دسته بندی'),
       ),
-      content: textFormField(_collectionTitleController, 'عنوان'),
+      content: Form(
+          key: _formKey,
+          child: textFormField(_collectionTitleController, 'عنوان', true)),
       actions: [
         TextButton(
           child: const Text('لغو'),
@@ -183,7 +193,9 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         TextButton(
           child: const Text('تایید'),
           onPressed: () {
-            _editCollection(collection);
+            if (_formKey.currentState!.validate()) {
+              _editCollection(collection);
+            }
           },
         ),
       ],
@@ -203,40 +215,45 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         child: Text(stateTitle),
       ),
       content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            textFormField(_productTitleController, 'عنوان'),
-            const SizedBox(height: 8.0),
-            textFormField(_productDescriptionController, 'توضیحات'),
-            const SizedBox(height: 8.0),
-            textFormFieldNumber(_productUnitPriceController, 'قیمت'),
-            const SizedBox(height: 8.0),
-            textFormFieldNumber(
-                _productDiscountPercentageController, 'درصد تخفیف'),
-            const SizedBox(height: 8.0),
-            textFormFieldNumber(_productInventoryController, 'تعداد'),
-            const SizedBox(height: 8.0),
-            Row(
-              textDirection: TextDirection.ltr,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                StatefulBuilder(
-                  builder: (BuildContext context, StateSetter setState) {
-                    return Checkbox(
-                      value: _checkBoxValue,
-                      onChanged: (newValue) {
-                        setState(() {
-                          _checkBoxValue = newValue!;
-                        });
-                      },
-                    );
-                  },
-                ),
-                const Text('فعال بودن')
-              ],
-            ),
-          ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              textFormField(_productTitleController, 'عنوان', true),
+              const SizedBox(height: 8.0),
+              textFormField(_productDescriptionController, 'توضیحات', false),
+              const SizedBox(height: 8.0),
+              textFormFieldNumber(
+                  _productUnitPriceController, 'قیمت', true, false),
+              const SizedBox(height: 8.0),
+              textFormFieldNumber(_productDiscountPercentageController,
+                  'درصد تخفیف', false, true),
+              const SizedBox(height: 8.0),
+              textFormFieldNumber(
+                  _productInventoryController, 'تعداد', false, false),
+              const SizedBox(height: 8.0),
+              Row(
+                textDirection: TextDirection.ltr,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setState) {
+                      return Checkbox(
+                        value: _checkBoxValue,
+                        onChanged: (newValue) {
+                          setState(() {
+                            _checkBoxValue = newValue!;
+                          });
+                        },
+                      );
+                    },
+                  ),
+                  const Text('فعال بودن')
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       actions: [
@@ -247,9 +264,9 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         TextButton(
           child: const Text('تایید'),
           onPressed: () {
-            if (flag) {
+            if (flag && _formKey.currentState!.validate()) {
               _addProduct(collection);
-            } else {
+            } else if (!flag && _formKey.currentState!.validate()) {
               _editProduct(collection, product!);
             }
           },
