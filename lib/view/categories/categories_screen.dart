@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:FastFeed/view/categories/components/text_form_field.dart';
 import 'package:FastFeed/view/categories/components/text_form_field_number.dart';
 import 'package:FastFeed/view_model/collection_view_model.dart';
@@ -6,6 +8,7 @@ import 'package:persian_number_utility/persian_number_utility.dart';
 
 import '../../model/entity/collection.dart';
 import '../../model/entity/product.dart';
+import '../../utils/constants.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key, required this.storeId});
@@ -50,42 +53,55 @@ class CategoriesScreenState extends State<CategoriesScreen> {
       ),
       body: Directionality(
         textDirection: TextDirection.ltr,
-        child: Center(
-          child: SizedBox(
-            width: 600,
-            child: Material(
-              color: Colors.white,
-              elevation: 8.0,
-              shadowColor: Colors.grey,
-              borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(height: 16.0),
-                    textFormField(
-                        _collectionTitleController, 'عنوان دسته بندی'),
-                    const SizedBox(height: 16.0),
-                    ElevatedButton(
-                      onPressed: _addCollection,
-                      child: const Text('افزودن دسته بندی'),
-                    ),
-                    const SizedBox(height: 16.0),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: _collections.length,
-                        itemBuilder: (context, index) {
-                          Collection collection = _collections[index];
-                          return expandedCard(collection, index);
-                        },
-                      ),
-                    ),
-                  ],
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: ImageFiltered(
+                imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                child: Image.asset(
+                  OwnerPageimg,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
-          ),
+            Center(
+              child: SizedBox(
+                width: 600,
+                child: Material(
+                  color: Colors.white,
+                  elevation: 8.0,
+                  shadowColor: Colors.grey,
+                  borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const SizedBox(height: 16.0),
+                        textFormField(
+                            _collectionTitleController, 'عنوان دسته بندی'),
+                        const SizedBox(height: 16.0),
+                        ElevatedButton(
+                          onPressed: _addCollection,
+                          child: const Text('افزودن دسته بندی'),
+                        ),
+                        const SizedBox(height: 16.0),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: _collections.length,
+                            itemBuilder: (context, index) {
+                              Collection collection = _collections[index];
+                              return expandedCard(collection, index);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
