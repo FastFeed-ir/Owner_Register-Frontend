@@ -20,7 +20,7 @@ class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
       contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       title: Text(
         "ورود یا عضویت",
-        style: TextStyle(fontFamily: "IranSansWeb"),
+        style: TextStyle(fontFamily: IranSansWeb),
       ),
       content: SizedBox(
         width: 500.w,
@@ -38,7 +38,7 @@ class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
                   border: OutlineInputBorder(),
                   labelStyle: TextStyle(
                     color: Colors.black,
-                    fontFamily: "IranSansWeb",
+                    fontFamily: IranSansWeb,
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black),
@@ -119,7 +119,7 @@ class _PhoneNumberDialogState extends State<PhoneNumberDialog> {
                 style: TextStyle(
                   fontSize: 15,
                   color: Colors.black,
-                  fontFamily: "IranSansWeb",
+                  fontFamily: IranSansWeb,
                 ),
               ),
             ),

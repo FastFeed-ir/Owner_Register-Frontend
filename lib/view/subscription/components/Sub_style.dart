@@ -24,7 +24,7 @@ class SubscriptionItem{
   late String periodText;
   late int period;
   late String amountText;
-  late int amount;
+  late double amount;
   SubscriptionItem(this.periodText, this.period,this.amountText, this.amount,);
 
 }
@@ -100,3 +100,19 @@ class PurchaseStyle extends StatelessWidget {
   }
 }
 
+class PurchaseButtonStyle extends StatelessWidget {
+  final String text;
+  const PurchaseButtonStyle({super.key, required this.text});
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontSize: 26.0.sp,
+        fontWeight: FontWeight.w400,
+        fontFamily: IranSansWeb,
+        color: BlackColor,
+      ),
+    );
+  }
+}

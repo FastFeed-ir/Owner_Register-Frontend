@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:FastFeed/utils/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import '../../../main.dart';
 import '../../../model/entity/owner.dart';
+import '../../../utils/Hive/owner/Hive_owner.dart';
 import '../../../view_model/owner_viewmodel.dart';
 
 class ConfirmationDialog extends StatefulWidget {
@@ -25,6 +26,8 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
       t4 = TextEditingController(),
       t5 = TextEditingController();
   int? id;
+  String? first_name;
+  String? last_name;
   verifyOTP(String verificationId,String userOTP) async{
     FirebaseAuth auth = FirebaseAuth.instance;
     try{
@@ -84,14 +87,17 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
       if(_owners.isNotEmpty){
         for (Owner i in _owners) {
             id = i.id;
+            first_name = i.first_name;
+            last_name = i.last_name;
         }
       } else {
-        Owner owner = await Owner(phone_number: widget.phoneNumber);
+        Owner owner = await Owner(phone_number: widget.phoneNumber,first_name: "",last_name: "");
         await Future.delayed(const Duration(seconds: 5));
         owner = await _viewModel.addOwner(owner);
         id = owner.id;
         loading();
       }
+      ownerBox.put('Owner', HiveOwner(id: id, first_name: first_name, last_name: last_name,phone_number: widget.phoneNumber));
       Get.toNamed(HomePage, arguments: id);
     });
   }
@@ -101,7 +107,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
     return AlertDialog(
       title: Text('تایید شماره تلفن همراه',
           style: TextStyle(
-            fontFamily: "IranSansWeb",
+            fontFamily: IranSansWeb,
           )),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -109,7 +115,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
           Text(
             ' لطفا کد ارسال شده به شماره ${widget.phoneNumber} را وارد نمایید ',
             style: TextStyle(
-              fontFamily: 'IranSansWeb',
+              fontFamily: IranSansWeb,
             ),
           ),
           SizedBox(height: 16),
@@ -138,7 +144,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
                         ' $_resendSeconds ثانیه تا ارسال مجدد  ',
                         style: TextStyle(
                           fontSize: 15,
-                          fontFamily: 'IranSansWeb',
+                          fontFamily: IranSansWeb,
                         ),
                       ),
                     ],
@@ -160,7 +166,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
                           style: TextStyle(
                             fontSize: 15,
                             color: RedColor,
-                            fontFamily: "IranSansWeb",
+                            fontFamily: IranSansWeb,
                           ),
                         ),
                       ),
@@ -185,7 +191,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
                 style: TextStyle(
                   fontSize: 15,
                   color: Colors.black,
-                  fontFamily: "IranSansWeb",
+                  fontFamily: IranSansWeb,
                 ),
               ),
               onPressed: () async {
@@ -209,7 +215,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontFamily: 'IranSansWeb',
+          fontFamily: IranSansWeb,
         ),
         decoration: InputDecoration(
           counter: SizedBox.shrink(),

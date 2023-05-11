@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:FastFeed/model/entity/subscription_model.dart';
+import 'package:FastFeed/utils/Hive/owner/Hive_owner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../../main.dart';
 import '../../../model/entity/store.dart';
+import '../../../utils/Hive/subsription/Hive_subscription.dart';
 import '../../../utils/constants.dart';
 import '../../../view_model/store_viewmodel.dart';
 import '../../../view_model/subscription_viewmodel.dart';
@@ -13,7 +16,7 @@ import 'Home_style.dart';
 import 'header_panel.dart';
 
 class RestaurantListScreen extends StatefulWidget {
-  var Id = Get.arguments;
+  HiveOwner owner = ownerBox.get('Owner');
 
   RestaurantListScreen({
     Key? key,
@@ -57,7 +60,7 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              HeaderPanel(ID: widget.Id,),
+              HeaderPanel(),
               SingleChildScrollView(child: restaurantList()),
               Footer(),
             ],
@@ -177,8 +180,8 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
                         var storeId = subscriptionModel.store;
                         period = subscriptionModel.period!;
                         amount = subscriptionModel.amount!;
-                        SubscriptionModel subModel = SubscriptionModel(id: id,business_owner: business_owner, store: storeId, period: period, amount: amount,);
-                        Get.toNamed(SubscriptionPage, arguments: [id,subModel]);
+                        subBox.put("Subscription", HiveSubscription(id: id,business_owner: business_owner, store: storeId, period: period, amount: amount,),);
+                        Get.toNamed(EditSubscriptionPage);
                       },
                       child: SubButtonTextStyle(
                         text: 'تمدید اشتراک',
@@ -231,7 +234,7 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
     );
   }
   Future<void> getSubscripton() async {
-    _subModel.getSubscriptions(widget.Id);
+    _subModel.getSubscriptions(widget.owner.id!);
     _subModel.subscriptions.stream.listen((list) {
       setState(() {
         _subs.addAll(list);
@@ -240,7 +243,7 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
   }
 
   void getStore() {
-    _storeModel.getStores(widget.Id);
+    _storeModel.getStores(widget.owner.id!);
     _storeModel.stores.stream.listen((list) {
       setState(() {
         _stores.addAll(list);

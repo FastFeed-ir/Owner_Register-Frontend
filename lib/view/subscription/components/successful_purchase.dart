@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+import '../../../main.dart';
+import '../../../utils/Hive/success/Hive_success.dart';
 import '../../../utils/constants.dart';
 import 'Sub_style.dart';
 import '../components/qr_code.dart';
 class SuccessfulPurchaseScreen extends StatefulWidget {
-  var subscription = Get.arguments;
+
+  HiveSuccessfulPurchase successfulPurchase = successBox.get("Successful");
 
   SuccessfulPurchaseScreen({super.key});
 
@@ -17,17 +20,23 @@ class SuccessfulPurchaseScreen extends StatefulWidget {
 class _SuccessfulPurchaseState extends State<SuccessfulPurchaseScreen> {
 
   late int period ;
-  late int amount = 0;
+  late double amount = 0;
   late String storeName;
   late int business_owner;
   late String url;
   @override
   void initState() {
-    period = widget.subscription[0];
-    amount = widget.subscription[1];
-    storeName = widget.subscription[2];
-    business_owner = widget.subscription[3];
-    url = widget.subscription[4];
+    storeName = widget.successfulPurchase.storeName!;
+    business_owner = widget.successfulPurchase.business_owner!;
+    url = widget.successfulPurchase.url!;
+    period = widget.successfulPurchase.period!;
+    amount = widget.successfulPurchase.amount!;
+  }
+  @override
+  void dispose() {
+    subBox.delete('Subscription');
+    storeBox.delete('Store');
+    verifySubBox.delete('AddVerifySub');
   }
   @override
   Widget build(BuildContext context) {
@@ -146,7 +155,7 @@ class _SuccessfulPurchaseState extends State<SuccessfulPurchaseScreen> {
                 PurchaseStyle(text: "مدت اشتراک :"),
                 Row(
                   children: [
-                    PurchaseStyle(text: "${period/30}"),
+                    PurchaseStyle(text: "${(period/30) as int}"),
                     PurchaseStyle(text: " ماه"),
                   ],
                 ),
@@ -173,17 +182,17 @@ class _SuccessfulPurchaseState extends State<SuccessfulPurchaseScreen> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        Get.toNamed(HomePage, arguments: business_owner);
+                        Get.toNamed(HomePage);
                       },
-                      child: PurchaseStyle(text: "صفحه اصلی"),
+                      child: PurchaseButtonStyle(text: "صفحه اصلی"),
                       style: buttonStyle_build(190, 55, 10, YellowColor),
                     ),
                     ElevatedButton(
                       onPressed: () async{
                         createQr(url);
-                        Get.toNamed(HomePage, arguments: business_owner);
+                        Get.toNamed(HomePage);
                       },
-                      child: PurchaseStyle(text: "دریافت QR"),
+                      child: PurchaseButtonStyle(text: "دریافت QR"),
                       style: buttonStyle_build(190, 55, 10, YellowColor),
                     ),
                   ],

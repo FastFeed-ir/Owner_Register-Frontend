@@ -1,13 +1,24 @@
+import 'package:FastFeed/utils/Hive/owner/Hive_owner.dart';
 import 'package:FastFeed/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../../main.dart';
 import '../../header_footer/components/HF_style.dart';
 
-class HeaderPanel extends StatelessWidget {
-  HeaderPanel({Key? key, required this.ID}) : super(key: key);
-  int ID;
+class HeaderPanel extends StatefulWidget {
+  HeaderPanel({Key? key}) : super(key: key);
 
+  @override
+  State<HeaderPanel> createState() => _HeaderPanelState();
+}
+
+class _HeaderPanelState extends State<HeaderPanel> {
+  late HiveOwner owner;
+  @override
+  void initState() {
+    owner = ownerBox.get('Owner');
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,7 +59,7 @@ class HeaderPanel extends StatelessWidget {
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(HomePage, arguments: ID);
+                    Get.toNamed(HomePage);
                   },
                   child: warpText('خانه', Icons.home_outlined),
                 ),
@@ -72,9 +83,9 @@ class HeaderPanel extends StatelessWidget {
       child: warpText("پروفایل",Icons.person_outline,),
       onSelected: (String choice) async {
         if (choice == 'view_profile') {
-          Get.toNamed(ProfilePage, arguments: ID);
+          Get.toNamed(ProfilePage);
         } else if (choice == 'buy_subscription') {
-          Get.toNamed(OwnerRegisterPage, arguments: ID);
+          Get.toNamed(OwnerRegisterPage);
         } else if (choice == 'exit') {
           //SharedPreferences prefs = await SharedPreferences.getInstance();
           //await prefs.remove('user.api_token');
@@ -120,7 +131,7 @@ class HeaderPanel extends StatelessWidget {
 
   Widget subsMenu(String? text) {
     return TextButton(
-      onPressed: () => Get.toNamed(RestaurantListPage, arguments: ID),
+      onPressed: () => Get.toNamed(RestaurantListPage),
       style: TextButton.styleFrom(
         backgroundColor: WhiteColor,
       ),
@@ -158,6 +169,5 @@ class HeaderPanel extends StatelessWidget {
       ],
     );
   }
-
 }
 

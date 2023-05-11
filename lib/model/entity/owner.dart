@@ -7,8 +7,8 @@ class Owner{
   Owner({
     this.id,
     required this.phone_number,
-    this.first_name,
-    this.last_name
+    required this.first_name,
+    required this.last_name
   });
   factory Owner.fromJson(Map<String, dynamic> json) {
     return Owner(

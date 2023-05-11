@@ -1,3 +1,5 @@
+import 'package:FastFeed/main.dart';
+import 'package:FastFeed/utils/Hive/owner/Hive_owner.dart';
 import 'package:FastFeed/utils/constants.dart';
 import 'package:FastFeed/view/header_footer/components/footer.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +9,7 @@ import 'Home_style.dart';
 import 'header_panel.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
-  int ID = Get.arguments;
+  HiveOwner owner = ownerBox.get('Owner');
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -16,8 +18,8 @@ class HomeScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              HeaderPanel(ID: ID),
-              Home(ID: ID),
+              HeaderPanel(),
+              Home(owner: owner),
               Footer(),
             ],
           ),
@@ -27,8 +29,8 @@ class HomeScreen extends StatelessWidget {
   }
 }
 class Home extends StatelessWidget {
-  Home({Key? key, required this.ID}) : super(key: key);
-  int ID;
+  Home({Key? key, required this.owner}) : super(key: key);
+  HiveOwner owner;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -59,7 +61,7 @@ class Home extends StatelessWidget {
                 child:
                   ElevatedButton(
                     onPressed: () {
-                      Get.toNamed(OwnerRegisterPage, arguments: ID);
+                      Get.toNamed(OwnerRegisterPage);
                     },
                     child: HomeTextStyle(text: "ثبت فروشگاه"),
                     style: buttonStyle_build(130, 100, 60, YellowColor),

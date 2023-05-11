@@ -5,20 +5,19 @@ import 'package:FastFeed/view/home/components/header_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../../main.dart';
+import '../../../utils/Hive/verifySub/Hive_verifySub.dart';
 import 'Sub_style.dart';
 
-class SubscriptionScreen extends StatefulWidget {
-  var pageType = Get.arguments;
+class AddSubscriptionScreen extends StatefulWidget {
   @override
-  State<SubscriptionScreen> createState() => _SubscriptionScreenState();
+  State<AddSubscriptionScreen> createState() => _AddSubscriptionScreenState();
 }
 
-class _SubscriptionScreenState extends State<SubscriptionScreen> {
-  int? Id;
+class _AddSubscriptionScreenState extends State<AddSubscriptionScreen> {
   @override
-  void initState() {
-    Id = widget.pageType[0];
-  }
+  void initState() {}
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,7 +27,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
           child: Column(
             children: [
               // TODO get ID
-              HeaderPanel(ID: Id!),
+              HeaderPanel(),
               subscription(),
               Footer(),
             ],
@@ -37,7 +36,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       ),
     );
   }
-  Widget subscription(){
+
+  Widget subscription() {
     late Color free = Color(0xFFFFFFFF);
     return Container(
       padding: EdgeInsets.only(
@@ -59,9 +59,11 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
           ListView.builder(
             itemCount: SubscriptionList.length,
             shrinkWrap: true,
-            padding: EdgeInsets.only(left: 700.w,),
+            padding: EdgeInsets.only(
+              left: 700.w,
+            ),
             itemBuilder: (BuildContext context, int index) {
-              if(index == 0) {
+              if (index == 0) {
                 free = YellowColor;
               } else {
                 free = WhiteColor;
@@ -80,28 +82,50 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         children: [
                           Text(
                             SubscriptionList[index].amountText,
-                            style: TextStyle(color: RedColor, fontSize: 28.sp,fontFamily: "IranSansWeb"),
+                            style: TextStyle(
+                                color: RedColor,
+                                fontSize: 28.sp,
+                                fontFamily: IranSansWeb),
                           ),
-                          Icon(Icons.arrow_back_ios_new_rounded, color: BlackColor, size: 25.r,),
+                          Icon(
+                            Icons.arrow_back_ios_new_rounded,
+                            color: BlackColor,
+                            size: 25.r,
+                          ),
                         ],
                       ),
                       // TODO
                       onTap: () {
-                        Get.toNamed(VerifySubscriptonPage,arguments: [Id,SubscriptionList[index].periodText, SubscriptionList[index].period,SubscriptionList[index].amountText,SubscriptionList[index].amount,widget.pageType[1],]);
+                        verifySubBox.put(
+                          "AddVerifySub",
+                          HiveVerifySub(
+                              periodText: SubscriptionList[index].periodText,
+                              period: SubscriptionList[index].period,
+                              amountText: SubscriptionList[index].amountText,
+                              amount: SubscriptionList[index].amount),
+                        );
+                        Get.toNamed(
+                          VerifyAddSubscriptonPage,
+                        );
                       },
                       shape: RoundedRectangleBorder(
                         //<-- SEE HERE
                         side: BorderSide(width: 2.w),
                         borderRadius: BorderRadius.circular(20.r),
                       ),
-                      leading:Text(
+                      leading: Text(
                         SubscriptionList[index].periodText,
-                        style: TextStyle(color: BlackColor, fontSize: 28.sp,fontFamily: "IranSansWeb"),
+                        style: TextStyle(
+                            color: BlackColor,
+                            fontSize: 28.sp,
+                            fontFamily: IranSansWeb),
                       ),
                       tileColor: free,
                     ),
                   ),
-                  SizedBox(height: 20.h,),
+                  SizedBox(
+                    height: 20.h,
+                  ),
                 ],
               );
             },

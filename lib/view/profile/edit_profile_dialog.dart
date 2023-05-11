@@ -1,9 +1,10 @@
 import 'package:FastFeed/view/profile/components/text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
+import '../../main.dart';
 import '../../model/entity/owner.dart';
+import '../../utils/Hive/owner/Hive_owner.dart';
 import '../../utils/constants.dart';
 import '../../view_model/owner_viewmodel.dart';
 import '../header_footer/components/footer.dart';
@@ -11,7 +12,7 @@ import '../home/components/header_panel.dart';
 
 class EditProfileDialog extends StatefulWidget {
   EditProfileDialog({super.key});
-  var Id = Get.arguments;
+  HiveOwner owner = ownerBox.get('Owner');
   @override
   EditProfileDialogState createState() => EditProfileDialogState();
 }
@@ -38,8 +39,8 @@ class EditProfileDialogState extends State<EditProfileDialog> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              HeaderPanel(ID: widget.Id,),
-              _owners.isEmpty? loading():profile(widget.Id),
+              HeaderPanel(),
+              _owners.isEmpty? loading():profile(widget.owner),
               Footer(),
             ],
           ),
@@ -47,7 +48,7 @@ class EditProfileDialogState extends State<EditProfileDialog> {
       ),
     );
   }
-  AlertDialog profile(int id) {
+  AlertDialog profile(HiveOwner owner) {
     for(var item in _owners){
         _name = item.first_name?? '';
         _lastName = item.last_name?? '';
@@ -110,7 +111,7 @@ class EditProfileDialogState extends State<EditProfileDialog> {
     );
   }
   void searchOwners() async {
-    _ownermodel.searchOwners(widget.Id);
+    _ownermodel.searchOwners(widget.owner.id!);
     _ownermodel.owners.stream.listen((list) {
       setState(() {
         _owners.addAll(list);

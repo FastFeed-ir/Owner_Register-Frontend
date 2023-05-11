@@ -20,10 +20,12 @@ String MaskGroupPage = "/maskgroupPage";
 String RulesPage = "/rulePage";
 String AboutPage = "/aboutPage";
 String ContactUsPage = "/contactUsPage";
-String SubscriptionPage = "/subscriptionPage";
+String AddSubscriptionPage = "/addSubscriptionPage";
+String EditSubscriptionPage = "/editSubscriptionPage";
 String HomePage = "/homePage";
 String OwnerRegisterPage = "/ownerRegisterPage";
-String VerifySubscriptonPage = "/verifySubscriptonPage";
+String VerifyAddSubscriptonPage = "/verifyAddSubscriptonPage";
+String VerifyEditSubscriptonPage = "/verifyEditSubscriptonPage";
 String SuccessfulPurchasePage = "/successfulPurchasePage";
 String UnSuccessfulPurchasePage = "/unSuccessfulPurchasePage";
 String RestaurantListPage = "/restaurantListPage";
@@ -135,7 +137,7 @@ Widget buildInfoDialog(BuildContext context, String? text, String? Phrase) {
             'متوجه شدم',
             style: TextStyle(
               color: BlackColor,
-              fontFamily: "IranSansWeb",
+              fontFamily: IranSansWeb,
               fontSize: 24.sp,
             ),
           ),

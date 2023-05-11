@@ -5,48 +5,55 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
-import '../../../model/entity/store.dart';
+import '../../../main.dart';
 import '../../../model/entity/subscription_model.dart';
-import '../../../view_model/store_viewmodel.dart';
+import '../../../utils/Hive/owner/Hive_owner.dart';
+import '../../../utils/Hive/subsription/Hive_subscription.dart';
+import '../../../utils/Hive/verifySub/Hive_verifySub.dart';
 import '../../../view_model/subscription_viewmodel.dart';
 import 'Sub_style.dart';
 
-class VerifySubscriptonScreen extends StatefulWidget {
-  var subscription = Get.arguments;
+class VerifyEditSubscriptonScreen extends StatefulWidget {
+  final HiveVerifySub _hiveVerifySub = verifySubBox.get("EditVerifySub");
+  final HiveSubscription _hiveSubscription = subBox.get('Subscription');
+  final HiveOwner _hiveOwner = ownerBox.get('Owner');
 
-  VerifySubscriptonScreen({super.key});
+  VerifyEditSubscriptonScreen({super.key});
 
   @override
-  State<VerifySubscriptonScreen> createState() => _VerifySubScreenState();
+  State<VerifyEditSubscriptonScreen> createState() =>
+      _VerifyEditSubScreenState();
 }
 
-class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
+class _VerifyEditSubScreenState extends State<VerifyEditSubscriptonScreen> {
   late int Id;
   late int subId;
-  late int _business_owner;
   late String storeName;
   late int storeId;
   late int period;
+  late String periodText = "";
   late String url = "";
   late String amountText = "";
   late double amount = 0;
   late double tax = 364000;
   late double totalCost;
-  late dynamic pageType;
+  late HiveSubscription hiveSub;
+  late HiveVerifySub hiveVerifySub;
+  late HiveOwner hiveOwner;
   final _viewModel = SubscriptionViewModel();
-  final _storeViewModel = StoreViewModel();
 
   @override
   void initState() {
-    // TODO isEdit, storeId
-    Id = widget.subscription[0];
-    amountText = widget.subscription[1];
-    period = widget.subscription[2];
-    amountText = widget.subscription[3];
-    amount = widget.subscription[4];
+    hiveVerifySub = widget._hiveVerifySub;
+    hiveOwner = widget._hiveOwner;
+    hiveSub = widget._hiveSubscription;
+    //----------------------
+    periodText = widget._hiveVerifySub.periodText!;
+    period = widget._hiveVerifySub.period!;
+    amountText = widget._hiveVerifySub.amountText!;
+    amount = widget._hiveVerifySub.amount!;
     if (amount == 0) tax = 0;
     totalCost = amount + tax;
-    pageType = widget.subscription[5];
   }
 
   @override
@@ -58,8 +65,7 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // TODO get ID
-              HeaderPanel(ID: Id),
+              HeaderPanel(),
               verifySubscripton(),
               Footer(),
             ],
@@ -68,6 +74,7 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
       ),
     );
   }
+
   Widget verifySubscripton() {
     return Container(
       padding: EdgeInsets.fromLTRB(
@@ -154,24 +161,8 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
               ElevatedButton(
                 onPressed: () {
                   // ToDo Get To Bank Gateway then Get To SuccessfulPurchase or UnSuccessfulPurchasePage
-                  if (pageType is Store) {
-                    // Store
-                    Store store = pageType;
-                    _storeViewModel.addStore(store).asStream().listen((event) async {
-                      storeId = event.id ?? 0;
-                      storeName = event.title ?? '';
-                      _business_owner = store.business_owner?? 0;
-                      _addSubscripton();
-                    });
-                  } else {
-                    // revival
-                    SubscriptionModel sub = pageType;
-                    subId = sub.id ?? 0;
-                    _business_owner = sub.business_owner ?? 0;
-                    storeId = sub.store!;
-                    _editSubscripton();
-                    Get.toNamed(HomePage,arguments: _business_owner);
-                  }
+                  _editSubscripton();
+                  Get.toNamed(HomePage);
                   //Get.toNamed(UnSuccessfulPurchasePage,arguments: [period, amount+tax],);
                 },
                 child: SubBuyTextStyle(text: "قبول قوانین و خرید اشتراک"),
@@ -184,40 +175,13 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
     );
   }
 
-  void _addSubscripton() {
-    var business_owner = _business_owner;
-    var store = storeId;
-    var period = this.period;
-    var amount = totalCost;
-    SubscriptionModel subscription = SubscriptionModel(
-      business_owner: business_owner,
-      store: store,
-      period: period,
-      amount: amount,
-    );
-    _viewModel.addSubscriptions(subscription).asStream().listen((event) async{
-      if(event.id! > 0){
-        Get.toNamed(
-          SuccessfulPurchasePage,
-          arguments: [period, totalCost, storeName, business_owner,event.url],
-        );
-      }
-    });
-
-  }
-
   void _editSubscripton() {
-    var id = subId;
-    var business_owner = _business_owner;
-    var store = storeId;
-    var period = this.period;
-    var amount = totalCost;
     SubscriptionModel subscription = SubscriptionModel(
-      id: id,
-      business_owner: business_owner,
-      store: store,
-      period: period,
-      amount: amount,
+        id: hiveSub.id,
+        business_owner: hiveSub.business_owner,
+        store: hiveSub.store,
+        period: (hiveSub.period! + hiveVerifySub.period!),
+        amount: (hiveSub.amount! + hiveVerifySub.amount!),
     );
     _viewModel.editSubscriptions(subscription);
   }

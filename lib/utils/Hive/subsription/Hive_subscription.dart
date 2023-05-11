@@ -1,6 +1,5 @@
 import 'package:hive/hive.dart';
 part 'Hive_subscription.g.dart';
-
 @HiveType(typeId: 3)
 class HiveSubscription {
 
