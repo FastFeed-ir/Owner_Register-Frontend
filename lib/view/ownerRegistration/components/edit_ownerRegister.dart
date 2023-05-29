@@ -86,7 +86,6 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
   var business_owner;
   final List<String> _businessTypes = ['کافه', 'رستوران'];
   final _formKey = GlobalKey<FormState>();
-  html.File? _image;
 
   final picker = ImagePicker();
 
@@ -97,10 +96,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
 
       String _base64String = base64.encode(bytes);
       _logo = _base64String;
-      final blob = html.Blob([bytes]);
-      setState(() {
-        _image = html.File([blob], pickedFile.path);
-      });
+
     } else {
       print('No image selected.');
     }
