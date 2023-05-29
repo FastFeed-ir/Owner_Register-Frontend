@@ -198,7 +198,7 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
-                      onPressed: () {/* TODO Get.toNamed(StoreRegistration);*/},
+                      onPressed: () { Get.toNamed(EditOwnerRegisterPage, arguments: id);},
                       child: SubButtonTextStyle(
                         text: 'ویرایش اطلاعات',
                       ),

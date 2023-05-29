@@ -23,6 +23,7 @@ String ContactUsPage = "/contactUsPage";
 String SubscriptionPage = "/subscriptionPage";
 String HomePage = "/homePage";
 String OwnerRegisterPage = "/ownerRegisterPage";
+String EditOwnerRegisterPage = "/editOwnerRegisterPage";
 String VerifySubscriptonPage = "/verifySubscriptonPage";
 String SuccessfulPurchasePage = "/successfulPurchasePage";
 String UnSuccessfulPurchasePage = "/unSuccessfulPurchasePage";
