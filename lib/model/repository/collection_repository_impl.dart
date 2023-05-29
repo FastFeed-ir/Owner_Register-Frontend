@@ -8,7 +8,7 @@ import 'collection_repository.dart';
 class CollectionRepositoryImpl extends CollectionRepository {
   @override
   Future<List<Collection>> getCollections(int storeId) async {
-    var response = await dio.get('collections/');
+    var response = await dio.get('collections/?store_id=$storeId');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
@@ -16,9 +16,7 @@ class CollectionRepositoryImpl extends CollectionRepository {
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
           var collectionServer = Collection.fromJson(data);
-          if (collectionServer.storeId == storeId) {
-            collections.add(collectionServer);
-          }
+          collections.add(collectionServer);
         }
       }
       return collections;
@@ -29,7 +27,7 @@ class CollectionRepositoryImpl extends CollectionRepository {
 
   @override
   Future<List<Product>> getProducts(int storeId) async {
-    var response = await dio.get('products/');
+    var response = await dio.get('products/?collection_id=&store_id=$storeId');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
@@ -37,9 +35,7 @@ class CollectionRepositoryImpl extends CollectionRepository {
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
           var productServer = Product.fromJson(data);
-          if (productServer.storeId == storeId) {
-            products.add(productServer);
-          }
+          products.add(productServer);
         }
       }
       return products;
