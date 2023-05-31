@@ -1,6 +1,5 @@
-import 'package:FastFeed/model/entity/product.dart';
-
 import '../entity/collection.dart';
+import '../entity/product.dart';
 import '../util/constants.dart';
 import 'collection_repository.dart';
 
@@ -8,7 +7,7 @@ import 'collection_repository.dart';
 class CollectionRepositoryImpl extends CollectionRepository {
   @override
   Future<List<Collection>> getCollections(int storeId) async {
-    var response = await dio.get('collections/');
+    var response = await dio.get('collections/?store_id=$storeId');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
@@ -16,9 +15,7 @@ class CollectionRepositoryImpl extends CollectionRepository {
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
           var collectionServer = Collection.fromJson(data);
-          if (collectionServer.storeId == storeId) {
-            collections.add(collectionServer);
-          }
+          collections.add(collectionServer);
         }
       }
       return collections;
@@ -29,7 +26,7 @@ class CollectionRepositoryImpl extends CollectionRepository {
 
   @override
   Future<List<Product>> getProducts(int storeId) async {
-    var response = await dio.get('products/');
+    var response = await dio.get('products/?collection_id=&store_id=$storeId');
     print('response: ${response.statusMessage}');
     if (response.data is List) {
       List<dynamic> dataList = response.data;
@@ -37,9 +34,7 @@ class CollectionRepositoryImpl extends CollectionRepository {
       for (var data in dataList) {
         if (data is Map<String, dynamic>) {
           var productServer = Product.fromJson(data);
-          if (productServer.storeId == storeId) {
-            products.add(productServer);
-          }
+          products.add(productServer);
         }
       }
       return products;
@@ -50,13 +45,9 @@ class CollectionRepositoryImpl extends CollectionRepository {
 
   @override
   Future<Collection> addCollection(Collection collection) async {
-    var notNullCollection = Collection(
-        title: collection.title,
-        storeId: collection.storeId,
-        isFeatured: collection.isFeatured ?? false);
     var response = await dio.post(
       'collections/',
-      data: notNullCollection,
+      data: collection,
     );
     print('response: ${response.statusMessage}');
     final newCollection = Collection.fromJson(response.data);
@@ -65,20 +56,9 @@ class CollectionRepositoryImpl extends CollectionRepository {
 
   @override
   Future<Product> addProduct(Product product) async {
-    var notNullProduct = Product(
-        title: product.title,
-        image: product.image ?? "",
-        description: product.description ?? "",
-        unitPrice: product.unitPrice,
-        inventory: product.inventory ?? 0,
-        isAvailable: product.isAvailable,
-        isFeatured: product.isFeatured ?? false,
-        discountPercentage: product.discountPercentage ?? 0.0,
-        collectionId: product.collectionId,
-        storeId: product.storeId);
     var response = await dio.post(
       'products/',
-      data: notNullProduct,
+      data: product,
     );
     print('response: ${response.statusMessage}');
     final newProduct = Product.fromJson(response.data);
@@ -87,35 +67,18 @@ class CollectionRepositoryImpl extends CollectionRepository {
 
   @override
   Future<void> editCollection(Collection collection) async {
-    var notNullCollection = Collection(
-        id: collection.id,
-        title: collection.title,
-        storeId: collection.storeId,
-        isFeatured: collection.isFeatured ?? false);
     var response = await dio.patch(
-      'collections/${notNullCollection.id}/',
-      data: notNullCollection,
+      'collections/${collection.id}/',
+      data: collection,
     );
     print('response: ${response.statusMessage}');
   }
 
   @override
   Future<void> editProduct(Product product) async {
-    var notNullProduct = Product(
-        id: product.id,
-        title: product.title,
-        image: product.image ?? "",
-        description: product.description ?? "",
-        unitPrice: product.unitPrice,
-        inventory: product.inventory ?? 0,
-        isAvailable: product.isAvailable,
-        isFeatured: product.isFeatured ?? false,
-        discountPercentage: product.discountPercentage ?? 0.0,
-        collectionId: product.collectionId,
-        storeId: product.storeId);
     var response = await dio.patch(
-      'products/${notNullProduct.id}/',
-      data: notNullProduct,
+      'products/${product.id}/',
+      data: product,
     );
     print('response: ${response.statusMessage}');
   }
