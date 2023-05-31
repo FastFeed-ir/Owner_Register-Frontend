@@ -69,24 +69,37 @@ Widget restaurantTitle(String? name, String? RestaurantLogo, String? cratedAt, i
             height: 200.h,
             padding: EdgeInsets.only(top: 30.h),
             alignment: Alignment.center,
-            child: RestaurantLogo != null
-            ? ClipRRect(
+            child: ClipRRect(
               borderRadius:
-              BorderRadius.circular(
-                  8),
-              child: Image.memory(
+              BorderRadius.circular(8),
+              child: RestaurantLogo == null
+              ?Image.asset(
+                RestaurantLogoDef,
+                width: 200.w,
+                height: 200.h,
+              )
+              : Image.memory(
                 base64.decode(RestaurantLogo),
                 fit: BoxFit.cover,
-                width: 100,
-                height: 85,
+                width: 200.w,
+                height: 200.h,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    RestaurantLogoDef,
+                    width: 200.w,
+                    height: 200.h,
+                    fit: BoxFit.cover,
+                  );
+                },
               ),
-            )
-            :Image.asset(
-              RestaurantLogoDef,
-              height: 200.h,
-              width: 200.w,
             ),
           ),
+          if (RestaurantLogo == null)
+            Positioned.fill(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
         ],
       ),
       Column(

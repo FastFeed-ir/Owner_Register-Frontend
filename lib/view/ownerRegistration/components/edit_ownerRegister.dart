@@ -18,6 +18,7 @@ import '../../../model/entity/store.dart';
 class EditOwenerRegisterScreen extends StatefulWidget {
   EditOwenerRegisterScreen({Key? key}) : super(key: key);
   var parameters = Get.arguments;
+
   @override
   _EditOwenerRegisterScreen createState() => _EditOwenerRegisterScreen();
 }
@@ -25,6 +26,7 @@ class EditOwenerRegisterScreen extends StatefulWidget {
 class _EditOwenerRegisterScreen extends State<EditOwenerRegisterScreen> {
   late Store store;
   late int Id;
+
   @override
   void initState() {
     store = widget.parameters[0];
@@ -40,10 +42,10 @@ class _EditOwenerRegisterScreen extends State<EditOwenerRegisterScreen> {
             child: Column(
               children: [
                 HeaderPanel(ID: Id),
-                  EditOwnerRegister(
-                    Id: Id,
-                    store: store,
-                  ),
+                EditOwnerRegister(
+                  Id: Id,
+                  store: store,
+                ),
                 SizedBox(height: 32.r),
                 Footer(),
               ],
@@ -60,6 +62,7 @@ class EditOwnerRegister extends StatefulWidget {
       : super(key: key);
   Store store;
   var Id;
+
   @override
   State<EditOwnerRegister> createState() => _EditOwnerRegisterState();
 }
@@ -79,7 +82,6 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
 
       String _base64String = base64.encode(bytes);
       _logo = _base64String;
-
     } else {
       print('No image selected.');
     }
@@ -102,6 +104,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
   late String _telephone_number = widget.store.telephone_number!;
   late int _tables_count = widget.store.tables_count!;
   late String _instagram_page_link = widget.store.instagram_page_link!;
+
   @override
   void initState() {
     super.initState();
@@ -168,11 +171,14 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                               // Row 1
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: DropdownButtonFormField<String>(
-                                      style: TextStyle(fontSize: 20.w,fontFamily: "IranSansWeb",),
+                                      style: TextStyle(
+                                        fontSize: 20.w,
+                                        fontFamily: "IranSansWeb",
+                                      ),
                                       decoration: const InputDecoration(
                                         suffixIcon: Icon(
                                           Icons.store_mall_directory_outlined,
@@ -180,32 +186,35 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                         ),
                                         border: OutlineInputBorder(),
                                         labelStyle:
-                                        TextStyle(color: Colors.white),
+                                            TextStyle(color: Colors.white),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide:
-                                          BorderSide(color: Colors.white),
+                                              BorderSide(color: Colors.white),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide:
-                                          BorderSide(color: YellowColor),
+                                              BorderSide(color: YellowColor),
                                         ),
-                                        errorStyle: TextStyle(color: YellowColor,fontWeight: FontWeight.bold),
+                                        errorStyle: TextStyle(
+                                            color: YellowColor,
+                                            fontWeight: FontWeight.bold),
                                         labelText: 'انتخاب نوع کسب و کار',
                                         hoverColor: Colors.white,
                                         helperText: "* الزامی",
                                         hintText: "انتخاب نوع کسب و کار",
-                                        hintStyle: TextStyle(color: Colors.white),
-                                        helperStyle: TextStyle(color: Colors.white),
+                                        hintStyle:
+                                            TextStyle(color: Colors.white),
+                                        helperStyle:
+                                            TextStyle(color: Colors.white),
                                       ),
                                       dropdownColor: BlackColor,
-
                                       items:
-                                      _businessTypes.map((business_type) {
+                                          _businessTypes.map((business_type) {
                                         return DropdownMenuItem(
                                           child: Text(
                                             business_type,
                                             style:
-                                            TextStyle(color: Colors.white),
+                                                TextStyle(color: Colors.white),
                                           ),
                                           value: business_type,
                                         );
@@ -214,7 +223,8 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                         setState(() {
                                           _business_type_text = value!;
                                           // TODO index of businestype
-                                          _business_type = _businessTypes.indexOf(value)+1;
+                                          _business_type =
+                                              _businessTypes.indexOf(value) + 1;
                                         });
                                       },
                                       validator: (value) {
@@ -229,29 +239,35 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                   Expanded(
                                     child: DropdownButtonFormField<String>(
                                       menuMaxHeight: 200,
-                                      style: TextStyle(fontSize: 20.w,fontFamily: "IranSansWeb",),
+                                      style: TextStyle(
+                                        fontSize: 20.w,
+                                        fontFamily: "IranSansWeb",
+                                      ),
                                       decoration: InputDecoration(
-                                        errorStyle: TextStyle(color: YellowColor,fontWeight: FontWeight.bold),
+                                        errorStyle: TextStyle(
+                                            color: YellowColor,
+                                            fontWeight: FontWeight.bold),
                                         labelText: 'انتخاب استان',
                                         helperText: "* الزامی",
                                         hintText: "انتخاب استان",
-                                        hintStyle: TextStyle(color: Colors.white),
+                                        hintStyle:
+                                            TextStyle(color: Colors.white),
                                         helperStyle:
-                                        TextStyle(color: Colors.white),
+                                            TextStyle(color: Colors.white),
                                         suffixIcon: Icon(
                                           Icons.location_city_outlined,
                                           color: Colors.white,
                                         ),
                                         border: OutlineInputBorder(),
                                         labelStyle:
-                                        TextStyle(color: Colors.white),
+                                            TextStyle(color: Colors.white),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide:
-                                          BorderSide(color: Colors.white),
+                                              BorderSide(color: Colors.white),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide:
-                                          BorderSide(color: YellowColor),
+                                              BorderSide(color: YellowColor),
                                         ),
                                       ),
                                       dropdownColor: BlackColor,
@@ -260,7 +276,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                           child: Text(
                                             province,
                                             style:
-                                            TextStyle(color: Colors.white),
+                                                TextStyle(color: Colors.white),
                                           ),
                                           value: province,
                                         );
@@ -270,7 +286,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                           _state_text = value!;
                                           // TODO index of _state
                                           _state =
-                                              Proviences.indexOf(value)+1;
+                                              Proviences.indexOf(value) + 1;
                                         });
                                       },
                                       validator: (value) {
@@ -287,7 +303,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                               // Row 2
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: TextFormField(
@@ -298,21 +314,24 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                         ),
                                         border: OutlineInputBorder(),
                                         labelStyle:
-                                        TextStyle(color: Colors.white),
+                                            TextStyle(color: Colors.white),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide:
-                                          BorderSide(color: Colors.white),
+                                              BorderSide(color: Colors.white),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide:
-                                          BorderSide(color: YellowColor),
+                                              BorderSide(color: YellowColor),
                                         ),
                                         labelText: 'نام شهر',
                                         helperText: "* اختیاری",
                                         helperStyle:
-                                        TextStyle(color: Colors.white),
+                                            TextStyle(color: Colors.white),
                                       ),
-                                      style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: "IranSansWeb",
+                                      ),
                                       onChanged: (value) {
                                         setState(() {
                                           _city = value;
@@ -330,21 +349,24 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                         ),
                                         border: OutlineInputBorder(),
                                         labelStyle:
-                                        TextStyle(color: Colors.white),
+                                            TextStyle(color: Colors.white),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide:
-                                          BorderSide(color: Colors.white),
+                                              BorderSide(color: Colors.white),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide:
-                                          BorderSide(color: YellowColor),
+                                              BorderSide(color: YellowColor),
                                         ),
                                         labelText: 'آدرس',
                                         helperText: "* اختیاری",
                                         helperStyle:
-                                        TextStyle(color: Colors.white),
+                                            TextStyle(color: Colors.white),
                                       ),
-                                      style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: "IranSansWeb",
+                                      ),
                                       onChanged: (value) {
                                         _address = value;
                                       },
@@ -357,7 +379,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
 
                               Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: TextFormField(
@@ -368,22 +390,27 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                           ),
                                           border: OutlineInputBorder(),
                                           labelStyle:
-                                          TextStyle(color: Colors.white),
+                                              TextStyle(color: Colors.white),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide:
-                                            BorderSide(color: Colors.white),
+                                                BorderSide(color: Colors.white),
                                           ),
                                           focusedBorder: OutlineInputBorder(
                                             borderSide:
-                                            BorderSide(color: YellowColor),
+                                                BorderSide(color: YellowColor),
                                           ),
-                                          errorStyle: TextStyle(color: YellowColor,fontWeight: FontWeight.bold),
+                                          errorStyle: TextStyle(
+                                              color: YellowColor,
+                                              fontWeight: FontWeight.bold),
                                           labelText: 'نام فروشگاه',
                                           helperText: "* الزامی",
                                           helperStyle:
-                                          TextStyle(color: Colors.white),
+                                              TextStyle(color: Colors.white),
                                         ),
-                                        style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: "IranSansWeb",
+                                        ),
                                         onChanged: (value) {
                                           _title = value;
                                         },
@@ -405,26 +432,31 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                           ),
                                           border: OutlineInputBorder(),
                                           labelStyle:
-                                          TextStyle(color: Colors.white),
+                                              TextStyle(color: Colors.white),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide:
-                                            BorderSide(color: Colors.white),
+                                                BorderSide(color: Colors.white),
                                           ),
                                           focusedBorder: OutlineInputBorder(
                                             borderSide:
-                                            BorderSide(color: YellowColor),
+                                                BorderSide(color: YellowColor),
                                           ),
-                                          errorStyle: TextStyle(color: YellowColor,fontWeight: FontWeight.bold),
+                                          errorStyle: TextStyle(
+                                              color: YellowColor,
+                                              fontWeight: FontWeight.bold),
                                           labelText: "تعداد میز",
                                           helperText: "* الزامی",
                                           helperStyle:
-                                          TextStyle(color: Colors.white),
+                                              TextStyle(color: Colors.white),
                                         ),
                                         keyboardType: TextInputType.number,
                                         inputFormatters: <TextInputFormatter>[
                                           FilteringTextInputFormatter.digitsOnly
                                         ],
-                                        style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: "IranSansWeb",
+                                        ),
                                         onChanged: (value) {
                                           _tables_count = int.parse(value);
                                         },
@@ -442,47 +474,52 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                               // Row 4
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                       child: TextFormField(
-                                        decoration: InputDecoration(
-                                          suffixIcon: Icon(
-                                            Icons.phone,
-                                            color: Colors.white,
-                                          ),
-                                          border: OutlineInputBorder(),
-                                          labelStyle:
+                                    decoration: InputDecoration(
+                                      suffixIcon: Icon(
+                                        Icons.phone,
+                                        color: Colors.white,
+                                      ),
+                                      border: OutlineInputBorder(),
+                                      labelStyle:
                                           TextStyle(color: Colors.white),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide:
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide:
                                             BorderSide(color: Colors.white),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide:
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide:
                                             BorderSide(color: YellowColor),
-                                          ),
-                                          errorStyle: TextStyle(color: YellowColor,fontWeight: FontWeight.bold),
-                                          labelText: "شماره تلفن فروشگاه",
-                                          helperText: "* الزامی",
-                                          helperStyle:
+                                      ),
+                                      errorStyle: TextStyle(
+                                          color: YellowColor,
+                                          fontWeight: FontWeight.bold),
+                                      labelText: "شماره تلفن فروشگاه",
+                                      helperText: "* الزامی",
+                                      helperStyle:
                                           TextStyle(color: Colors.white),
-                                        ),
-                                        style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly
-                                        ],
-                                        onChanged: (value) {
-                                          _telephone_number = value;
-                                        },
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return "لطفا شماره تلفن فروشگاه را وارد کنید";
-                                          }
-                                          return null;
-                                        },
-                                      )),
+                                    ),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "IranSansWeb",
+                                    ),
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                    onChanged: (value) {
+                                      _telephone_number = value;
+                                    },
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return "لطفا شماره تلفن فروشگاه را وارد کنید";
+                                      }
+                                      return null;
+                                    },
+                                  )),
                                   SizedBox(width: 16.0.w),
                                   Expanded(
                                     child: TextFormField(
@@ -493,21 +530,24 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                         ),
                                         border: OutlineInputBorder(),
                                         labelStyle:
-                                        TextStyle(color: Colors.white),
+                                            TextStyle(color: Colors.white),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide:
-                                          BorderSide(color: Colors.white),
+                                              BorderSide(color: Colors.white),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide:
-                                          BorderSide(color: YellowColor),
+                                              BorderSide(color: YellowColor),
                                         ),
                                         labelText: 'آدرس شبکه های اجتماعی',
                                         helperText: "* اختیاری",
                                         helperStyle:
-                                        TextStyle(color: Colors.white),
+                                            TextStyle(color: Colors.white),
                                       ),
-                                      style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: "IranSansWeb",
+                                      ),
                                       onChanged: (value) {
                                         _instagram_page_link = value;
                                       },
@@ -518,71 +558,84 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                               //logo
                               SizedBox(height: 24.0.h),
                               Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                        // width: 50,
-                                        height: 130,
-                                        child: Column(
-                                          children: [
-                                            ElevatedButton(
-                                                style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all<
-                                                              Color>(
-                                                          Colors.transparent),
-                                                  shape:
-                                                      MaterialStateProperty.all<
-                                                          RoundedRectangleBorder>(
-                                                    RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5),
-                                                      side: BorderSide(
-                                                          color: Colors.white),
-                                                    ),
-                                                  ),
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    // width: 50,
+                                    height: 130,
+                                    child: Column(
+                                      children: [
+                                        ElevatedButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all<
+                                                          Color>(
+                                                      Colors.transparent),
+                                              shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  side: BorderSide(
+                                                      color: Colors.white),
                                                 ),
-                                                onPressed: () {
-                                                  getImage();
-                                                },
-                                                child: Text(
-                                                  'افزودن/ویرایش لوگو',
-                                                  style: TextStyle(
-                                                      color: WhiteColor),
-                                                )),
-                                            SizedBox(
-                                              height: 8.h,
+                                              ),
                                             ),
-                                            //if image not null show the image
-                                            //if image null show text
-                                            _logo != null &&
-                                                    _logo != null &&
-                                                    _logo.isNotEmpty
-                                                ? Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 50),
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                      child: Image.memory(
-                                                        base64.decode(_logo),
-                                                        fit: BoxFit.cover,
-                                                        width: 100,
-                                                        height: 85,
-                                                      ),
-                                                    ),
+                                            onPressed: () {
+                                              getImage();
+                                            },
+                                            child: Text(
+                                              'افزودن/ویرایش لوگو',
+                                              style:
+                                                  TextStyle(color: WhiteColor),
+                                            )),
+                                        SizedBox(
+                                          height: 8.h,
+                                        ),
+                                        //if image not null show the image
+                                        //if image null show text
+                                        SizedBox(
+                                          width: 100.w,
+                                          height: 100.h,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            child: _logo == null
+                                                ? Image.asset(
+                                                    RestaurantLogoDef,
+                                                    width: 100.w,
+                                                    height: 100.h,
+                                                    fit: BoxFit.cover,
                                                   )
-                                                : Text(
-                                                    "",
-                                                    style:
-                                                        TextStyle(fontSize: 10),
+                                                : Image.memory(
+                                                    base64.decode(_logo),
+                                                    fit: BoxFit.cover,
+                                                    width: 100.w,
+                                                    height: 100.h,
+                                                    errorBuilder: (context,
+                                                        error, stackTrace) {
+                                                      return Image.asset(
+                                                        RestaurantLogoDef,
+                                                        width: 100.w,
+                                                        height: 100.h,
+                                                        fit: BoxFit.cover,
+                                                      );
+                                                    },
                                                   ),
-                                          ],
-                                        ))
-                                  ]),
+                                          ),
+                                        ),
+                                        if (_logo == null)
+                                          Positioned.fill(
+                                            child: Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                               SizedBox(height: 16.h),
                               //button to submit the form
                               Row(
@@ -604,21 +657,28 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                       onPressed: () {
                                         if (_formKey.currentState!.validate()) {
                                           business_owner = widget.Id;
-                                            widget.store.business_owner = business_owner;
-                                            widget.store.title = _title;
-                                            widget.store.logo =  _logo;
-                                            widget.store.business_type = _business_type;
-                                            widget.store.state = _state;
-                                            widget.store.city = _city;
-                                            widget.store.address = _address;
-                                            widget.store.owner_phone_number =_owner_phone_number;
-                                            widget.store.telephone_number = _telephone_number;
-                                            widget.store.tables_count = _tables_count;
-                                            widget.store.instagram_page_link = _instagram_page_link;
+                                          widget.store.business_owner =
+                                              business_owner;
+                                          widget.store.title = _title;
+                                          widget.store.logo = _logo;
+                                          widget.store.business_type =
+                                              _business_type;
+                                          widget.store.state = _state;
+                                          widget.store.city = _city;
+                                          widget.store.address = _address;
+                                          widget.store.owner_phone_number =
+                                              _owner_phone_number;
+                                          widget.store.telephone_number =
+                                              _telephone_number;
+                                          widget.store.tables_count =
+                                              _tables_count;
+                                          widget.store.instagram_page_link =
+                                              _instagram_page_link;
 
                                           _storeModel.editStore(widget.store);
 
-                                          Get.toNamed(HomePage, arguments: widget.Id);
+                                          Get.toNamed(HomePage,
+                                              arguments: widget.Id);
                                         }
                                       },
                                       child: Text(
