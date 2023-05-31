@@ -656,9 +656,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                       ),
                                       onPressed: () {
                                         if (_formKey.currentState!.validate()) {
-                                          business_owner = widget.Id;
-                                          widget.store.business_owner =
-                                              business_owner;
+
                                           widget.store.title = _title;
                                           widget.store.logo = _logo;
                                           widget.store.business_type =
@@ -678,7 +676,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                           _storeModel.editStore(widget.store);
 
                                           Get.toNamed(HomePage,
-                                              arguments: widget.Id);
+                                              arguments: widget.store.business_owner);
                                         }
                                       },
                                       child: Text(
@@ -701,7 +699,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                       ),
                                       onPressed: () {
                                         Get.toNamed(HomePage,
-                                            arguments: widget.Id);
+                                            arguments: widget.store.business_owner);
                                       },
                                       child: Text(
                                         'انصراف',
