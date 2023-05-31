@@ -2,7 +2,7 @@ import 'package:FastFeed/model/entity/subscription_model.dart';
 
 abstract class SubscriptonRepository{
 
-  Future<List<SubscriptionModel>> getSubscription(int id);
+  Future<List<SubscriptionModel>> getSubscription(int businessOwnerId);
 
   Future<void> addSubscription(SubscriptionModel subscription);
 
