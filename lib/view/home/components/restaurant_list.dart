@@ -147,7 +147,7 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
       children: [
         ListTile(
           // ToDo get name from API
-          title: restaurantTitle(store.title, RestaurantLogoDef, subscriptionModel.startDate,subscriptionModel.period),
+          title: restaurantTitle(subscriptionModel.store_title, store.logo, subscriptionModel.created_at,subscriptionModel.period),
           shape: RoundedRectangleBorder(
             side: BorderSide(width: 2.w),
             borderRadius: BorderRadius.circular(20.r),
@@ -163,7 +163,7 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
-                      onPressed: () {Get.toNamed(CategoriesPage);},
+                      onPressed: () {Get.toNamed(CategoriesPage, arguments: store.id);},
                       child: SubButtonTextStyle(
                         text: 'تغییر منو',
                       ),
@@ -198,7 +198,7 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
-                      onPressed: () { Get.toNamed(EditOwnerRegisterPage, arguments: id);},
+                      onPressed: () {Get.toNamed(EditOwnerRegisterPage, arguments: [store, store.id]);},
                       child: SubButtonTextStyle(
                         text: 'ویرایش اطلاعات',
                       ),

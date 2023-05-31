@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:FastFeed/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,12 +43,18 @@ class SubButtonTextStyle extends StatelessWidget {
   }
 }
 
-Widget restaurantTitle(String? name, String? RestaurantLogo, String? startDate, int? period) {
-  Jalali startJal = _stringToJal(startDate);
+Widget restaurantTitle(String? name, String? RestaurantLogo, String? cratedAt, int? period) {
+  List<String>? dateHour = cratedAt?.split(' ') ;
+  String startDate = dateHour![0];
+  var date = startDate.split('/');
+  int startYear = int.parse(date[0]);
+  int startMonth = int.parse(date[1]);
+  int startDay = int.parse(date[2]);
+  Jalali startJal = Jalali(startYear, startMonth, startDay);
   Jalali finishJal = _finishDate(startJal, period);
-  int year = finishJal.year;
-  int month = finishJal.month;
-  int day = finishJal.day;
+  int finishYear = finishJal.year;
+  int finishMonth = finishJal.month;
+  int finishDay = finishJal.day;
   int remainingDays = _remainingDays(Jalali.now(), finishJal);
   double percent = (1.0 * (remainingDays) / period!);
   return Wrap(
@@ -61,8 +69,20 @@ Widget restaurantTitle(String? name, String? RestaurantLogo, String? startDate, 
             height: 200.h,
             padding: EdgeInsets.only(top: 30.h),
             alignment: Alignment.center,
-            child: Image.asset(
-              RestaurantLogo!,
+            child: RestaurantLogo != null
+            ? ClipRRect(
+              borderRadius:
+              BorderRadius.circular(
+                  8),
+              child: Image.memory(
+                base64.decode(RestaurantLogo),
+                fit: BoxFit.cover,
+                width: 100,
+                height: 85,
+              ),
+            )
+            :Image.asset(
+              RestaurantLogoDef,
               height: 200.h,
               width: 200.w,
             ),
@@ -88,7 +108,7 @@ Widget restaurantTitle(String? name, String? RestaurantLogo, String? startDate, 
             height: 10.h,
           ),
           Text(
-            ("شروع اشتراک: " +startDate!),
+            (" شروع اشتراک: ${startYear.toString().toPersianDigit()}/${startMonth.toString().toPersianDigit()}/${startDay.toString().toPersianDigit()}"),
             style: TextStyle(
               fontSize: 26.0.sp,
               fontWeight: FontWeight.w400,
@@ -99,7 +119,7 @@ Widget restaurantTitle(String? name, String? RestaurantLogo, String? startDate, 
           SizedBox(
             height: 10.h,
           ),
-          Text(("پایان اشتراک: "+"${year.toString().toPersianDigit()}/${month.toString().toPersianDigit()}/${day.toString().toPersianDigit()}"),
+          Text((" پایان اشتراک: ${finishYear.toString().toPersianDigit()}/${finishMonth.toString().toPersianDigit()}/${finishDay.toString().toPersianDigit()}"),
             style: TextStyle(
               fontSize: 28.0.sp,
               fontWeight: FontWeight.w400,
@@ -144,15 +164,6 @@ Widget circularPercent(int remainingDays, double percent) {
       progressColor: YellowColor,
     ),
   );
-}
-
-Jalali _stringToJal(String? startDate) {
-  List<String> parts = startDate!.split('/');
-  int shamsiYear = int.parse(parts[0]);
-  int shamsiMonth = int.parse(parts[1]);
-  int shamsiDay = int.parse(parts[2]);
-  Jalali shamsiDate = Jalali(shamsiYear, shamsiMonth, shamsiDay);
-  return shamsiDate;
 }
 
 Jalali _finishDate(Jalali? startDate, int? day) {
