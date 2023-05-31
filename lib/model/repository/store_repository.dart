@@ -1,7 +1,7 @@
 import 'package:FastFeed/model/entity/store.dart';
 
 abstract class StoreRepository{
-  Future<List<Store>> getStores(int id);
+  Future<List<Store>> getStores(int businessOwnerId);
 
   Future<Store> addStore(Store store);
 
