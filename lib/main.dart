@@ -15,6 +15,7 @@ import 'view/contact_about_rules/components/contactus.dart';
 import 'view/contact_about_rules/components/rules.dart';
 import 'view/home/components/homePage.dart';
 import 'view/home/components/restaurant_list.dart';
+import 'view/ownerRegistration/components/edit_ownerRegister.dart';
 import 'view/ownerRegistration/components/owner_reg_page.dart';
 import 'view/subscription/components/subscription.dart';
 import 'view/subscription/components/successful_purchase.dart';
@@ -49,6 +50,8 @@ class MyApp extends StatelessWidget {
             GetPage(
                 name: OwnerRegisterPage, page: () => OwenerRegisterScreen()),
             GetPage(
+                name: EditOwnerRegisterPage, page: () => EditOwenerRegisterScreen()),
+            GetPage(
               name: ProfilePage,
               page: () => EditProfileDialog(),
             ),
@@ -76,7 +79,7 @@ class MyApp extends StatelessWidget {
             ),
           ],
           // title: 'FastFeed',
-          initialRoute: CategoriesPage,
+          initialRoute: MaskGroupPage,
           textDirection: TextDirection.rtl,
           defaultTransition: Transition.noTransition,
           theme: ThemeData(

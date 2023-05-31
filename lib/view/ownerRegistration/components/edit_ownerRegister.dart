@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:html';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,27 +14,21 @@ import '../../../view_model/owner_viewmodel.dart';
 import '../../../view_model/store_viewmodel.dart';
 import '../../home/components/header_panel.dart';
 import '../../../model/entity/store.dart';
-import 'dart:html' as html;
 
 class EditOwenerRegisterScreen extends StatefulWidget {
   EditOwenerRegisterScreen({Key? key}) : super(key: key);
-  // var ID = Get.arguments;
-  var ID = 2;
+  var parameters = Get.arguments;
   @override
   _EditOwenerRegisterScreen createState() => _EditOwenerRegisterScreen();
 }
 
 class _EditOwenerRegisterScreen extends State<EditOwenerRegisterScreen> {
-  final _storeModel = StoreViewModel();
-  final List<Store> _stores = [];
+  late Store store;
+  late int Id;
   @override
   void initState() {
-    fetchData();
-  }
-
-  Future<void> fetchData() async {
-    await getStore();
-
+    store = widget.parameters[0];
+    Id = widget.parameters[1];
   }
 
   @override
@@ -46,11 +39,10 @@ class _EditOwenerRegisterScreen extends State<EditOwenerRegisterScreen> {
           child: Container(
             child: Column(
               children: [
-                HeaderPanel(ID: widget.ID),
-                if (_stores.isNotEmpty)
+                HeaderPanel(ID: Id),
                   EditOwnerRegister(
-                    Id: widget.ID,
-                    store: _stores[0],
+                    Id: Id,
+                    store: store,
                   ),
                 SizedBox(height: 32.r),
                 Footer(),
@@ -60,15 +52,6 @@ class _EditOwenerRegisterScreen extends State<EditOwenerRegisterScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> getStore() async {
-    await _storeModel.getStores(widget.ID);
-    _storeModel.stores.stream.listen((list) {
-      setState(() {
-        _stores.addAll(list);
-      });
-    });
   }
 }
 
@@ -621,8 +604,6 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                       onPressed: () {
                                         if (_formKey.currentState!.validate()) {
                                           business_owner = widget.Id;
-
-
                                             widget.store.business_owner = business_owner;
                                             widget.store.title = _title;
                                             widget.store.logo =  _logo;
@@ -637,8 +618,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
 
                                           _storeModel.editStore(widget.store);
 
-                                          Get.toNamed(HomePage,
-                                              arguments: widget.Id);
+                                          Get.toNamed(HomePage, arguments: widget.Id);
                                         }
                                       },
                                       child: Text(
