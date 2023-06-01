@@ -108,7 +108,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
     _title = widget.store.title ?? "";
     _logo = widget.store.logo ?? "";
     _business_type = widget.store.business_type ?? 0;
-    _business_type_text = _businessTypes[_business_type];
+    _business_type_text = _businessTypes[_business_type-1];
     _state = widget.store.state ?? 0;
     _city = widget.store.city ?? "";
     _address = widget.store.address ?? "";
