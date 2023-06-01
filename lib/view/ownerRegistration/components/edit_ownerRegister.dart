@@ -94,7 +94,10 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
       final bytes = await pickedFile.readAsBytes();
 
       String _base64String = base64.encode(bytes);
-      _logo = _base64String;
+      setState(() {
+        _logo = _base64String;
+      });
+
     } else {
       print('No image selected.');
     }
@@ -196,7 +199,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                             fontWeight: FontWeight.bold),
                                         labelText: 'انتخاب نوع کسب و کار',
                                         hoverColor: Colors.white,
-                                        helperText: "* الزامی",
+                                        // helperText: "* الزامی",
                                         hintText: "انتخاب نوع کسب و کار",
                                         hintStyle:
                                             TextStyle(color: Colors.white),
@@ -223,12 +226,6 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                               _businessTypes.indexOf(value) + 1;
                                         });
                                       },
-                                      validator: (value) {
-                                        if (value == null) {
-                                          return 'لطفا نوع کسب و کار خود را انتخاب کنید';
-                                        }
-                                        return null;
-                                      },
                                     ),
                                   ),
                                   SizedBox(width: 16.0.w),
@@ -244,7 +241,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                             color: YellowColor,
                                             fontWeight: FontWeight.bold),
                                         labelText: 'انتخاب استان',
-                                        helperText: "* الزامی",
+                                        // helperText: "* الزامی",
                                         hintText: "انتخاب استان",
                                         hintStyle:
                                             TextStyle(color: Colors.white),
@@ -285,12 +282,6 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                               Proviences.indexOf(value) + 1;
                                         });
                                       },
-                                      validator: (value) {
-                                        if (value == null) {
-                                          return 'لطفا استان خود را انتخاب کنید';
-                                        }
-                                        return null;
-                                      },
                                     ),
                                   ),
                                 ],
@@ -320,7 +311,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                               BorderSide(color: YellowColor),
                                         ),
                                         labelText: 'نام شهر',
-                                        helperText: "* اختیاری",
+                                        // helperText: "* اختیاری",
                                         helperStyle:
                                             TextStyle(color: Colors.white),
                                       ),
@@ -355,7 +346,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                               BorderSide(color: YellowColor),
                                         ),
                                         labelText: 'آدرس',
-                                        helperText: "* اختیاری",
+                                        // helperText: "* اختیاری",
                                         helperStyle:
                                             TextStyle(color: Colors.white),
                                       ),
@@ -399,7 +390,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                               color: YellowColor,
                                               fontWeight: FontWeight.bold),
                                           labelText: 'نام فروشگاه',
-                                          helperText: "* الزامی",
+                                          // helperText: "* الزامی",
                                           helperStyle:
                                               TextStyle(color: Colors.white),
                                         ),
@@ -409,12 +400,6 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                         ),
                                         onChanged: (value) {
                                           _title = value;
-                                        },
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return 'لطفا نام فروشگاه خود را وارد کنید';
-                                          }
-                                          return null;
                                         },
                                       ),
                                     ),
@@ -441,7 +426,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                               color: YellowColor,
                                               fontWeight: FontWeight.bold),
                                           labelText: "تعداد میز",
-                                          helperText: "* الزامی",
+                                          // helperText: "* الزامی",
                                           helperStyle:
                                               TextStyle(color: Colors.white),
                                         ),
@@ -455,12 +440,6 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                         ),
                                         onChanged: (value) {
                                           _tables_count = int.parse(value);
-                                        },
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
-                                            return "لطفا تعداد میز را وارد کنید";
-                                          }
-                                          return null;
                                         },
                                       ),
                                     ),
@@ -494,7 +473,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                           color: YellowColor,
                                           fontWeight: FontWeight.bold),
                                       labelText: "شماره تلفن فروشگاه",
-                                      helperText: "* الزامی",
+                                      // helperText: "* الزامی",
                                       helperStyle:
                                           TextStyle(color: Colors.white),
                                     ),
@@ -508,12 +487,6 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                     ],
                                     onChanged: (value) {
                                       _telephone_number = value;
-                                    },
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return "لطفا شماره تلفن فروشگاه را وارد کنید";
-                                      }
-                                      return null;
                                     },
                                   )),
                                   SizedBox(width: 16.0.w),
@@ -536,7 +509,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                               BorderSide(color: YellowColor),
                                         ),
                                         labelText: 'آدرس شبکه های اجتماعی',
-                                        helperText: "* اختیاری",
+                                        // helperText: "* اختیاری",
                                         helperStyle:
                                             TextStyle(color: Colors.white),
                                       ),
