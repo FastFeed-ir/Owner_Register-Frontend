@@ -5,7 +5,6 @@ class SubscriptionModel {
   int? period;
   double? amount;
   String? url;
-  String? store_title;
   String? created_at;
   SubscriptionModel({
     this.id,
@@ -14,7 +13,6 @@ class SubscriptionModel {
     required this.period,
     required this.amount,
     this.url,
-    this.store_title,
     this.created_at,
   });
 
@@ -26,7 +24,6 @@ class SubscriptionModel {
       period: json['period'],
       amount: double.parse(json['amount']),
       url: json['url'],
-      store_title: json['store_title'],
       created_at: json['created_at'],
     );
   }
