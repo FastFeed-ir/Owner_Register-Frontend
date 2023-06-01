@@ -35,9 +35,7 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
   late dynamic pageType;
   final _viewModel = SubscriptionViewModel();
   final _storeViewModel = StoreViewModel();
-
   late int oldPeriod;
-  late double oldTotalCost;
 
   @override
   void initState() {
@@ -173,7 +171,6 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
                     _business_owner = sub.business_owner ?? 0;
                     storeId = sub.store!;
                     oldPeriod = sub.period ?? 0;
-                    oldTotalCost = sub.amount ?? 0;
                     _editSubscripton();
                     Get.toNamed(HomePage,arguments: _business_owner);
                   }
@@ -216,7 +213,7 @@ class _VerifySubScreenState extends State<VerifySubscriptonScreen> {
     var business_owner = _business_owner;
     var store = storeId;
     var period = this.period + oldPeriod;
-    var amount = totalCost + oldTotalCost;
+    var amount = totalCost;
     SubscriptionModel subscription = SubscriptionModel(
       id: id,
       business_owner: business_owner,
