@@ -25,12 +25,12 @@ class EditOwenerRegisterScreen extends StatefulWidget {
 
 class _EditOwenerRegisterScreen extends State<EditOwenerRegisterScreen> {
   late Store store;
-  late int Id;
+  late int ownerId;
 
   @override
   void initState() {
     store = widget.parameters[0];
-    Id = widget.parameters[1];
+    ownerId = widget.parameters[1];
   }
 
   @override
@@ -41,9 +41,9 @@ class _EditOwenerRegisterScreen extends State<EditOwenerRegisterScreen> {
           child: Container(
             child: Column(
               children: [
-                HeaderPanel(ID: Id),
+                HeaderPanel(ID: ownerId),
                 EditOwnerRegister(
-                  Id: Id,
+                  Id: ownerId,
                   store: store,
                 ),
                 SizedBox(height: 32.r),
@@ -58,10 +58,10 @@ class _EditOwenerRegisterScreen extends State<EditOwenerRegisterScreen> {
 }
 
 class EditOwnerRegister extends StatefulWidget {
-  EditOwnerRegister({Key? key, required this.Id, required this.store})
-      : super(key: key);
-  Store store;
-  var Id;
+  final Store store;
+  final int Id;
+
+  EditOwnerRegister({Key? key, required this.Id, required this.store});
 
   @override
   State<EditOwnerRegister> createState() => _EditOwnerRegisterState();
@@ -69,10 +69,23 @@ class EditOwnerRegister extends StatefulWidget {
 
 class _EditOwnerRegisterState extends State<EditOwnerRegister> {
   //dropdown options for type of business
-  var business_owner;
+  late String _title;
+  late String _logo;
+  late int _business_type;
+  late String _business_type_text;
+  late String _state_text;
+  late int _state;
+  late String _city;
+  late String _address;
+  late String _owner_phone_number;
+  late String _telephone_number;
+  late int _tables_count;
+  late String _instagram_page_link;
+  final _storeModel = StoreViewModel();
+  final _viewModel = OwnerViewModel();
+  final List<Owner> _owners = [];
   final List<String> _businessTypes = ['کافه', 'رستوران'];
   final _formKey = GlobalKey<FormState>();
-
   final picker = ImagePicker();
 
   Future<void> getImage() async {
@@ -89,37 +102,20 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
 
 //form field variables
 
-  final _storeModel = StoreViewModel();
-  final _viewModel = OwnerViewModel();
-  final List<Owner> _owners = [];
-  late String _title = widget.store.title!;
-  late String _logo = widget.store.logo!;
-  late int _business_type = widget.store.business_type!;
-  late String _business_type_text = _businessTypes[_business_type];
-  late String _state_text;
-  late int _state = widget.store.state!;
-  late String _city = widget.store.city!;
-  late String _address = widget.store.address!;
-  late String _owner_phone_number = widget.store.owner_phone_number!;
-  late String _telephone_number = widget.store.telephone_number!;
-  late int _tables_count = widget.store.tables_count!;
-  late String _instagram_page_link = widget.store.instagram_page_link!;
-
   @override
   void initState() {
     super.initState();
-    _title = widget.store.title!;
-    _logo = widget.store.logo!;
-    _business_type = widget.store.business_type!;
+    _title = widget.store.title ?? "";
+    _logo = widget.store.logo ?? "";
+    _business_type = widget.store.business_type ?? 0;
     _business_type_text = _businessTypes[_business_type];
-    _state = widget.store.state!;
-    _city = widget.store.city!;
-    _address = widget.store.address!;
-    _owner_phone_number = widget.store.owner_phone_number!;
-    _telephone_number = widget.store.telephone_number!;
-    _tables_count = widget.store.tables_count!;
-    _instagram_page_link = widget.store.instagram_page_link!;
-
+    _state = widget.store.state ?? 0;
+    _city = widget.store.city ?? "";
+    _address = widget.store.address ?? "";
+    _owner_phone_number = widget.store.owner_phone_number ?? "";
+    _telephone_number = widget.store.telephone_number ?? "";
+    _tables_count = widget.store.tables_count ?? 0;
+    _instagram_page_link = widget.store.instagram_page_link ?? "";
     findPhone();
   }
 
@@ -177,7 +173,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                     child: DropdownButtonFormField<String>(
                                       style: TextStyle(
                                         fontSize: 20.w,
-                                        fontFamily: "IranSansWeb",
+                                        fontFamily: IranSansWeb,
                                       ),
                                       decoration: const InputDecoration(
                                         suffixIcon: Icon(
@@ -209,14 +205,14 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                       ),
                                       dropdownColor: BlackColor,
                                       items:
-                                          _businessTypes.map((business_type) {
+                                          _businessTypes.map((businessType) {
                                         return DropdownMenuItem(
                                           child: Text(
-                                            business_type,
+                                            businessType,
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
-                                          value: business_type,
+                                          value: businessType,
                                         );
                                       }).toList(),
                                       onChanged: (value) {
@@ -241,7 +237,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                       menuMaxHeight: 200,
                                       style: TextStyle(
                                         fontSize: 20.w,
-                                        fontFamily: "IranSansWeb",
+                                        fontFamily: IranSansWeb,
                                       ),
                                       decoration: InputDecoration(
                                         errorStyle: TextStyle(
@@ -330,7 +326,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                       ),
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontFamily: "IranSansWeb",
+                                        fontFamily: IranSansWeb,
                                       ),
                                       onChanged: (value) {
                                         setState(() {
@@ -365,7 +361,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                       ),
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontFamily: "IranSansWeb",
+                                        fontFamily: IranSansWeb,
                                       ),
                                       onChanged: (value) {
                                         _address = value;
@@ -409,7 +405,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                         ),
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontFamily: "IranSansWeb",
+                                          fontFamily: IranSansWeb,
                                         ),
                                         onChanged: (value) {
                                           _title = value;
@@ -455,7 +451,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                         ],
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontFamily: "IranSansWeb",
+                                          fontFamily: IranSansWeb,
                                         ),
                                         onChanged: (value) {
                                           _tables_count = int.parse(value);
@@ -504,7 +500,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                     ),
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontFamily: "IranSansWeb",
+                                      fontFamily: IranSansWeb,
                                     ),
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
@@ -546,7 +542,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                       ),
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontFamily: "IranSansWeb",
+                                        fontFamily: IranSansWeb,
                                       ),
                                       onChanged: (value) {
                                         _instagram_page_link = value;
@@ -676,7 +672,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                           _storeModel.editStore(widget.store);
 
                                           Get.toNamed(HomePage,
-                                              arguments: widget.store.business_owner);
+                                              arguments: widget.Id);
                                         }
                                       },
                                       child: Text(
@@ -699,7 +695,7 @@ class _EditOwnerRegisterState extends State<EditOwnerRegister> {
                                       ),
                                       onPressed: () {
                                         Get.toNamed(HomePage,
-                                            arguments: widget.store.business_owner);
+                                            arguments: widget.Id);
                                       },
                                       child: Text(
                                         'انصراف',
