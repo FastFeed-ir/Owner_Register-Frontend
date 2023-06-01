@@ -13,7 +13,7 @@ import 'Home_style.dart';
 import 'header_panel.dart';
 
 class RestaurantListScreen extends StatefulWidget {
-  var Id = Get.arguments;
+  final int Id = Get.arguments;
 
   RestaurantListScreen({
     Key? key,
@@ -146,8 +146,7 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ListTile(
-          // ToDo get name from API
-          title: restaurantTitle(subscriptionModel.store_title, store.logo, subscriptionModel.created_at,subscriptionModel.period),
+          title: restaurantTitle(store.title, store.logo, subscriptionModel.created_at,subscriptionModel.period),
           shape: RoundedRectangleBorder(
             side: BorderSide(width: 2.w),
             borderRadius: BorderRadius.circular(20.r),
@@ -198,7 +197,7 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
-                      onPressed: () {Get.toNamed(EditOwnerRegisterPage, arguments: [store, store.id]);},
+                      onPressed: () {Get.toNamed(EditOwnerRegisterPage, arguments: [store, store.business_owner]);},
                       child: SubButtonTextStyle(
                         text: 'ویرایش اطلاعات',
                       ),
