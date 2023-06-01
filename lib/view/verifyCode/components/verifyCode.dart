@@ -101,7 +101,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
     return AlertDialog(
       title: Text('تایید شماره تلفن همراه',
           style: TextStyle(
-            fontFamily: "IranSansWeb",
+            fontFamily: IranSansWeb,
           )),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -160,7 +160,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
                           style: TextStyle(
                             fontSize: 15,
                             color: RedColor,
-                            fontFamily: "IranSansWeb",
+                            fontFamily: IranSansWeb,
                           ),
                         ),
                       ),
@@ -185,7 +185,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
                 style: TextStyle(
                   fontSize: 15,
                   color: Colors.black,
-                  fontFamily: "IranSansWeb",
+                  fontFamily: IranSansWeb,
                 ),
               ),
               onPressed: () async {

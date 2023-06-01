@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:html';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -154,7 +153,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                 children: [
                                   Expanded(
                                     child: DropdownButtonFormField<String>(
-                                      style: TextStyle(fontSize: 20.w,fontFamily: "IranSansWeb",),
+                                      style: TextStyle(fontSize: 20.w,fontFamily: IranSansWeb,),
                                       decoration: const InputDecoration(
                                         suffixIcon: Icon(
                                           Icons.store_mall_directory_outlined,
@@ -211,7 +210,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                   Expanded(
                                     child: DropdownButtonFormField<String>(
                                       menuMaxHeight: 200,
-                                      style: TextStyle(fontSize: 20.w,fontFamily: "IranSansWeb",),
+                                      style: TextStyle(fontSize: 20.w,fontFamily: IranSansWeb,),
                                       decoration: InputDecoration(
                                         errorStyle: TextStyle(color: YellowColor,fontWeight: FontWeight.bold),
                                         labelText: 'انتخاب استان',
@@ -294,7 +293,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         helperStyle:
                                             TextStyle(color: Colors.white),
                                       ),
-                                      style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
+                                      style: TextStyle(color: Colors.white,fontFamily: IranSansWeb,),
                                       onChanged: (value) {
                                         setState(() {
                                           _city = value;
@@ -326,7 +325,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         helperStyle:
                                             TextStyle(color: Colors.white),
                                       ),
-                                      style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
+                                      style: TextStyle(color: Colors.white,fontFamily: IranSansWeb,),
                                       onChanged: (value) {
                                         _address = value;
                                       },
@@ -365,7 +364,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                           helperStyle:
                                               TextStyle(color: Colors.white),
                                         ),
-                                        style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
+                                        style: TextStyle(color: Colors.white,fontFamily: IranSansWeb,),
                                         onChanged: (value) {
                                           _title = value;
                                         },
@@ -406,7 +405,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         inputFormatters: <TextInputFormatter>[
                                           FilteringTextInputFormatter.digitsOnly
                                         ],
-                                        style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
+                                        style: TextStyle(color: Colors.white,fontFamily: IranSansWeb,),
                                         onChanged: (value) {
                                           _tables_count = int.parse(value);
                                         },
@@ -450,7 +449,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                       helperStyle:
                                           TextStyle(color: Colors.white),
                                     ),
-                                    style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
+                                    style: TextStyle(color: Colors.white,fontFamily: IranSansWeb,),
                                     keyboardType: TextInputType.number,
                                     inputFormatters: <TextInputFormatter>[
                                       FilteringTextInputFormatter.digitsOnly
@@ -489,7 +488,7 @@ class _OwnerRegisterState extends State<OwnerRegister> {
                                         helperStyle:
                                             TextStyle(color: Colors.white),
                                       ),
-                                      style: TextStyle(color: Colors.white,fontFamily: "IranSansWeb",),
+                                      style: TextStyle(color: Colors.white,fontFamily: IranSansWeb,),
                                       onChanged: (value) {
                                         _instagram_page_link = value;
                                       },

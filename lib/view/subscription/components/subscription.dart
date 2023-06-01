@@ -80,7 +80,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         children: [
                           Text(
                             SubscriptionList[index].amountText,
-                            style: TextStyle(color: RedColor, fontSize: 28.sp,fontFamily: "IranSansWeb"),
+                            style: TextStyle(color: RedColor, fontSize: 28.sp,fontFamily: IranSansWeb),
                           ),
                           Icon(Icons.arrow_back_ios_new_rounded, color: BlackColor, size: 25.r,),
                         ],
@@ -96,7 +96,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                       ),
                       leading:Text(
                         SubscriptionList[index].periodText,
-                        style: TextStyle(color: BlackColor, fontSize: 28.sp,fontFamily: "IranSansWeb"),
+                        style: TextStyle(color: BlackColor, fontSize: 28.sp,fontFamily: IranSansWeb),
                       ),
                       tileColor: free,
                     ),
