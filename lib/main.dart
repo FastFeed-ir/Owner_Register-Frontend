@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
             ),
             GetPage(
               name: CategoriesPage,
-              page: () => CategoriesScreen(storeId: 1),
+              page: () => CategoriesScreen(),
             ),
             GetPage(
               name: PhoneNumbePage,

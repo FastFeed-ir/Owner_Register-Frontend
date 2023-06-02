@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:FastFeed/view/categories/components/text_form_field.dart';
 import 'package:FastFeed/view/categories/components/text_form_field_number.dart';
 import 'package:FastFeed/view_model/collection_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
 import '../../model/entity/collection.dart';
@@ -11,9 +14,9 @@ import '../../model/entity/product.dart';
 import '../../utils/constants.dart';
 
 class CategoriesScreen extends StatefulWidget {
-  const CategoriesScreen({super.key, required this.storeId});
+  final storeId = Get.arguments;
 
-  final int storeId;
+  CategoriesScreen({super.key});
 
   @override
   CategoriesScreenState createState() => CategoriesScreenState();
@@ -32,11 +35,14 @@ class CategoriesScreenState extends State<CategoriesScreen> {
   final TextEditingController _productInventoryController =
       TextEditingController(text: "");
 
+  String _imageServer = "";
   var _checkBoxValue = false;
   var _gotFromServer = false;
   final List<Collection> _collections = [];
   final _viewModel = CollectionViewModel();
-  final _formKey = GlobalKey<FormState>();
+  final _formKeyCollection = GlobalKey<FormState>();
+  final _formKeyBuild = GlobalKey<FormState>();
+  final _formKeyProduct = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -81,14 +87,14 @@ class CategoriesScreenState extends State<CategoriesScreen> {
                       children: [
                         const SizedBox(height: 16.0),
                         Form(
-                          key: _formKey,
+                          key: _formKeyBuild,
                           child: textFormField(_collectionTitleController,
                               'عنوان دسته بندی', true),
                         ),
                         const SizedBox(height: 16.0),
                         ElevatedButton(
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
+                            if (_formKeyBuild.currentState!.validate()) {
                               _addCollection();
                             }
                           },
@@ -144,8 +150,11 @@ class CategoriesScreenState extends State<CategoriesScreen> {
               (product) => ListTile(
                 title: Container(
                   alignment: Alignment.center,
-                  child: Text('${product.title} : '
-                      '${product.unitPrice.toString().toPersianDigit().seRagham()} تومان'),
+                  child: Text(
+                    '${product.title} : '
+                    '${product.unitPrice.toString().toPersianDigit().seRagham()} تومان',
+                    textDirection: TextDirection.rtl,
+                  ),
                 ),
                 subtitle: Container(
                     alignment: Alignment.center,
@@ -186,7 +195,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         child: const Text('ویرایش دسته بندی'),
       ),
       content: Form(
-          key: _formKey,
+          key: _formKeyCollection,
           child: textFormField(_collectionTitleController, 'عنوان', true)),
       actions: [
         TextButton(
@@ -196,7 +205,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         TextButton(
           child: const Text('تایید'),
           onPressed: () {
-            if (_formKey.currentState!.validate()) {
+            if (_formKeyCollection.currentState!.validate()) {
               _editCollection(collection);
             }
           },
@@ -217,48 +226,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         alignment: Alignment.centerRight,
         child: Text(stateTitle),
       ),
-      content: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              textFormField(_productTitleController, 'عنوان', true),
-              const SizedBox(height: 8.0),
-              textFormField(_productDescriptionController, 'توضیحات', false),
-              const SizedBox(height: 8.0),
-              textFormFieldNumber(
-                  _productUnitPriceController, 'قیمت', true, false),
-              const SizedBox(height: 8.0),
-              textFormFieldNumber(_productDiscountPercentageController,
-                  'درصد تخفیف', false, true),
-              const SizedBox(height: 8.0),
-              textFormFieldNumber(
-                  _productInventoryController, 'تعداد', false, false),
-              const SizedBox(height: 8.0),
-              Row(
-                textDirection: TextDirection.ltr,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  StatefulBuilder(
-                    builder: (BuildContext context, StateSetter setState) {
-                      return Checkbox(
-                        value: _checkBoxValue,
-                        onChanged: (newValue) {
-                          setState(() {
-                            _checkBoxValue = newValue!;
-                          });
-                        },
-                      );
-                    },
-                  ),
-                  const Text('فعال بودن')
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+      content: productDialogContent(),
       actions: [
         TextButton(
           child: const Text('انصراف'),
@@ -267,14 +235,105 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         TextButton(
           child: const Text('تایید'),
           onPressed: () {
-            if (flag && _formKey.currentState!.validate()) {
+            if (flag && _formKeyProduct.currentState!.validate()) {
               _addProduct(collection);
-            } else if (!flag && _formKey.currentState!.validate()) {
+            } else if (!flag && _formKeyProduct.currentState!.validate()) {
               _editProduct(collection, product!);
             }
           },
         ),
       ],
+    );
+  }
+
+  Widget productDialogContent() {
+    return SingleChildScrollView(
+      child: Form(
+        key: _formKeyProduct,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            textFormField(_productTitleController, 'عنوان', true),
+            const SizedBox(height: 8.0),
+            textFormField(_productDescriptionController, 'توضیحات', false),
+            const SizedBox(height: 8.0),
+            textFormFieldNumber(
+              _productUnitPriceController,
+              'قیمت',
+              true,
+              false,
+            ),
+            const SizedBox(height: 8.0),
+            textFormFieldNumber(
+              _productDiscountPercentageController,
+              'درصد تخفیف',
+              false,
+              true,
+            ),
+            const SizedBox(height: 8.0),
+            textFormFieldNumber(
+              _productInventoryController,
+              'تعداد',
+              false,
+              false,
+            ),
+            const SizedBox(height: 8.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  textDirection: TextDirection.ltr,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    StatefulBuilder(
+                      builder: (BuildContext context, StateSetter setState) {
+                        return Checkbox(
+                          value: _checkBoxValue,
+                          onChanged: (newValue) {
+                            setState(() {
+                              _checkBoxValue = newValue!;
+                            });
+                          },
+                        );
+                      },
+                    ),
+                    const Text('فعال بودن'),
+                  ],
+                ),
+                const SizedBox(height: 8.0),
+                Column(
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(YellowColor),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                      onPressed: () async {
+                        {
+                          await getImage();
+                        }
+                      },
+                      child: const Text(
+                        'افزودن لوگو',
+                        style: TextStyle(
+                          color: WhiteColor,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -308,7 +367,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         collection.id = collectionId;
         setState(() {
           _collections.add(collection);
-          _collectionTitleController.clear();
+          _collectionTitleController.text = '';
         });
       });
     }
@@ -320,6 +379,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
     var unitPrice = _productUnitPriceController.text.trim();
     var discountPercentage = _productDiscountPercentageController.text.trim();
     var inventory = _productInventoryController.text.trim();
+    var logo = _imageServer;
     if (title.isNotEmpty && unitPrice.isNotEmpty) {
       Product product = Product(
         title: title,
@@ -331,17 +391,19 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         inventory: int.tryParse(inventory.toEnglishDigit()),
         collectionId: collection.id ?? 0,
         storeId: widget.storeId,
+        image: logo,
       );
       _viewModel.addProduct(product).asStream().listen((productId) {
         product.id = productId;
         setState(() {
           collection.products ??= [];
           collection.products!.add(product);
-          _productTitleController.clear();
-          _productDescriptionController.clear();
-          _productUnitPriceController.clear();
-          _productDiscountPercentageController.clear();
-          _productInventoryController.clear();
+          _productTitleController.text = '';
+          _productDescriptionController.text = '';
+          _productUnitPriceController.text = '';
+          _productDiscountPercentageController.text = '';
+          _productInventoryController.text = '';
+          _imageServer = '';
           _checkBoxValue = false;
         });
         Navigator.pop(context);
@@ -356,7 +418,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
       _viewModel.editCollection(collection);
       setState(() {
         collection.title = title;
-        _collectionTitleController.clear();
+        _collectionTitleController.text = '';
       });
       Navigator.pop(context);
     }
@@ -368,6 +430,7 @@ class CategoriesScreenState extends State<CategoriesScreen> {
     var unitPrice = _productUnitPriceController.text.trim();
     var discountPercentage = _productDiscountPercentageController.text.trim();
     var inventory = _productInventoryController.text.trim();
+    var logo = _imageServer;
     if (title.isNotEmpty && unitPrice.isNotEmpty) {
       Product newProduct = Product(
         title: title,
@@ -380,16 +443,18 @@ class CategoriesScreenState extends State<CategoriesScreen> {
         collectionId: collection.id ?? 0,
         id: product.id,
         storeId: widget.storeId,
+        image: logo,
       );
       _viewModel.editProduct(newProduct);
       setState(() {
         var index = collection.products?.indexOf(product);
         collection.products?.replaceRange(index!, index + 1, [newProduct]);
-        _productTitleController.clear();
-        _productDescriptionController.clear();
-        _productUnitPriceController.clear();
-        _productDiscountPercentageController.clear();
-        _productInventoryController.clear();
+        _productTitleController.text = '';
+        _productDescriptionController.text = '';
+        _productUnitPriceController.text = '';
+        _productDiscountPercentageController.text = '';
+        _productInventoryController.text = '';
+        _imageServer = '';
       });
       Navigator.pop(context);
     }
@@ -419,11 +484,11 @@ class CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   void _showAddProductDialog(Collection collection) {
-    _productTitleController.clear();
-    _productDescriptionController.clear();
-    _productUnitPriceController.clear();
-    _productDiscountPercentageController.clear();
-    _productInventoryController.clear();
+    _productTitleController.text = '';
+    _productDescriptionController.text = '';
+    _productUnitPriceController.text = '';
+    _productDiscountPercentageController.text = '';
+    _productInventoryController.text = '';
     _checkBoxValue = false;
     showDialog(
       context: context,
@@ -437,14 +502,22 @@ class CategoriesScreenState extends State<CategoriesScreen> {
     _productTitleController.text = product.title;
     _productDescriptionController.text = product.description ?? '';
     _productUnitPriceController.text = product.unitPrice.toString();
-    _productInventoryController.text = product.inventory.toString();
-    _productDiscountPercentageController.text =
-        product.discountPercentage.toString();
+    _productInventoryController.text = '';
+    _productDiscountPercentageController.text = '';
     showDialog(
       context: context,
       builder: (context) {
         return productDialog(collection, product, false);
       },
     );
+  }
+
+  Future<void> getImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      final bytes = await pickedFile.readAsBytes();
+      _imageServer = base64.encode(bytes);
+    }
   }
 }
