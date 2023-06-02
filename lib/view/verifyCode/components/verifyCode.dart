@@ -67,10 +67,35 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
     });
   }
 
-  void _resendCode() {
+  Future<void> _resendCode() async {
     // code to resend the confirmation code to the user's phone number
     _resendSeconds = 100;
     _startResendTimer();
+    FirebaseAuth auth = FirebaseAuth.instance;
+    try {
+      await auth.verifyPhoneNumber(
+        phoneNumber: '${widget.phoneNumber}',
+        verificationCompleted: (PhoneAuthCredential credential) async {},
+        verificationFailed: (e) {
+          throw Exception(e.toString());
+        },
+        codeSent: ((String verificationId, int? resendToken) async {
+          await Future.delayed(Duration(seconds: 2));
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return ConfirmationDialog(
+                phoneNumber: '+${widget.phoneNumber}',
+                verificationId: verificationId,
+              );
+            },
+          );
+        }),
+        codeAutoRetrievalTimeout: (String verificationId) {},
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e.toString());
+    }
   }
 
   void _confirmCode() {
@@ -107,7 +132,7 @@ class _ConfirmationDialogState extends State<ConfirmationDialog> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            ' لطفا کد ارسال شده به شماره ${widget.phoneNumber} را وارد نمایید ',
+            ' لطفا کد ارسال شده به شماره ${(widget.phoneNumber)?.substring(1)} را وارد نمایید  را وارد نمایید ',
             style: TextStyle(
               fontFamily: 'IranSansWeb',
             ),
