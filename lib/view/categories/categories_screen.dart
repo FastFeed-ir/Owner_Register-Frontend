@@ -5,6 +5,7 @@ import 'package:FastFeed/view/categories/components/text_form_field.dart';
 import 'package:FastFeed/view/categories/components/text_form_field_number.dart';
 import 'package:FastFeed/view_model/collection_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 
@@ -13,9 +14,9 @@ import '../../model/entity/product.dart';
 import '../../utils/constants.dart';
 
 class CategoriesScreen extends StatefulWidget {
-  final storeId = 3; //TODO Get.arguments
+  final storeId = Get.arguments;
 
-  const CategoriesScreen({super.key});
+  CategoriesScreen({super.key});
 
   @override
   CategoriesScreenState createState() => CategoriesScreenState();
